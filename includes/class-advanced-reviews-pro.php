@@ -131,6 +131,11 @@ class Advanced_Reviews_Pro {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-images.php';
 
 		/**
+		 * Include reviews manual class.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-manual.php';
+
+		/**
 		 * Include max reviews score class.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-max-review-score.php';
@@ -198,6 +203,7 @@ class Advanced_Reviews_Pro {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+		// reCAPTCHA
 		if ( 'on' === arp_get_option( $this->prefix . 'enable_recaptcha_checkbox' ) ) {
 
 			$plugin_recaptcha = new Advanced_Reviews_Pro_Recaptcha();
@@ -205,6 +211,7 @@ class Advanced_Reviews_Pro {
 			$this->loader->add_action( 'set_comment_cookies', $plugin_recaptcha, 'validate_captcha', 9 );
 		}
 
+		// Images
 		if ( 'on' === arp_get_option( $this->prefix . 'enable_images_checkbox' ) ) {
 
 			$plugin_review_images = new Advanced_Reviews_Pro_Images();
@@ -213,6 +220,15 @@ class Advanced_Reviews_Pro {
 			$this->loader->add_filter( 'comments_array', $plugin_review_images, 'display_review_image', 12 );
 		}
 
+		// Manual adding
+		if ( 'on' === arp_get_option( $this->prefix . 'enable_manual_checkbox' ) ) {
+
+			$plugin_review_manual = new Advanced_Reviews_Pro_Manual();
+			$this->loader->add_action( 'admin_menu', $plugin_review_manual, 'add_rating_submenu' );
+			$this->loader->add_action( 'wp_ajax_arp_get_images', $plugin_review_manual, 'arp_get_images' );
+		}
+
+		// Custom review score
 		$review_score_max = absint( arp_get_option( $this->prefix . 'max_review_score_number' ) );
 		if ( ! empty( $review_score_max ) && 5 !== $review_score_max ) {
 

@@ -105,6 +105,8 @@ class Advanced_Reviews_Pro_Admin {
 		 * class.
 		 */
 
+		wp_enqueue_media();
+
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/advanced-reviews-pro-admin.js', array( 'jquery' ), $this->version, false );
 
 		$comment_id = esc_attr( $_GET['c'] );
@@ -167,6 +169,13 @@ class Advanced_Reviews_Pro_Admin {
 			'name' => 'Vote for Reviews',
 			'desc' => 'Enable people to upvote or downvote reviews. The plugin allows one vote per review per person. If the person is a guest, the plugin uses cookies and IP addresses to identify this visitor.',
 			'id'   => $this->prefix . 'enable_votes_checkbox',
+			'type' => 'checkbox',
+		) );
+
+		$cmb_options->add_field( array(
+			'name' => 'Manual Reviews',
+			'desc' => 'Enable manual review generation via admin pannel.',
+			'id'   => $this->prefix . 'enable_manual_checkbox',
 			'type' => 'checkbox',
 		) );
 
