@@ -1,0 +1,30 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+.arv-comment-images {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 -10px;
+}
+
+.arv-comment-images .arv-comment-image{
+    width: 25%;
+    padding: 0 10px;
+    text-align: center;
+}
+
+.arv-comment-images .arv-comment-image img{
+    float: none !important;
+    cursor: pointer;
+}
+
+@media screen and ( max-width: 768px ) {
+
+    .arv-comment-images .arv-comment-image{
+        width: 50%;
+    }
+
+}
