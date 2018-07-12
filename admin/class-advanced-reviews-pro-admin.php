@@ -174,7 +174,7 @@ class Advanced_Reviews_Pro_Admin {
 
 		$cmb_options->add_field( array(
 			'name' => 'Manual Reviews',
-			'desc' => 'Enable manual review generation via admin pannel.',
+			'desc' => 'Enable manual review generation via admin panel.',
 			'id'   => $this->prefix . 'enable_manual_checkbox',
 			'type' => 'checkbox',
 		) );
@@ -259,7 +259,7 @@ class Advanced_Reviews_Pro_Admin {
 
 		$cmb_options->add_field( array(
 			'name' => 'Images',
-			'desc' => 'Attachment of images to reviews left on WooCommerce product pages.',
+			'desc' => 'Enable attaching images to reviews left on WooCommerce product pages.',
 			'type' => 'title',
 			'id'   => $this->prefix . 'images_settings_title',
 		) );

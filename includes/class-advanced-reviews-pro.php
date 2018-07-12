@@ -226,6 +226,7 @@ class Advanced_Reviews_Pro {
 			$plugin_review_manual = new Advanced_Reviews_Pro_Manual();
 			$this->loader->add_action( 'admin_menu', $plugin_review_manual, 'add_rating_submenu' );
 			$this->loader->add_action( 'wp_ajax_arp_get_images', $plugin_review_manual, 'arp_get_images' );
+			$this->loader->add_action( 'wp_loaded', $plugin_review_manual, 'submit_new_comment' );
 		}
 
 		// Custom review score

@@ -38,136 +38,110 @@ class Advanced_Reviews_Pro_Manual {
 	public function __construct() {
 	}
 
+	/**
+	 * Add submenu page
+	 *
+	 * @since    1.0.0
+	 */
 	public function add_rating_submenu() {
-		add_submenu_page( 'edit-comments.php', 'Add rating', 'Add rating', 'manage_options', 'custom-link-unique-identifier', array( $this, 'output_add_comment' ) );
+		add_submenu_page( 'edit-comments.php', 'Add rating', 'Add rating', 'manage_options', $this->prefix . 'add-custom-rating', array( $this, 'output_add_comment' ) );
 	}
 
+	/**
+	 * Output add-comment screen
+	 *
+	 * @since    1.0.0
+	 */
 	public function output_add_comment() {
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/advanced-reviews-pro-admin-add-comment.php';
+	}
 
-		$users            = get_users();
+	public function submit_new_comment() {
+
+		if ( ! isset( $_POST['add_rating_nonce'] ) || ! wp_verify_nonce( $_POST['add_rating_nonce'], 'add_rating_action' ) ) {
+			return;
+		}
+
 		$review_score_max = absint( arp_get_option( $this->prefix . 'max_review_score_number' ) );
 		if ( ! $review_score_max ) {
 			$review_score_max = 5;
 		}
 
-		$products = get_posts( array(
-			'post_type'      => 'product',
-			'posts_per_page' => -1,
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
-		) );
+		// Transform to 1-5 rating system
+		$selected_rating = ( $_POST['selected-rating'] / $review_score_max ) * 5;
 
-		?>
-		<div id="post-body-content" class="edit-form-section edit-comment-section wrap" style="width: calc( 100% - 20px );">
-			<form name="arp-add-custom-rating" method="post">
-				<?php wp_nonce_field( 'add_rating_action', 'add_rating_nonce' ); ?>
+		$selected_user = $_POST['selected-user'];
+		if ( 'guest' === $selected_user ) {
+			$author_name  = $_POST['author-name'];
+			$author_email = $_POST['author-email'];
+			$author_url   = $_POST['newcomment_author_url'];
+		} else {
+			$user         = get_user_by( 'id', $selected_user );
+			$author_name  = $user->first_name . ' ' . $user->last_name;
+			$author_email = $user->user_email;
+			$author_url   = $user->user_url;
+			if ( empty( $author_name ) ) {
+				$author_name = $user->display_name;
+			}
+		}
 
-				<div class="stuffbox" style="padding: 20px;box-sizing: border-box;">
-					<div class="inside">
-						<fieldset>
-							<legend class="edit-comment-author">Author</legend>
-							<table class="form-table editcomment">
-								<tbody>
-								<tr>
-									<td class="first"><label for="selected-user">Select User:</label></td>
-									<td>
-										<select name="selected-user" id="selected-user">
-											<option value="guest">Guest</option>
-											<?php
-											foreach ( $users as $user ) {
-												$user_data = wp_json_encode( array(
-													'ID' => $user->data->ID,
-													'user_email' => $user->data->user_email,
-													'user_url' => $user->data->user_url,
-													'display_name' => $user->data->display_name,
-												) );
-												echo "<option value='{$user_data}'>{$user->data->display_name} (#{$user->ID})</option>";
-											}
-											?>
-										</select>
-									</td>
-								</tr>
-								<tr class="hide-if-guest">
-									<td class="first"><label for="name">Name: *</label></td>
-									<td><input style="width:100%;" type="text" name="author-name" value="" id="author-name" required></td>
-								</tr>
-								<tr class="hide-if-guest">
-									<td class="first"><label for="email">Email: *</label></td>
-									<td>
-										<input style="width:100%;" type="email" name="author-email" value="" id="author-email" required>
-									</td>
-								</tr>
-								<tr class="hide-if-guest">
-									<td class="first"><label for="newcomment_author_url">URL:</label></td>
-									<td>
-										<input style="width:100%;" type="text" name="newcomment_author_url" id="newcomment_author_url">
-									</td>
-								</tr>
-								<tr>
-									<td class="first"><label for="name">Comment</label></td>
-									<td>
-										<?php
-										wp_editor( '', 'comment-content', array(
-											'media_buttons' => false,
-											'textarea_name' => 'comment-content',
-											'textarea_rows' => 10,
-											'teeny' => true,
-										) );
-										?>
-									</td>
-								</tr>
-								<tr>
-									<td class="first"><label for="selected-rating">Rating</label></td>
-									<td>
-										<select name="selected-rating">
-											<?php
-											for ( $i = 1; $i <= $review_score_max; $i++ ) {
-												echo '<option value="' . esc_attr( $i ) . '">' . esc_html( $i ) . '</option>';
-											}
-											?>
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<td class="first"><label for="selected-product">Select a Product</label></td>
-									<td>
-										<select name="selected-product" id="arp-selected-product">
-											<?php
-											foreach ( $products as $product ) {
-												$product_title = get_the_title( $product->ID );
-												echo "<option value='{$product->ID}'>{$product_title} (#{$product->ID})</option>";
-											}
-											?>
-										</select>
-									</td>
-								</tr>
-								<?php if ( 'on' === arp_get_option( $this->prefix . 'enable_images_checkbox' ) ) { ?>
-									<tr>
-										<td class="first"><label for="selected-images">Upload images</label></td>
-										<td>
-											<a href="javascript:;" class="arp-insert-media">Add files</a>
-											<input type="hidden" id="arp-selected-imgs">
-											<div id="selected-images" style="padding-top: 10px;"></div>
-										</td>
-									</tr>
-								<?php } ?>
-								</tbody>
-							</table>
-							<br>
-						</fieldset>
-						<button type="submit" class="button-primary">Add Review</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		<?php
+		$comment_content  = $_POST['comment-content'];
+		$selected_product = $_POST['selected-product'];
+		$selected_date    = $_POST['comment_date'];
+		$selected_images  = $_POST['arp-selected-imgs'];
+
+		if ( ! $selected_date ) {
+			$selected_date     = date( 'Y-m-d G-i-s' );
+			$selected_date_gmt = new DateTime( 'now' );
+		} else {
+			$selected_date_gmt = new DateTime( $selected_date );
+		}
+
+		$time_zone_off = get_option( 'gmt_offset' );
+		$selected_date_gmt->modify( "-{$time_zone_off} hours" );
+
+		$comment_data = array(
+			'comment_author'       => $author_name,
+			'comment_author_email' => $author_email,
+			'comment_author_url'   => $author_url,
+			'comment_content'      => $comment_content,
+			'comment_post_ID'      => $selected_product,
+			'comment_type'         => '',
+			'comment_approved'     => 1,
+			'user_id'              => 'guest' === $selected_user ? '' : $selected_user,
+			'comment_date'         => $selected_date,
+			'comment_date_gmt'     => date( 'Y-m-d G-i-s', $selected_date_gmt->getTimestamp() ),
+		);
+
+		$review_id = wp_insert_comment( $comment_data );
+
+		if ( $review_id ) {
+
+			update_comment_meta( $review_id, 'rating', $selected_rating );
+			update_comment_meta( $review_id, 'verified', 0 );
+
+			if ( $selected_images ) {
+				update_comment_meta( $review_id, $this->prefix . 'review_images', explode( ',', $selected_images ) );
+			}
+
+			$_POST['arp-added-comment'] = true;
+			$_POST['arp-review-id']     = $review_id;
+
+		} else {
+			$_POST['arp-added-comment-error'] = true;
+		}
 	}
 
+	/**
+	 * AJAX call, returns images from id-s
+	 *
+	 * @since 1.0.0
+	 */
 	public function arp_get_images() {
 
-		if( isset( $_GET['ids'] ) ){
+		if( isset( $_POST['ids'] ) ){
 
-			$ids    = explode( ',', $_GET['ids'] );
+			$ids    = explode( ',', $_POST['ids'] );
 			$images = array();
 
 			foreach ( $ids as $id ) {
