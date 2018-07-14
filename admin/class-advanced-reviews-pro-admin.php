@@ -166,13 +166,6 @@ class Advanced_Reviews_Pro_Admin {
 		) );
 
 		$cmb_options->add_field( array(
-			'name' => 'Vote for Reviews',
-			'desc' => 'Enable people to upvote or downvote reviews. The plugin allows one vote per review per person. If the person is a guest, the plugin uses cookies and IP addresses to identify this visitor.',
-			'id'   => $this->prefix . 'enable_votes_checkbox',
-			'type' => 'checkbox',
-		) );
-
-		$cmb_options->add_field( array(
 			'name' => 'Manual Reviews',
 			'desc' => 'Enable manual review generation via admin panel.',
 			'id'   => $this->prefix . 'enable_manual_checkbox',
@@ -193,6 +186,34 @@ class Advanced_Reviews_Pro_Admin {
 				),
 			)
 		);
+
+		/**
+		 * SECTION: Vote for reviews
+		 */
+
+		$cmb_options->add_field( array(
+			'name' => 'Vote for Reviews',
+			'desc' => 'Settings for review voting.',
+			'type' => 'title',
+			'id'   => $this->prefix . 'voting_title',
+		) );
+
+		$cmb_options->add_field( array(
+			'name' => 'Vote for Reviews',
+			'desc' => 'Enable people to upvote or downvote reviews. The plugin allows one vote per review per person. If the person is a guest, the plugin uses cookies and IP addresses to identify this visitor.',
+			'id'   => $this->prefix . 'enable_votes_checkbox',
+			'type' => 'checkbox',
+		) );
+
+		$cmb_options->add_field( array(
+			'name'       => 'Admin Votes',
+			'desc'       => 'Allow logged-in administrators to make unlimited votes.',
+			'id'         => $this->prefix . 'enable_votes_admin_checkbox',
+			'type'       => 'checkbox',
+			'attributes' => array(
+				'data-conditional-id' => $this->prefix . 'enable_votes_checkbox',
+			),
+		) );
 
 		/**
 		 * SECTION: Emails

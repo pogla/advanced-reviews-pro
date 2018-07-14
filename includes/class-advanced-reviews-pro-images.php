@@ -90,6 +90,11 @@ class Advanced_Reviews_Pro_Images {
 	 */
 	public function review_fields_attachment( $comment_form ) {
 
+		// Return if not product
+		if ( ! is_product() ) {
+			return $comment_form;
+		}
+
 		$post_id = get_the_ID();
 
 		$comment_form['comment_field'] .= '<p><label for="comment_image_' . $post_id . '">';
@@ -110,6 +115,11 @@ class Advanced_Reviews_Pro_Images {
 	 * @since    1.0.0
 	 */
 	public function save_review_images( $comment_id, $comment ) {
+
+		// Return if not product review
+		if ( ! is_product() || 0 !== intval( $comment->comment_parent ) ) {
+			return;
+		}
 
 		$post_id          = $comment->comment_post_ID;
 		$comment_image_id = 'review_image_' . $post_id;
@@ -155,6 +165,11 @@ class Advanced_Reviews_Pro_Images {
 
 	public function display_review_image( $comments ) {
 
+		// Return if not product review
+		if ( ! is_product() ) {
+			return $comments;
+		}
+
 		if ( count( $comments ) > 0 ) {
 
 			//check WooCommerce version because PhotoSwipe lightbox is only supported in version 3.0+
@@ -165,10 +180,16 @@ class Advanced_Reviews_Pro_Images {
 
 			foreach ( $comments as $comment ) {
 
+				// Only product reviews
+				if ( 0 !== intval( $comment->comment_parent ) ) {
+					continue;
+				}
+
 				$pics       = get_comment_meta( $comment->comment_ID, $this->prefix . 'review_images', true );
 				$total_pics = count( $pics );
 
 				if ( $total_pics > 0 ) {
+
 					$comment->comment_content .= '<p class="arv-comment-image-text">' . ( 1 === $total_pics ? __( 'Uploaded image:', 'advanced-reviews-pro' ) : __( 'Uploaded images:', 'advanced-reviews-pro' ) ) . '</p>';
 					$comment->comment_content .= '<div class="arv-comment-images">';
 					for ( $i = 0; $i < $total_pics; $i++ ) {

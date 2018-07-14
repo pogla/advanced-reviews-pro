@@ -141,6 +141,11 @@ class Advanced_Reviews_Pro {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-max-review-score.php';
 
 		/**
+		 * Include max reviews score class.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-voting.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-advanced-reviews-pro-admin.php';
@@ -227,6 +232,15 @@ class Advanced_Reviews_Pro {
 			$this->loader->add_action( 'admin_menu', $plugin_review_manual, 'add_rating_submenu' );
 			$this->loader->add_action( 'wp_ajax_arp_get_images', $plugin_review_manual, 'arp_get_images' );
 			$this->loader->add_action( 'wp_loaded', $plugin_review_manual, 'submit_new_comment' );
+		}
+
+		// Voting
+		if ( 'on' === arp_get_option( $this->prefix . 'enable_votes_checkbox' ) ) {
+
+			$plugin_review_voting = new Advanced_Reviews_Pro_Voting();
+			$this->loader->add_filter( 'woocommerce_review_after_comment_text', $plugin_review_voting, 'add_voting_to_rating_html' );
+			$this->loader->add_action( 'wp_ajax_arp_vote', $plugin_review_voting, 'vote' );
+			$this->loader->add_action( 'wp_ajax_nopriv_arp_vote', $plugin_review_voting, 'vote' );
 		}
 
 		// Custom review score

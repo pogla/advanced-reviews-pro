@@ -242,6 +242,7 @@ class Advanced_Reviews_Pro_Max_Review_Score {
 
 	/**
 	 * Replace ratings in html with new score and max score
+	 * Only works if rating markup has not been changed
 	 *
 	 * @since    1.0.0
 	 *

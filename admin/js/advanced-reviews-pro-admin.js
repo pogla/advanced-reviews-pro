@@ -79,7 +79,7 @@ jQuery( document ).ready( function( $ ) {
 			ids: ids
 		};
 
-		jQuery.post( ajaxurl, data, function(response) {
+		$.post( ajaxurl, data, function(response) {
 
 			if( true === response.success ) {
 

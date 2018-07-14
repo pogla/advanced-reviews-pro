@@ -21,6 +21,33 @@
     cursor: pointer;
 }
 
+.arp-vote-wrapper {
+    display: table;
+}
+
+.arp-vote {
+    width: 16px;
+    height: 16px;
+    background-size: 16px 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: table-cell;
+    transition: .2s;
+}
+
+.arp-vote.selected,
+.arp-vote:hover {
+    opacity: .7;
+}
+
+.arp-total-votes {
+    margin: 0 7px;
+    line-height: 16px;
+    font-size: 13px;
+    color: #666666;
+}
+
 @media screen and ( max-width: 768px ) {
 
     .arv-comment-images .arv-comment-image{

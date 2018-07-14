@@ -2,6 +2,8 @@ jQuery( document ).ready( function( $ ) {
 
 	$('#review_form form#commentform').attr( 'enctype', 'multipart/form-data' ).attr( 'encoding', 'multipart/form-data' );
 
+	var votedComments = [];
+
 	$( 'body' )
 		.on( 'click', '.arv-comment-images img', function (e) {
 
@@ -49,10 +51,52 @@ jQuery( document ).ready( function( $ ) {
 
 			return false;
 		} )
-		.on( 'init', '#reviews', function() {
+		.on( 'click', '.arp-vote', function(e) {
+
+			e.preventDefault();
+
+			var adminCanUnlimited = 1 === $( this ).data( 'allow-admin' );
+			var commendID = $( this ).data( 'comment' );
+
+			if ( ! adminCanUnlimited ) {
+
+				if ( $( this ).hasClass( 'selected' ) ) {
+					return;
+				}
+
+				if ( votedComments.includes( commendID ) && ! adminCanUnlimited ) {
+					return;
+				}
+
+				votedComments.push( commendID );
+
+				$( this ).addClass( 'selected' );
+
+			}
+
+			var data = {
+				action: 'arp_vote',
+				vote: $( this ).data( 'vote' ),
+				product: $( this ).data( 'product' ),
+				comment: commendID,
+				security: wp_vars.security
+			};
+
+			var votingTotal = $( this ).siblings( '.arp-total-votes' );
+			if ( isNaN( votingTotal.html() ) ) {
+				votingTotal.html('0');
+			}
+
+			if ( $( this ).hasClass( 'up' ) ) {
+				votingTotal.html( parseInt( votingTotal.html() ) + 1 );
+			} else {
+				votingTotal.html( parseInt( votingTotal.html() ) - 1 );
+			}
+
+			$.post( ajaxurl, data, function(response) {});
 
 		} );
 
-		$( '#reviews, #arp-rating' ).trigger( 'init' );
+		$( '.arp-vote-wrapper, #arp-rating' ).trigger( 'init' );
 
 });

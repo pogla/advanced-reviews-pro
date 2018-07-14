@@ -10,19 +10,6 @@
  * @subpackage Advanced_Reviews_Pro/admin/partials
  */
 
-$users            = get_users();
-$review_score_max = absint( arp_get_option( $this->prefix . 'max_review_score_number' ) );
-if ( ! $review_score_max ) {
-	$review_score_max = 5;
-}
-
-$products = get_posts( array(
-	'post_type'      => 'product',
-	'posts_per_page' => -1,
-	'orderby'        => 'ID',
-	'order'          => 'ASC',
-) );
-
 ?>
 <style>
 	.edit-form-section {
@@ -198,4 +185,3 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 		</div>
 	</form>
 </div>
-<?php

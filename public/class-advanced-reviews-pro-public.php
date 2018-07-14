@@ -105,7 +105,12 @@ class Advanced_Reviews_Pro_Public {
 		 * class.
 		 */
 
+		$ajax_nonce = wp_create_nonce( 'arp-public-js-nonce' );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/advanced-reviews-pro-public.js', array( 'jquery' ), $this->version, false );
+
+		wp_localize_script( $this->plugin_name, 'wp_vars', array(
+			'security' => $ajax_nonce,
+		) );
 
 		if ( is_product() && 'on' === arp_get_option( $this->prefix . 'enable_recaptcha_checkbox' ) ) {
 

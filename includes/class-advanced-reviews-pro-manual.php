@@ -44,7 +44,7 @@ class Advanced_Reviews_Pro_Manual {
 	 * @since    1.0.0
 	 */
 	public function add_rating_submenu() {
-		add_submenu_page( 'edit-comments.php', 'Add rating', 'Add rating', 'manage_options', $this->prefix . 'add-custom-rating', array( $this, 'output_add_comment' ) );
+		add_submenu_page( 'edit-comments.php', 'Add Rating', 'Add rating', 'manage_options', $this->prefix . 'add-custom-rating', array( $this, 'output_add_comment' ) );
 	}
 
 	/**
@@ -53,6 +53,20 @@ class Advanced_Reviews_Pro_Manual {
 	 * @since    1.0.0
 	 */
 	public function output_add_comment() {
+
+		$users            = get_users();
+		$review_score_max = absint( arp_get_option( $this->prefix . 'max_review_score_number' ) );
+		if ( ! $review_score_max ) {
+			$review_score_max = 5;
+		}
+
+		$products = get_posts( array(
+			'post_type'      => 'product',
+			'posts_per_page' => -1,
+			'orderby'        => 'ID',
+			'order'          => 'ASC',
+		) );
+
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/advanced-reviews-pro-admin-add-comment.php';
 	}
 
