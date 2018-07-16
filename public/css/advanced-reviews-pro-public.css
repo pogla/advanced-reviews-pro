@@ -48,10 +48,109 @@
     color: #666666;
 }
 
+.arp-percantage-bar-wrapper {
+    position: relative;
+}
+
+.arp-percantage-bar {
+    height: 5px;
+    width: 100%;
+    display: table;
+    background: #dbdbdb;
+}
+
+span.arp-inner-bar {
+    background: black;
+    display: table;
+    height: 100%;
+}
+
+td.arp-stars-name {
+    font-size: 14px;
+    margin: 0 10px;
+    text-align: center;
+    width: 93px;
+}
+
+td.arp-summary-counts {
+    text-align: right;
+    font-size: 14px;
+    width: 100px;
+}
+
+.arp-single-star-rating-wrapper .single-star:first-child {
+    padding-left: 5px;
+}
+
+.arp-single-star-rating-wrapper .arp-summary-counts:last-child {
+    padding-right: 5px;
+}
+
+.arp-single-star-rating-wrapper {
+    transition: .2s;
+    cursor: pointer;
+}
+
+.arp-single-star-rating-wrapper:hover {
+    background: #f4f4f4;
+}
+
+.arp-single-star-rating-wrapper .single-star {
+    font-family: star;
+    width: 15px;
+    height: 15px;
+    padding: 0 1px 0 0;
+}
+
+.arp-single-star-rating-wrapper .single-star:before {
+    content: '\73';
+    font-size: 14px;
+}
+
+.arp-single-star-rating-wrapper .single-star.full:before {
+    content: '\53';
+}
+
+.arp-rating-filter-wrapper {
+    margin-bottom: 15px;
+}
+
+.arp-rating-filter-wrapper a {
+    float: right;
+}
+
+h4.arp-rating-filter-subtitle {
+    padding: 0;
+    margin: 0;
+    width: 50%;
+    display: inline-block;
+}
+
 @media screen and ( max-width: 768px ) {
 
     .arv-comment-images .arv-comment-image{
         width: 50%;
+    }
+
+    td.arp-stars-name {
+        width: 60px;
+        font-size: 12px;
+    }
+
+    .arp-single-star-rating-wrapper .single-star {
+        letter-spacing: -2px;
+    }
+
+}
+
+@media screen and ( max-width: 450px ) {
+
+    .arp-stars-name {
+        display: none;
+    }
+
+    .arp-percantage-bar-wrapper {
+        padding-left: 20px;
     }
 
 }

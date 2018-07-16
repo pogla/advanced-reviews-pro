@@ -26,8 +26,8 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 /**
@@ -43,7 +43,8 @@ define( 'PLUGIN_NAME_VERSION', '1.0.0' );
  */
 function activate_advanced_reviews_pro() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-advanced-reviews-pro-activator.php';
-	Advanced_Reviews_Pro_Activator::activate();
+	$activator = advanced_reviews_pro_activator();
+	$activator::activate();
 }
 
 /**
@@ -52,7 +53,8 @@ function activate_advanced_reviews_pro() {
  */
 function deactivate_advanced_reviews_pro() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-advanced-reviews-pro-deactivator.php';
-	Advanced_Reviews_Pro_Deactivator::deactivate();
+	$deactivator = advanced_reviews_pro_deactivator();
+	$deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_advanced_reviews_pro' );
@@ -81,7 +83,7 @@ require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-conditionals/cmb2-conditional
  */
 function run_advanced_reviews_pro() {
 
-	$plugin = new Advanced_Reviews_Pro();
+	$plugin = advanced_reviews_pro();
 	$plugin->run();
 
 }

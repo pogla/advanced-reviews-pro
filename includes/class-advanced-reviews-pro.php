@@ -27,273 +27,340 @@
  * @subpackage Advanced_Reviews_Pro/includes
  * @author     Matic Pogladič <matic.pogladic@gmail.com>
  */
-class Advanced_Reviews_Pro {
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      Advanced_Reviews_Pro_Loader    $loader    Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-	 */
-	protected $plugin_name;
+if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
-
-	/**
-	 * Prefix.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $prefix    Prefix for cmb2 fields.
-	 */
-	private $prefix = 'arp_';
-
-	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
-	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
-		$this->plugin_name = 'advanced-reviews-pro';
-
-		$this->load_dependencies();
-		$this->set_locale();
-		$this->define_admin_hooks();
-		$this->define_public_hooks();
-
-	}
-
-	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - Advanced_Reviews_Pro_Loader. Orchestrates the hooks of the plugin.
-	 * - Advanced_Reviews_Pro_i18n. Defines internationalization functionality.
-	 * - Advanced_Reviews_Pro_Admin. Defines all hooks for the admin area.
-	 * - Advanced_Reviews_Pro_Public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function load_dependencies() {
+	class Advanced_Reviews_Pro {
 
 		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
+		 * @var object The single instance of the class
+		 * @since 1.0.0
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-loader.php';
+		protected static $_instance = null;
 
 		/**
-		 * The class responsible for defining internationalization functionality
+		 * The loader that's responsible for maintaining and registering all hooks that power
+		 * the plugin.
+		 *
+		 * @since    1.0.0
+		 * @access   protected
+		 * @var      Advanced_Reviews_Pro_Loader    $loader    Maintains and registers all hooks for the plugin.
+		 */
+		protected $loader;
+
+		/**
+		 * The unique identifier of this plugin.
+		 *
+		 * @since    1.0.0
+		 * @access   protected
+		 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+		 */
+		protected $plugin_name;
+
+		/**
+		 * The current version of the plugin.
+		 *
+		 * @since    1.0.0
+		 * @access   protected
+		 * @var      string    $version    The current version of the plugin.
+		 */
+		protected $version;
+
+		/**
+		 * Prefix.
+		 *
+		 * @since    1.0.0
+		 * @access   private
+		 * @var      string    $prefix    Prefix for cmb2 fields.
+		 */
+		private $prefix = 'arp_';
+
+		/**
+		 * Define the core functionality of the plugin.
+		 *
+		 * Set the plugin name and the plugin version that can be used throughout the plugin.
+		 * Load the dependencies, define the locale, and set the hooks for the admin area and
+		 * the public-facing side of the site.
+		 *
+		 * @since    1.0.0
+		 */
+		public function __construct() {
+			if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
+				$this->version = PLUGIN_NAME_VERSION;
+			} else {
+				$this->version = '1.0.0';
+			}
+			$this->plugin_name = 'advanced-reviews-pro';
+
+			$this->load_dependencies();
+
+			// Check max review score
+			Advanced_Reviews_Pro_Max_Review_Score::check_if_new_max_rating_selected( $this->prefix );
+
+			$this->set_locale();
+			$this->define_admin_hooks();
+			$this->define_public_hooks();
+
+		}
+
+		/**
+		 * Load the required dependencies for this plugin.
+		 *
+		 * Include the following files that make up the plugin:
+		 *
+		 * - Advanced_Reviews_Pro_Loader. Orchestrates the hooks of the plugin.
+		 * - Advanced_Reviews_Pro_i18n. Defines internationalization functionality.
+		 * - Advanced_Reviews_Pro_Admin. Defines all hooks for the admin area.
+		 * - Advanced_Reviews_Pro_Public. Defines all hooks for the public side of the site.
+		 *
+		 * Create an instance of the loader which will be used to register the hooks
+		 * with WordPress.
+		 *
+		 * @since    1.0.0
+		 * @access   private
+		 */
+		private function load_dependencies() {
+
+			/**
+			 * The class responsible for orchestrating the actions and filters of the
+			 * core plugin.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-loader.php';
+
+			/**
+			 * The class responsible for defining internationalization functionality
+			 * of the plugin.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-i18n.php';
+
+			/**
+			 * Include reviews class.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-recaptcha.php';
+
+			/**
+			 * Include reviews images class.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-images.php';
+
+			/**
+			 * Include reviews manual class.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-manual.php';
+
+			/**
+			 * Include max reviews score class.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-max-review-score.php';
+
+			/**
+			 * Include max reviews score class.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-voting.php';
+
+			/**
+			 * Include summary class.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-summary.php';
+
+			/**
+			 * The class responsible for defining all actions that occur in the admin area.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-advanced-reviews-pro-admin.php';
+
+			/**
+			 * The class responsible for defining all actions that occur in the public-facing
+			 * side of the site.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-advanced-reviews-pro-public.php';
+
+			$this->loader = advanced_reviews_pro_loader();
+
+		}
+
+		/**
+		 * Define the locale for this plugin for internationalization.
+		 *
+		 * Uses the Advanced_Reviews_Pro_i18n class in order to set the domain and to register the hook
+		 * with WordPress.
+		 *
+		 * @since    1.0.0
+		 * @access   private
+		 */
+		private function set_locale() {
+
+			$plugin_i18n = advanced_reviews_pro_i18n();
+			$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+
+		}
+
+		/**
+		 * Register all of the hooks related to the admin area functionality
 		 * of the plugin.
+		 *
+		 * @since    1.0.0
+		 * @access   private
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-i18n.php';
+		private function define_admin_hooks() {
 
-		/**
-		 * Include reviews class.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-recaptcha.php';
+			$plugin_admin = advanced_reviews_pro_admin( $this->get_plugin_name(), $this->get_version() );
+			$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+			$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+			$this->loader->add_action( 'cmb2_admin_init', $plugin_admin, 'register_plugin_options' );
 
-		/**
-		 * Include reviews images class.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-images.php';
+			// Manual adding
+			if ( 'on' === arp_get_option( $this->prefix . 'enable_manual_checkbox' ) ) {
 
-		/**
-		 * Include reviews manual class.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-manual.php';
+				$plugin_review_manual = advanced_reviews_pro_manual();
+				$this->loader->add_action( 'admin_menu', $plugin_review_manual, 'add_rating_submenu' );
+				$this->loader->add_action( 'wp_ajax_arp_get_images', $plugin_review_manual, 'arp_get_images' );
+				$this->loader->add_action( 'wp_loaded', $plugin_review_manual, 'submit_new_comment' );
+			}
 
-		/**
-		 * Include max reviews score class.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-max-review-score.php';
-
-		/**
-		 * Include max reviews score class.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-voting.php';
-
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-advanced-reviews-pro-admin.php';
-
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-advanced-reviews-pro-public.php';
-
-		$this->loader = new Advanced_Reviews_Pro_Loader();
-
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Advanced_Reviews_Pro_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
-
-		$plugin_i18n = new Advanced_Reviews_Pro_i18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
-	}
-
-	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_admin_hooks() {
-
-		$plugin_admin = new Advanced_Reviews_Pro_Admin( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'cmb2_admin_init', $plugin_admin, 'register_plugin_options' );
-
-	}
-
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_public_hooks() {
-
-		$plugin_public = new Advanced_Reviews_Pro_Public( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
-		// reCAPTCHA
-		if ( 'on' === arp_get_option( $this->prefix . 'enable_recaptcha_checkbox' ) ) {
-
-			$plugin_recaptcha = new Advanced_Reviews_Pro_Recaptcha();
-			$this->loader->add_filter( 'comment_form_submit_field', $plugin_recaptcha, 'output_captcha', 9 );
-			$this->loader->add_action( 'set_comment_cookies', $plugin_recaptcha, 'validate_captcha', 9 );
 		}
 
-		// Images
-		if ( 'on' === arp_get_option( $this->prefix . 'enable_images_checkbox' ) ) {
+		/**
+		 * Register all of the hooks related to the public-facing functionality
+		 * of the plugin.
+		 *
+		 * @since    1.0.0
+		 * @access   private
+		 */
+		private function define_public_hooks() {
 
-			$plugin_review_images = new Advanced_Reviews_Pro_Images();
-			$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_review_images, 'review_fields_attachment' );
-			$this->loader->add_filter( 'wp_insert_comment', $plugin_review_images, 'save_review_images', 10, 2 );
-			$this->loader->add_filter( 'comments_array', $plugin_review_images, 'display_review_image', 12 );
+			$plugin_public = advanced_reviews_pro_public( $this->get_plugin_name(), $this->get_version() );
+
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+			// reCAPTCHA
+			if ( 'on' === arp_get_option( $this->prefix . 'enable_recaptcha_checkbox' ) ) {
+
+				$plugin_recaptcha = advanced_reviews_pro_recaptcha();
+				$this->loader->add_filter( 'comment_form_submit_field', $plugin_recaptcha, 'output_captcha', 9 );
+				$this->loader->add_action( 'set_comment_cookies', $plugin_recaptcha, 'validate_captcha', 9 );
+			}
+
+			// Images
+			if ( 'on' === arp_get_option( $this->prefix . 'enable_images_checkbox' ) ) {
+
+				$plugin_review_images = advanced_reviews_pro_images();
+				$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_review_images, 'review_fields_attachment' );
+				$this->loader->add_filter( 'wp_insert_comment', $plugin_review_images, 'save_review_images', 10, 2 );
+				$this->loader->add_filter( 'comments_array', $plugin_review_images, 'display_review_image', 12 );
+			}
+
+			// Voting
+			if ( 'on' === arp_get_option( $this->prefix . 'enable_votes_checkbox' ) ) {
+
+				$plugin_review_voting = advanced_reviews_pro_voting();
+				$this->loader->add_filter( 'woocommerce_review_after_comment_text', $plugin_review_voting, 'add_voting_to_rating_html' );
+				$this->loader->add_action( 'wp_ajax_arp_vote', $plugin_review_voting, 'vote' );
+				$this->loader->add_action( 'wp_ajax_nopriv_arp_vote', $plugin_review_voting, 'vote' );
+
+				// Sort by votes
+				if ( 'on' === arp_get_option( $this->prefix . 'enable_votes_sorting_checkbox' ) ) {
+					$this->loader->add_action( 'parse_comment_query', $plugin_review_voting, 'parse_comment_query' );
+				}
+			}
+
+			// Custom review score
+			$review_score_max = absint( arp_get_option( $this->prefix . 'max_review_score_number' ) );
+			if ( ! empty( $review_score_max ) && 5 !== $review_score_max ) {
+
+				$plugin_max_score = advanced_reviews_pro_max_review_score( $review_score_max );
+				$this->loader->add_filter( 'wp_insert_comment', $plugin_max_score, 'insert_current_review_score' );
+				$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_max_score, 'custom_review_stars' );
+				$this->loader->add_filter( 'woocommerce_get_star_rating_html', $plugin_max_score, 'woocommerce_get_star_rating_html', 10, 3 );
+				$this->loader->add_filter( 'wp_update_comment_data', $plugin_max_score, 'save_comment_admin' );
+			}
+
+			// Summary
+			if ( 'on' === arp_get_option( $this->prefix . 'enable_summary_checkbox' ) ) {
+
+				if ( ! $review_score_max ) {
+					$review_score_max = 5;
+				}
+
+				$plugin_review_summary = advanced_reviews_pro_summary( $review_score_max );
+				$this->loader->add_filter( 'woocommerce_product_review_list_args', $plugin_review_summary, 'add_summary' );
+				$this->loader->add_filter( 'query_vars', $plugin_review_summary, 'add_query_vars' );
+				$this->loader->add_action( 'parse_comment_query', $plugin_review_summary, 'parse_comment_query' );
+			}
+
 		}
 
-		// Manual adding
-		if ( 'on' === arp_get_option( $this->prefix . 'enable_manual_checkbox' ) ) {
-
-			$plugin_review_manual = new Advanced_Reviews_Pro_Manual();
-			$this->loader->add_action( 'admin_menu', $plugin_review_manual, 'add_rating_submenu' );
-			$this->loader->add_action( 'wp_ajax_arp_get_images', $plugin_review_manual, 'arp_get_images' );
-			$this->loader->add_action( 'wp_loaded', $plugin_review_manual, 'submit_new_comment' );
+		/**
+		 * Run the loader to execute all of the hooks with WordPress.
+		 *
+		 * @since    1.0.0
+		 */
+		public function run() {
+			$this->loader->run();
 		}
 
-		// Voting
-		if ( 'on' === arp_get_option( $this->prefix . 'enable_votes_checkbox' ) ) {
-
-			$plugin_review_voting = new Advanced_Reviews_Pro_Voting();
-			$this->loader->add_filter( 'woocommerce_review_after_comment_text', $plugin_review_voting, 'add_voting_to_rating_html' );
-			$this->loader->add_action( 'wp_ajax_arp_vote', $plugin_review_voting, 'vote' );
-			$this->loader->add_action( 'wp_ajax_nopriv_arp_vote', $plugin_review_voting, 'vote' );
+		/**
+		 * The name of the plugin used to uniquely identify it within the context of
+		 * WordPress and to define internationalization functionality.
+		 *
+		 * @since     1.0.0
+		 * @return    string    The name of the plugin.
+		 */
+		public function get_plugin_name() {
+			return $this->plugin_name;
 		}
 
-		// Custom review score
-		$review_score_max = absint( arp_get_option( $this->prefix . 'max_review_score_number' ) );
-		if ( ! empty( $review_score_max ) && 5 !== $review_score_max ) {
+		/**
+		 * The reference to the class that orchestrates the hooks with the plugin.
+		 *
+		 * @since     1.0.0
+		 * @return    Advanced_Reviews_Pro_Loader    Orchestrates the hooks of the plugin.
+		 */
+		public function get_loader() {
+			return $this->loader;
+		}
 
-			$plugin_max_score = new Advanced_Reviews_Pro_Max_Review_Score( $review_score_max );
-			$this->loader->add_filter( 'wp_insert_comment', $plugin_max_score, 'insert_current_review_score' );
-			$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_max_score, 'custom_review_stars' );
-			$this->loader->add_filter( 'woocommerce_get_star_rating_html', $plugin_max_score, 'woocommerce_get_star_rating_html', 10, 3 );
-			$this->loader->add_filter( 'wp_update_comment_data', $plugin_max_score, 'save_comment_admin' );
+		/**
+		 * Retrieve the version number of the plugin.
+		 *
+		 * @since     1.0.0
+		 * @return    string    The version number of the plugin.
+		 */
+		public function get_version() {
+			return $this->version;
+		}
+
+		/**
+		 * Class Instance
+		 *
+		 * @static
+		 * @return object instance
+		 *
+		 * @since  1.0.0
+		 */
+		public static function instance() {
+			if ( is_null( self::$_instance ) ) {
+				self::$_instance = new self();
+			}
+
+			return self::$_instance;
 		}
 
 	}
+}
 
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-		$this->loader->run();
+/**
+ * Instance of plugin
+ *
+ * @return object
+ * @since  1.0.0
+ */
+if ( ! function_exists( 'advanced_reviews_pro' ) ) {
+	function advanced_reviews_pro() {
+		return Advanced_Reviews_Pro::instance();
 	}
-
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    Advanced_Reviews_Pro_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
-	}
-
 }

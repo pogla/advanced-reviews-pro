@@ -20,50 +20,59 @@
  * @subpackage Advanced_Reviews_Pro/includes
  * @author     Matic Pogladič <matic.pogladic@gmail.com>
  */
-class Advanced_Reviews_Pro_Activator {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function activate() {
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-		self::restore_decimal_ratings();
+if ( ! class_exists( 'Advanced_Reviews_Pro_Activator' ) ) {
 
-	}
+	class Advanced_Reviews_Pro_Activator {
 
-	/**
-	 * Restores up all the decimal ratings that were saved on plugin deactivation
-	 *
-	 * @since      1.0.0
-	 */
-	private static function restore_decimal_ratings() {
+		/**
+		 * @var object The single instance of the class
+		 * @since 1.0.0
+		 */
+		protected static $_instance = null;
 
-		global $wpdb;
-		$results = $wpdb->get_results(
-			$wpdb->prepare( "SELECT meta_key,meta_value,comment_id FROM $wpdb->commentmeta WHERE meta_key = 'arp_old_rating' OR meta_key = 'rating'", array() )
-		);
-
-		$structured_results = array();
-
-		foreach ( $results as $result ) {
-			$structured_results[ $result->comment_id ][ $result->meta_key ] = $result->meta_value;
+		/**
+		 * Short Description. (use period)
+		 *
+		 * Long Description.
+		 *
+		 * @since    1.0.0
+		 */
+		public static function activate() {
+			Advanced_Reviews_Pro_Max_Review_Score::restore_decimal_ratings();
 		}
 
-		foreach ( $structured_results as $comment_id => $result ) {
-			if ( ! isset( $result['arp_old_rating'] ) ) {
-				continue;
+		/**
+		 * Class Instance
+		 *
+		 * @static
+		 * @return object instance
+		 *
+		 * @since  1.0.0
+		 */
+		public static function instance() {
+			if ( is_null( self::$_instance ) ) {
+				self::$_instance = new self();
 			}
 
-			if ( strval( absint( round( $result['arp_old_rating'], 0, PHP_ROUND_HALF_UP ) ) ) === strval( $result['rating'] ) ) {
-				update_comment_meta( $comment_id, 'rating', $result['arp_old_rating'] );
-				delete_comment_meta( $comment_id, 'arp_old_rating' );
-			}
+			return self::$_instance;
 		}
 
 	}
+}
 
+/**
+ * Instance of plugin
+ *
+ * @return object
+ * @since  1.0.0
+ */
+if ( ! function_exists( 'advanced_reviews_pro_activator' ) ) {
+	function advanced_reviews_pro_activator() {
+		return Advanced_Reviews_Pro_Activator::instance();
+	}
 }

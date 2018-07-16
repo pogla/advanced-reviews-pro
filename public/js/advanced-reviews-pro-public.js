@@ -95,6 +95,12 @@ jQuery( document ).ready( function( $ ) {
 
 			$.post( ajaxurl, data, function(response) {});
 
+		} )
+		.on( 'click', '.arp-single-star-rating-wrapper', function (e) {
+			e.preventDefault();
+			if ( $( this ).data( 'href' ).length ) {
+				location.href = $( this ).data( 'href' );
+			}
 		} );
 
 		$( '.arp-vote-wrapper, #arp-rating' ).trigger( 'init' );

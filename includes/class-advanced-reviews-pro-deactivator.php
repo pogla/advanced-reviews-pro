@@ -20,42 +20,56 @@
  * @subpackage Advanced_Reviews_Pro/includes
  * @author     Matic Pogladič <matic.pogladic@gmail.com>
  */
-class Advanced_Reviews_Pro_Deactivator {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function deactivate() {
+if ( ! class_exists( 'Advanced_Reviews_Pro_Deactivator' ) ) {
 
-		self::cleanup_decimal_ratings();
-	}
+	class Advanced_Reviews_Pro_Deactivator {
 
-	/**
-	 * Cleans up all the decimal ratings
-	 *
-	 * @since      1.0.0
-	 */
-	private static function cleanup_decimal_ratings() {
+		/**
+		 * @var object The single instance of the class
+		 * @since 1.0.0
+		 */
+		protected static $_instance = null;
 
-		global $wpdb;
-		$results = $wpdb->get_results(
-			$wpdb->prepare( "SELECT meta_value,comment_id FROM $wpdb->commentmeta WHERE meta_key = 'rating'", array() )
-		);
+		/**
+		 * Short Description. (use period)
+		 *
+		 * Long Description.
+		 *
+		 * @since    1.0.0
+		 */
+		public static function deactivate() {
+			Advanced_Reviews_Pro_Max_Review_Score::cleanup_decimal_ratings();
+		}
 
-		if ( $results ) {
-			foreach ( $results as $result ) {
-				// Remember rating if decimal
-				if ( strval( absint( round( $result->meta_value, 0, PHP_ROUND_HALF_UP ) ) ) !== strval( $result->meta_value ) ) {
-					update_comment_meta( $result->comment_id, 'arp_old_rating', $result->meta_value );
-				}
-				update_comment_meta( $result->comment_id, 'rating', round( $result->meta_value, 0, PHP_ROUND_HALF_UP ) );
+		/**
+		 * Class Instance
+		 *
+		 * @static
+		 * @return object instance
+		 *
+		 * @since  1.0.0
+		 */
+		public static function instance() {
+			if ( is_null( self::$_instance ) ) {
+				self::$_instance = new self();
 			}
+
+			return self::$_instance;
 		}
 
 	}
-
 }
+
+/**
+ * Instance of plugin
+ *
+ * @return object
+ * @since  1.0.0
+ */
+if ( ! function_exists( 'advanced_reviews_pro_deactivator' ) ) {
+	function advanced_reviews_pro_deactivator() {
+		return Advanced_Reviews_Pro_Deactivator::instance();
+	}
+}
+
