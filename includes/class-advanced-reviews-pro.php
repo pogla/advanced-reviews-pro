@@ -89,11 +89,13 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 		 * @since    1.0.0
 		 */
 		public function __construct() {
+
 			if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
 				$this->version = PLUGIN_NAME_VERSION;
 			} else {
 				$this->version = '1.0.0';
 			}
+
 			$this->plugin_name = 'advanced-reviews-pro';
 
 			$this->load_dependencies();
@@ -178,6 +180,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-advanced-reviews-pro-public.php';
 
+			// Initiate loader
 			$this->loader = advanced_reviews_pro_loader();
 
 		}
@@ -195,7 +198,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 
 			$plugin_i18n = advanced_reviews_pro_i18n();
 			$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 		}
 
 		/**
@@ -220,7 +222,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_action( 'wp_ajax_arp_get_images', $plugin_review_manual, 'arp_get_images' );
 				$this->loader->add_action( 'wp_loaded', $plugin_review_manual, 'submit_new_comment' );
 			}
-
 		}
 
 		/**
@@ -343,6 +344,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 		 * @since  1.0.0
 		 */
 		public static function instance() {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self();
 			}
@@ -360,6 +362,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro' ) ) {
+
 	function advanced_reviews_pro() {
 		return Advanced_Reviews_Pro::instance();
 	}

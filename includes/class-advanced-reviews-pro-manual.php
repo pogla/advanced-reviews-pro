@@ -1,10 +1,7 @@
 <?php
 
 /**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
+ * The file that defines class for manual reviews
  *
  * @link       https://maticpogladic.com/
  * @since      1.0.0
@@ -83,6 +80,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/advanced-reviews-pro-admin-add-comment.php';
 		}
 
+		/**
+		 * Submits a new comment
+		 */
 		public function submit_new_comment() {
 
 			if ( ! isset( $_POST['add_rating_nonce'] ) || ! wp_verify_nonce( $_POST['add_rating_nonce'], 'add_rating_action' ) ) {
@@ -178,7 +178,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 				wp_send_json_success( array(
 					'images' => $images,
 				) );
-
 			} else {
 				wp_send_json_error();
 			}
@@ -193,6 +192,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		 * @since  1.0.0
 		 */
 		public static function instance() {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self();
 			}
@@ -210,6 +210,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro_manual' ) ) {
+
 	function advanced_reviews_pro_manual() {
 		return Advanced_Reviews_Pro_Manual::instance();
 	}

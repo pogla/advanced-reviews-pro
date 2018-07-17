@@ -13,8 +13,8 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * Enqueue the admin-specific stylesheet and JavaScript.
+ * Register plugin options using CMB2
  *
  * @package    Advanced_Reviews_Pro
  * @subpackage Advanced_Reviews_Pro/admin
@@ -29,10 +29,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 	class Advanced_Reviews_Pro_Admin {
 
-
 		/**
-		 * @var object The single instance of the class
-		 * @since 1.0.0
+		 * @var      object The single instance of the class
+		 * @since    1.0.0
+		 * @access   protected
 		 */
 		protected static $_instance = null;
 
@@ -67,8 +67,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 		 * Initialize the class and set its properties.
 		 *
 		 * @since    1.0.0
-		 * @param      string    $plugin_name       The name of this plugin.
-		 * @param      string    $version    The version of this plugin.
+		 * @param    string    $plugin_name       The name of this plugin.
+		 * @param    string    $version    The version of this plugin.
 		 */
 		public function __construct( $plugin_name, $version ) {
 
@@ -143,9 +143,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 		public function register_plugin_options() {
 
 			/**
+			 * TAB 1
+			 *
 			 * Registers options page menu item and form.
 			 */
-			$cmb_options = new_cmb2_box(
+			$tab1_options = new_cmb2_box(
 				array(
 					'id'           => $this->prefix . 'option_metabox',
 					'title'        => esc_html__( 'Advanced Reviews Pro', 'advanced-reviews-pro' ),
@@ -165,28 +167,28 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			 * SECTION: General
 			 */
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'General',
 				'desc' => 'General settings.',
 				'type' => 'title',
 				'id'   => $this->prefix . 'general_settings_title',
 			) );
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'Reviews Summary',
 				'desc' => 'Enable display of a histogram table with a summary of reviews on a product page.',
 				'id'   => $this->prefix . 'enable_summary_checkbox',
 				'type' => 'checkbox',
 			) );
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'Manual Reviews',
 				'desc' => 'Enable manual review generation via admin panel.',
 				'id'   => $this->prefix . 'enable_manual_checkbox',
 				'type' => 'checkbox',
 			) );
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name'       => __( 'Maximum Review Score', 'advanced-reviews-pro' ),
 					'desc'       => __( 'Custom maximum review score. Between 2 and 10.', 'advanced-reviews-pro' ),
@@ -205,21 +207,21 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			 * SECTION: Vote for reviews
 			 */
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'Vote for Reviews',
 				'desc' => 'Settings for review voting.',
 				'type' => 'title',
 				'id'   => $this->prefix . 'voting_title',
 			) );
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'Vote for Reviews',
 				'desc' => 'Enable people to upvote or downvote reviews. The plugin allows one vote per review per person. If the person is a guest, the plugin uses cookies and IP addresses to identify this visitor.',
 				'id'   => $this->prefix . 'enable_votes_checkbox',
 				'type' => 'checkbox',
 			) );
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name'       => 'Admin Votes',
 				'desc'       => 'Allow logged-in administrators to make unlimited votes.',
 				'id'         => $this->prefix . 'enable_votes_admin_checkbox',
@@ -229,7 +231,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				),
 			) );
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name'       => 'Sort Reviews by Votes',
 				'desc'       => 'Sort product reviews by the total score of votes.',
 				'id'         => $this->prefix . 'enable_votes_sorting_checkbox',
@@ -243,14 +245,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			 * SECTION: Emails
 			 */
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'Emails',
 				'desc' => 'Configure email settings.',
 				'type' => 'title',
 				'id'   => $this->prefix . 'email_settings_title',
 			) );
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name'    => __( 'Shop Name', 'advanced-reviews-pro' ),
 					'desc'    => __( 'Name of your shop.', 'advanced-reviews-pro' ),
@@ -260,7 +262,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				)
 			);
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name'    => __( 'From Address', 'advanced-reviews-pro' ),
 					'desc'    => __( 'From email address.', 'advanced-reviews-pro' ),
@@ -270,7 +272,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				)
 			);
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name' => __( 'BCC Address', 'advanced-reviews-pro' ),
 					'desc' => __( 'BCC address.', 'advanced-reviews-pro' ),
@@ -279,7 +281,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				)
 			);
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name' => __( 'Reply-To Address', 'advanced-reviews-pro' ),
 					'desc' => __( 'Reply-to address.', 'advanced-reviews-pro' ),
@@ -288,7 +290,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				)
 			);
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name'    => __( 'From Name', 'advanced-reviews-pro' ),
 					'desc'    => __( 'From name.', 'advanced-reviews-pro' ),
@@ -302,21 +304,21 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			 * SECTION: Emails
 			 */
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'Images',
 				'desc' => 'Enable attaching images to reviews left on WooCommerce product pages.',
 				'type' => 'title',
 				'id'   => $this->prefix . 'images_settings_title',
 			) );
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'Enable',
 				'desc' => 'Enable Images on Reviews',
 				'id'   => $this->prefix . 'enable_images_checkbox',
 				'type' => 'checkbox',
 			) );
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name'       => __( 'Total Images', 'advanced-reviews-pro' ),
 					'desc'       => __( 'Maximum amount of images to be left on a single review.', 'advanced-reviews-pro' ),
@@ -330,7 +332,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				)
 			);
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name'       => __( 'Image Size', 'advanced-reviews-pro' ),
 					'desc'       => __( 'Maximum size of image (MB).', 'advanced-reviews-pro' ),
@@ -348,21 +350,21 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			 * SECTION: reCAPTCHA V2
 			 */
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'reCAPTCHA V2',
 				'desc' => 'Eliminate fake and spam reviews.',
 				'type' => 'title',
 				'id'   => $this->prefix . 'recaptcha_settings_title',
 			) );
 
-			$cmb_options->add_field( array(
+			$tab1_options->add_field( array(
 				'name' => 'Enable',
 				'desc' => 'Enable reCAPTCHA',
 				'id'   => $this->prefix . 'enable_recaptcha_checkbox',
 				'type' => 'checkbox',
 			) );
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name'       => __( 'reCAPTCHA V2 Site Key', 'advanced-reviews-pro' ),
 					'desc'       => sprintf( 'reCAPTCHA V2 site key. %sHow to get reCAPTCHA?%s', '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
@@ -374,7 +376,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				)
 			);
 
-			$cmb_options->add_field(
+			$tab1_options->add_field(
 				array(
 					'name'       => __( 'reCAPTCHA V2 Secret Key', 'advanced-reviews-pro' ),
 					'desc'       => sprintf( 'reCAPTCHA V2 secret key. %sHow to get reCAPTCHA?%s', '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
@@ -386,17 +388,47 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				)
 			);
 
+			/**
+			 * TAB 2
+			 *
+			 * Registers options page menu item and form.
+			 */
+			$tab2_options = new_cmb2_box(
+				array(
+					'id'           => $this->prefix . 'option_tab2_metabox',
+					'menu_title'   => esc_html__( 'Review Reminder', 'advanced-reviews-pro' ),
+					'title'        => esc_html__( 'Review Reminder', 'advanced-reviews-pro' ),
+					'object_types' => array( 'options-page' ),
+					'option_key'   => $this->prefix . 'tab2_options',
+					'tab_group'    => $this->prefix . 'main_options',
+					'tab_title'    => 'Review Reminder',
+					'save_button'  => esc_html__( 'Save', 'advanced-reviews-pro' ),
+				)
+			);
+
+			$tab2_options->add_field( array(
+				'name' => 'General',
+				'desc' => 'General settings.',
+				'type' => 'title',
+				'id'   => $this->prefix . 'general1_settings_title',
+			) );
+
 		}
 
 		/**
 		 * Class Instance
 		 *
 		 * @static
+		 *
+		 * @param $plugin_name
+		 * @param $version
+		 *
 		 * @return object instance
 		 *
 		 * @since  1.0.0
 		 */
 		public static function instance( $plugin_name, $version ) {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self( $plugin_name, $version );
 			}
@@ -415,18 +447,22 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
  * @return mixed           Option value
  */
 function arp_get_option( $key = '', $default = false ) {
+
 	if ( function_exists( 'cmb2_get_option' ) ) {
 		// Use cmb2_get_option as it passes through some key filters.
 		return cmb2_get_option( 'arp_options', $key, $default );
 	}
+
 	// Fallback to get_option if CMB2 is not loaded yet.
 	$opts = get_option( 'arp_options', $default );
 	$val  = $default;
+
 	if ( 'all' === $key ) {
 		$val = $opts;
 	} elseif ( is_array( $opts ) && array_key_exists( $key, $opts ) && false !== $opts[ $key ] ) {
 		$val = $opts[ $key ];
 	}
+
 	return $val;
 }
 
@@ -437,6 +473,7 @@ function arp_get_option( $key = '', $default = false ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro_admin' ) ) {
+
 	function advanced_reviews_pro_admin( $plugin_name, $version ) {
 		return Advanced_Reviews_Pro_Admin::instance( $plugin_name, $version );
 	}

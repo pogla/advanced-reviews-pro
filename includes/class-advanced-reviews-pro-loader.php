@@ -63,7 +63,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Loader' ) ) {
 
 			$this->actions = array();
 			$this->filters = array();
-
 		}
 
 		/**
@@ -115,11 +114,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Loader' ) ) {
 				'component'     => $component,
 				'callback'      => $callback,
 				'priority'      => $priority,
-				'accepted_args' => $accepted_args
+				'accepted_args' => $accepted_args,
 			);
 
 			return $hooks;
-
 		}
 
 		/**
@@ -136,7 +134,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Loader' ) ) {
 			foreach ( $this->actions as $hook ) {
 				add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 			}
-
 		}
 
 		/**
@@ -148,6 +145,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Loader' ) ) {
 		 * @since  1.0.0
 		 */
 		public static function instance() {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self();
 			}
@@ -165,6 +163,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Loader' ) ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro_loader' ) ) {
+
 	function advanced_reviews_pro_loader() {
 		return Advanced_Reviews_Pro_Loader::instance();
 	}

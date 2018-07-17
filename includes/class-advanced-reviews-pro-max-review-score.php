@@ -1,11 +1,6 @@
 <?php
 
 /**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
  * @link       https://maticpogladic.com/
  * @since      1.0.0
  *
@@ -14,7 +9,7 @@
  */
 
 /**
- * Handle recaptcha on WooCommerce reviews
+ * Changes max stars for reviews
  *
  * @since      1.0.0
  * @package    Advanced_Reviews_Pro
@@ -307,7 +302,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 			}
 
 			return $score_max;
-
 		}
 
 		/**
@@ -357,7 +351,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 					delete_comment_meta( $comment_id, 'arp_old_rating' );
 				}
 			}
-
 		}
 
 		/**
@@ -383,7 +376,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 					update_comment_meta( $result->comment_id, 'rating', round( $result->meta_value, 0, PHP_ROUND_HALF_UP ) );
 				}
 			}
-
 		}
 
 		/**
@@ -393,15 +385,17 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		 * @return object instance
 		 *
 		 * @since  1.0.0
+		 *
+		 * @param $max_score
 		 */
 		public static function instance( $max_score ) {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self( $max_score );
 			}
 
 			return self::$_instance;
 		}
-
 	}
 }
 
@@ -412,6 +406,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro_max_review_score' ) ) {
+
 	function advanced_reviews_pro_max_review_score( $max_score ) {
 		return Advanced_Reviews_Pro_Max_Review_Score::instance( $max_score );
 	}

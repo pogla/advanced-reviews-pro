@@ -1,11 +1,6 @@
 <?php
 
 /**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
  * @link       https://maticpogladic.com/
  * @since      1.0.0
  *
@@ -14,7 +9,7 @@
  */
 
 /**
- * Handle recaptcha on WooCommerce reviews
+ * Recaptcha on WooCommerce reviews
  *
  * @since      1.0.0
  * @package    Advanced_Reviews_Pro
@@ -92,7 +87,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 			if ( ! $this->max_image_size ) {
 				$this->max_image_size = 2;
 			}
-
 		}
 
 		/**
@@ -243,6 +237,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 		 * @since  1.0.0
 		 */
 		public static function instance() {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self();
 			}
@@ -260,6 +255,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro_images' ) ) {
+
 	function advanced_reviews_pro_images() {
 		return Advanced_Reviews_Pro_Images::instance();
 	}

@@ -76,7 +76,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 				$q->query_vars['meta_key'] = 'arp_total_votes';
 				$q->query_vars['orderby']  = 'meta_value_num';
 				$q->query_vars['order']    = 'DESC';
-
 			}
 		}
 
@@ -137,7 +136,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 			}
 
 			return false;
-
 		}
 
 		/**
@@ -211,7 +209,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 			$this->update_vote( $comment_id, $vote_type, true );
 
 			return 3;
-
 		}
 
 		/**
@@ -250,7 +247,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 			$this->update_vote( $comment_id, $vote_type, false );
 
 			return 4;
-
 		}
 
 		/**
@@ -289,7 +285,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 					update_comment_meta( $comment_id, $this->prefix . $reg . 'downvotes', ++$comment_downvotes );
 				}
 			}
-
 		}
 
 		/**
@@ -301,13 +296,13 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 		 * @since  1.0.0
 		 */
 		public static function instance() {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self();
 			}
 
 			return self::$_instance;
 		}
-
 	}
 
 }
@@ -319,6 +314,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro_voting' ) ) {
+
 	function advanced_reviews_pro_voting() {
 		return Advanced_Reviews_Pro_Voting::instance();
 	}

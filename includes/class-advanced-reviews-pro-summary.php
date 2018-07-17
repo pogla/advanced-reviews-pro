@@ -1,11 +1,6 @@
 <?php
 
 /**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
  * @link       https://maticpogladic.com/
  * @since      1.0.0
  *
@@ -14,8 +9,8 @@
  */
 
 /**
- * Handle recaptcha on WooCommerce reviews
- *namediv
+ * Reviews summary per rating graph.
+ *
  * @since      1.0.0
  * @package    Advanced_Reviews_Pro
  * @subpackage Advanced_Reviews_Pro/includes
@@ -157,7 +152,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 			$is_comment_summary        = false;
 
 			return $grouped_by_score;
-
 		}
 
 		/**
@@ -191,7 +185,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 					'type'    => 'string',
 				),
 			);
-
 		}
 
 		/**
@@ -201,15 +194,17 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 		 * @return object instance
 		 *
 		 * @since  1.0.0
+		 *
+		 * @param $review_score_max
 		 */
 		public static function instance( $review_score_max ) {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self( $review_score_max );
 			}
 
 			return self::$_instance;
 		}
-
 	}
 }
 
@@ -220,6 +215,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro_summary' ) ) {
+
 	function advanced_reviews_pro_summary( $review_score_max ) {
 		return Advanced_Reviews_Pro_Summary::instance( $review_score_max );
 	}

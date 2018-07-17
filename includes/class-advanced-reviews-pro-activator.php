@@ -55,6 +55,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Activator' ) ) {
 		 * @since  1.0.0
 		 */
 		public static function instance() {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self();
 			}
@@ -72,6 +73,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Activator' ) ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro_activator' ) ) {
+
 	function advanced_reviews_pro_activator() {
 		return Advanced_Reviews_Pro_Activator::instance();
 	}

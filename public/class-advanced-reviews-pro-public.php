@@ -64,7 +64,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Public' ) ) {
 
 			$this->plugin_name = $plugin_name;
 			$this->version     = $version;
-
 		}
 
 		/**
@@ -96,7 +95,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Public' ) ) {
 			 */
 
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/advanced-reviews-pro-public.css', array(), $this->version, 'all' );
-
 		}
 
 		/**
@@ -132,18 +130,22 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Public' ) ) {
 					wp_enqueue_script( $this->prefix . 'recaptcha_api', 'https://www.google.com/recaptcha/api.js?onload=onloadCallback', array( $this->plugin_name ), $this->version, true );
 				}
 			}
-
 		}
 
 		/**
 		 * Class Instance
 		 *
 		 * @static
+		 *
+		 * @param $plugin_name
+		 * @param $version
+		 *
 		 * @return object instance
 		 *
 		 * @since  1.0.0
 		 */
 		public static function instance( $plugin_name, $version ) {
+
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self( $plugin_name, $version );
 			}
@@ -161,6 +163,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Public' ) ) {
  * @since  1.0.0
  */
 if ( ! function_exists( 'advanced_reviews_pro_public' ) ) {
+
 	function advanced_reviews_pro_public( $plugin_name, $version ) {
 		return Advanced_Reviews_Pro_Public::instance( $plugin_name, $version );
 	}
