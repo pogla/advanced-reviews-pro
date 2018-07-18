@@ -170,6 +170,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-summary.php';
 
 			/**
+			 * Reminders class
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-reminders.php';
+
+			/**
 			 * The class responsible for defining all actions that occur in the admin area.
 			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-advanced-reviews-pro-admin.php';
@@ -293,6 +298,27 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_action( 'parse_comment_query', $plugin_review_summary, 'parse_comment_query' );
 			}
 
+			// Review Reminders
+			$is_auto_reminders   = 'on' === arp_get_option( $this->prefix . 'enable_review_reminder_checkbox', 2 );
+			$is_manual_reminders = 'on' === arp_get_option( $this->prefix . 'enable_manual_review_reminder_checkbox', 2 );
+
+			if ( $is_auto_reminders || $is_manual_reminders ) {
+
+				$plugin_review_reminders = advanced_reviews_pro_reminders();
+				$this->loader->add_filter( 'woocommerce_email_classes', $plugin_review_reminders, 'add_review_reminder_woocommerce_email' );
+				$this->loader->add_action( 'query_vars', $plugin_review_reminders, 'add_query_vars' );
+				$this->loader->add_action( 'template_redirect', $plugin_review_reminders, 'handle_multiple_reviews_visit' );
+
+				if ( $is_auto_reminders ) {
+					$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_review_reminders, 'order_status_completed' );
+					$this->loader->add_action( 'send_reminder_review_email_event', $plugin_review_reminders, 'send_reminder_review_email' );
+				}
+
+				if ( $is_manual_reminders ) {
+					$this->loader->add_action( 'woocommerce_order_actions', $plugin_review_reminders, 'add_reminder_order_action' );
+					$this->loader->add_action( 'woocommerce_order_action_wc_review_reminder_action', $plugin_review_reminders, 'process_reminder_order_action' );
+				}
+			}
 		}
 
 		/**

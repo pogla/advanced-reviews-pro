@@ -64,6 +64,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-advanced-reviews-pro.php';
  */
 require plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
 require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-conditionals/cmb2-conditionals.php';
+require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-select2/cmb-field-select2.php';
 
 /**
  * Begins execution of the plugin.
@@ -80,3 +81,5 @@ function run_advanced_reviews_pro() {
 	$plugin->run();
 }
 run_advanced_reviews_pro();
+
+
