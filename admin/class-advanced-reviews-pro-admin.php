@@ -188,20 +188,18 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				'type' => 'checkbox',
 			) );
 
-			$tab1_options->add_field(
-				array(
-					'name'       => __( 'Maximum Review Score', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Custom maximum review score. Between 2 and 10.', 'advanced-reviews-pro' ),
-					'id'         => $this->prefix . 'max_review_score_number',
-					'type'       => 'text',
-					'default'    => 5,
-					'attributes' => array(
-						'type' => 'number',
-						'min'  => 2,
-						'max'  => 10,
-					),
-				)
-			);
+			$tab1_options->add_field( array(
+				'name'       => __( 'Maximum Review Score', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Custom maximum review score. Between 2 and 10.', 'advanced-reviews-pro' ),
+				'id'         => $this->prefix . 'max_review_score_number',
+				'type'       => 'text',
+				'default'    => 5,
+				'attributes' => array(
+					'type' => 'number',
+					'min'  => 2,
+					'max'  => 10,
+				),
+			) );
 
 			/**
 			 * SECTION: Vote for reviews
@@ -252,53 +250,50 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				'id'   => $this->prefix . 'email_settings_title',
 			) );
 
-			$tab1_options->add_field(
-				array(
-					'name'    => __( 'Shop Name', 'advanced-reviews-pro' ),
-					'desc'    => __( 'Name of your shop.', 'advanced-reviews-pro' ),
-					'id'      => $this->prefix . 'shop_name_text',
-					'type'    => 'text',
-					'default' => get_bloginfo( 'name' ),
-				)
-			);
+			$tab1_options->add_field( array(
+				'name'    => __( 'Shop Name', 'advanced-reviews-pro' ),
+				'desc'    => __( 'Name of your shop.', 'advanced-reviews-pro' ),
+				'id'      => $this->prefix . 'shop_name_text',
+				'type'    => 'text',
+				'default' => get_bloginfo( 'name' ),
+			) );
 
-			$tab1_options->add_field(
-				array(
-					'name'    => __( 'From Address', 'advanced-reviews-pro' ),
-					'desc'    => __( 'From email address.', 'advanced-reviews-pro' ),
-					'id'      => $this->prefix . 'from_email_text',
-					'type'    => 'text_email',
-					'default' => get_bloginfo( 'admin_email' ),
-				)
-			);
+			$tab1_options->add_field( array(
+				'name'    => __( 'From Name', 'advanced-reviews-pro' ),
+				'desc'    => __( 'From name.', 'advanced-reviews-pro' ),
+				'id'      => $this->prefix . 'from_name_text',
+				'type'    => 'text',
+				'default' => get_bloginfo( 'name' ),
+			) );
 
-			$tab1_options->add_field(
-				array(
-					'name' => __( 'BCC Addresses', 'advanced-reviews-pro' ),
-					'desc' => __( 'BCC addresses. Separated by comma.', 'advanced-reviews-pro' ),
-					'id'   => $this->prefix . 'bbc_email_text',
-					'type' => 'text_email',
-				)
-			);
+			$tab1_options->add_field( array(
+				'name'    => __( 'From Address', 'advanced-reviews-pro' ),
+				'desc'    => __( 'From email address.', 'advanced-reviews-pro' ),
+				'id'      => $this->prefix . 'from_email_text',
+				'type'    => 'text_email',
+				'default' => get_bloginfo( 'admin_email' ),
+			) );
 
-			$tab1_options->add_field(
-				array(
-					'name' => __( 'Reply-To Address', 'advanced-reviews-pro' ),
-					'desc' => __( 'Reply-to address.', 'advanced-reviews-pro' ),
-					'id'   => $this->prefix . 'reply_to_email_text',
-					'type' => 'text_email',
-				)
-			);
+			$tab1_options->add_field( array(
+				'name' => __( 'Reply-To Name', 'advanced-reviews-pro' ),
+				'desc' => __( 'Reply-To Name.', 'advanced-reviews-pro' ),
+				'id'   => $this->prefix . 'reply_to_name_text',
+				'type' => 'text',
+			) );
 
-			$tab1_options->add_field(
-				array(
-					'name'    => __( 'From Name', 'advanced-reviews-pro' ),
-					'desc'    => __( 'From name.', 'advanced-reviews-pro' ),
-					'id'      => $this->prefix . 'from_name_text',
-					'type'    => 'text',
-					'default' => get_bloginfo( 'name' ),
-				)
-			);
+			$tab1_options->add_field( array(
+				'name' => __( 'Reply-To Address', 'advanced-reviews-pro' ),
+				'desc' => __( 'Reply-to address.', 'advanced-reviews-pro' ),
+				'id'   => $this->prefix . 'reply_to_email_text',
+				'type' => 'text_email',
+			) );
+
+			$tab1_options->add_field( array(
+				'name' => __( 'BCC Addresses', 'advanced-reviews-pro' ),
+				'desc' => __( 'BCC addresses. Separated by comma.', 'advanced-reviews-pro' ),
+				'id'   => $this->prefix . 'bbc_email_text',
+				'type' => 'text_email',
+			) );
 
 			/**
 			 * SECTION: Emails
@@ -318,33 +313,29 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				'type' => 'checkbox',
 			) );
 
-			$tab1_options->add_field(
-				array(
-					'name'       => __( 'Total Images', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Maximum amount of images to be left on a single review.', 'advanced-reviews-pro' ),
-					'id'         => $this->prefix . 'total_imgs_number',
-					'type'       => 'text',
-					'default'    => 3,
-					'attributes' => array(
-						'type'                => 'number',
-						'data-conditional-id' => $this->prefix . 'enable_images_checkbox',
-					),
-				)
-			);
+			$tab1_options->add_field( array(
+				'name'       => __( 'Total Images', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Maximum amount of images to be left on a single review.', 'advanced-reviews-pro' ),
+				'id'         => $this->prefix . 'total_imgs_number',
+				'type'       => 'text',
+				'default'    => 3,
+				'attributes' => array(
+					'type'                => 'number',
+					'data-conditional-id' => $this->prefix . 'enable_images_checkbox',
+				),
+			) );
 
-			$tab1_options->add_field(
-				array(
-					'name'       => __( 'Image Size', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Maximum size of image (MB).', 'advanced-reviews-pro' ),
-					'id'         => $this->prefix . 'size_imgs_number',
-					'type'       => 'text',
-					'default'    => 5,
-					'attributes' => array(
-						'type'                => 'number',
-						'data-conditional-id' => $this->prefix . 'enable_images_checkbox',
-					),
-				)
-			);
+			$tab1_options->add_field( array(
+				'name'       => __( 'Image Size', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Maximum size of image (MB).', 'advanced-reviews-pro' ),
+				'id'         => $this->prefix . 'size_imgs_number',
+				'type'       => 'text',
+				'default'    => 5,
+				'attributes' => array(
+					'type'                => 'number',
+					'data-conditional-id' => $this->prefix . 'enable_images_checkbox',
+				),
+			) );
 
 			/**
 			 * SECTION: reCAPTCHA V2
@@ -364,29 +355,25 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				'type' => 'checkbox',
 			) );
 
-			$tab1_options->add_field(
-				array(
-					'name'       => __( 'reCAPTCHA V2 Site Key', 'advanced-reviews-pro' ),
-					'desc'       => sprintf( 'reCAPTCHA V2 site key. %sHow to get reCAPTCHA?%s', '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
-					'id'         => $this->prefix . 'recaptcha_site_key_text',
-					'type'       => 'text',
-					'attributes' => array(
-						'data-conditional-id' => $this->prefix . 'enable_recaptcha_checkbox',
-					),
-				)
-			);
+			$tab1_options->add_field( array(
+				'name'       => __( 'reCAPTCHA V2 Site Key', 'advanced-reviews-pro' ),
+				'desc'       => sprintf( 'reCAPTCHA V2 site key. %sHow to get reCAPTCHA?%s', '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
+				'id'         => $this->prefix . 'recaptcha_site_key_text',
+				'type'       => 'text',
+				'attributes' => array(
+					'data-conditional-id' => $this->prefix . 'enable_recaptcha_checkbox',
+				),
+			) );
 
-			$tab1_options->add_field(
-				array(
-					'name'       => __( 'reCAPTCHA V2 Secret Key', 'advanced-reviews-pro' ),
-					'desc'       => sprintf( 'reCAPTCHA V2 secret key. %sHow to get reCAPTCHA?%s', '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
-					'id'         => $this->prefix . 'recaptcha_secret_key_text',
-					'type'       => 'text',
-					'attributes' => array(
-						'data-conditional-id' => $this->prefix . 'enable_recaptcha_checkbox',
-					),
-				)
-			);
+			$tab1_options->add_field( array(
+				'name'       => __( 'reCAPTCHA V2 Secret Key', 'advanced-reviews-pro' ),
+				'desc'       => sprintf( 'reCAPTCHA V2 secret key. %sHow to get reCAPTCHA?%s', '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
+				'id'         => $this->prefix . 'recaptcha_secret_key_text',
+				'type'       => 'text',
+				'attributes' => array(
+					'data-conditional-id' => $this->prefix . 'enable_recaptcha_checkbox',
+				),
+			) );
 
 			/**
 			 * TAB 2
@@ -426,37 +413,33 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				'type' => 'checkbox',
 			) );
 
-			$tab2_options->add_field(
-				array(
-					'name'       => __( 'Sending Delay', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Choose when automatic reminder should be sent after the purchase.', 'advanced-reviews-pro' ),
-					'id'         => $this->prefix . 'sending_delay_text',
-					'type'       => 'text',
-					'default'    => 3,
-					'attributes' => array(
-						'type'     => 'number',
-						'required' => 'required',
-					),
-				)
-			);
+			$tab2_options->add_field( array(
+				'name'       => __( 'Sending Delay', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Choose when automatic reminder should be sent after the purchase.', 'advanced-reviews-pro' ),
+				'id'         => $this->prefix . 'sending_delay_text',
+				'type'       => 'text',
+				'default'    => 3,
+				'attributes' => array(
+					'type'     => 'number',
+					'required' => 'required',
+				),
+			) );
 
-			$tab2_options->add_field(
-				array(
-					'name'       => __( 'Sending Delay Unit', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Choose the unit for sending delay.', 'advanced-reviews-pro' ),
-					'id'         => $this->prefix . 'sending_delay_unit_text',
-					'type'       => 'pw_select',
-					'default'    => 'days',
-					'options'    => array(
-						'minutes' => __( 'Minutes', 'advanced-reviews-pro' ),
-						'hours'   => __( 'Hours', 'advanced-reviews-pro' ),
-						'days'    => __( 'Days', 'advanced-reviews-pro' ),
-					),
-					'attributes' => array(
-						'required' => 'required',
-					),
-				)
-			);
+			$tab2_options->add_field( array(
+				'name'       => __( 'Sending Delay Unit', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Choose the unit for sending delay.', 'advanced-reviews-pro' ),
+				'id'         => $this->prefix . 'sending_delay_unit_text',
+				'type'       => 'pw_select',
+				'default'    => 'days',
+				'options'    => array(
+					'minutes' => __( 'Minutes', 'advanced-reviews-pro' ),
+					'hours'   => __( 'Hours', 'advanced-reviews-pro' ),
+					'days'    => __( 'Days', 'advanced-reviews-pro' ),
+				),
+				'attributes' => array(
+					'required' => 'required',
+				),
+			) );
 
 			$tab2_options->add_field( array(
 				'name'       => __( 'Limit to Product Categories', 'advanced-reviews-pro' ),

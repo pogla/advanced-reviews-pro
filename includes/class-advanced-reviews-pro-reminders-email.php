@@ -11,7 +11,7 @@
 
 /**
  * Handle review reminders
- *namediv
+ *
  * @since      1.0.0
  * @package    Advanced_Reviews_Pro
  * @subpackage Advanced_Reviews_Pro/includes
@@ -67,14 +67,30 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 		 */
 		public function get_headers() {
 
-			$from_address  = arp_get_option( $this->prefix . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
-			$reply_name    = arp_get_option( $this->prefix . 'from_name_text', 1 );
-			$reply_address = arp_get_option( $this->prefix . 'reply_to_email_text', 1, get_bloginfo( 'admin_email' ) );
-			$bbc_address   = arp_get_option( $this->prefix . 'bbc_email_text', 1 );
 
-			$header  = 'Content-Type: ' . $this->get_content_type() . "\r\n";
-			$header .= 'From: ' . $from_address . "\r\n";
-			$header .= 'Reply-to: ' . $reply_name . ' <' . $reply_address . ">\r\n";
+			$reply_address = arp_get_option( $this->prefix . 'reply_to_email_text', 1, get_bloginfo( 'admin_email' ) );
+			$reply_name    = arp_get_option( $this->prefix . 'reply_to_name_text', 1 );
+			$bbc_address   = arp_get_option( $this->prefix . 'bbc_email_text', 1 );
+			$from_address  = arp_get_option( $this->prefix . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
+			$from_name     = arp_get_option( $this->prefix . 'from_name_text', 1 );
+
+			if ( $from_address ) {
+				add_filter( 'woocommerce_email_from_address', function () {
+					$from_address = arp_get_option( $this->prefix . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
+					return $from_address;
+				}, 99 );
+			}
+
+			if ( $from_name ) {
+				add_filter( 'woocommerce_email_from_name', function () {
+					$from_name = arp_get_option( $this->prefix . 'from_name_text', 1 );
+					return $from_name;
+				}, 99 );
+			}
+
+			$header  = 'Content-Type: ' . $this->get_content_type() . '\r\n';
+			$header .= 'From: ' . $from_name . ' <' . $from_address . '>\r\n';
+			$header .= 'Reply-to: ' . $reply_name . ' <' . $reply_address . '>\r\n';
 
 			if ( $bbc_address ) {
 				$header .= 'Bcc: ' . implode( ',', $bbc_address ) . "\r\n";
@@ -88,6 +104,8 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 		 *
 		 * @since 1.0.0
 		 * @param int $order_id
+		 *
+		 * @return void
 		 */
 		public function trigger( $order_id ) {
 
@@ -105,7 +123,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			}
 
 			// Replacements
-			$this->placeholders['{order_date}']          = date_i18n( woocommerce_date_format(), strtotime( $this->object->order_date ) );
+			$this->placeholders['{order_date}']          = date_i18n( wc_date_format(), strtotime( $this->object->order_date ) );
 			$this->placeholders['{order_id}']            = $this->object->get_order_number();
 			$this->placeholders['{site_title}']          = arp_get_option( $this->prefix . 'shop_name_text', 1, get_bloginfo( 'name' ) );
 			$this->placeholders['{customer_first_name}'] = $this->object->get_billing_first_name();

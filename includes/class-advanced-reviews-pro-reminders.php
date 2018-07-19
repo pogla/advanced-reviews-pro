@@ -11,7 +11,7 @@
 
 /**
  * Handle review reminders
- *namediv
+ *
  * @since      1.0.0
  * @package    Advanced_Reviews_Pro
  * @subpackage Advanced_Reviews_Pro/includes
@@ -79,7 +79,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		}
 
 		public function handle_multiple_reviews_visit() {
-			
+
 			if ( 'true' === get_query_var( 'arp-add-reviews' ) ) {
 				// TODO
 			}
@@ -134,8 +134,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 */
 		public function add_reminder_order_action( $actions ) {
 
-			global $theorder;
-
 			// add "mark printed" custom action
 			$actions['wc_review_reminder_action'] = __( 'Send review reminder', 'advanced-reviews-pro' );
 			return $actions;
@@ -164,6 +162,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 * Trigger review reminder email for order.
 		 *
 		 * @param $order_id
+		 * @since  1.0.0
 		 */
 		public function send_reminder_review_email( $order_id ) {
 
@@ -178,9 +177,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 * Class Instance
 		 *
 		 * @static
-		 * @return object instance
-		 *
 		 * @since  1.0.0
+		 *
+		 * @return object instance
 		 */
 		public static function instance() {
 
