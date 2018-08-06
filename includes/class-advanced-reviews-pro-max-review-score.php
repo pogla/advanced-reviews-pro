@@ -32,15 +32,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Prefix.
-		 *
-		 * @since    1.0.0
-		 * @access   private
-		 * @var      string    $prefix    Prefix for cmb2 fields.
-		 */
-		private $prefix = 'arp_';
-
-		/**
 		 * Max score.
 		 *
 		 * @since    1.0.0
@@ -309,11 +300,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string $prefix
 		 */
-		public static function check_if_new_max_rating_selected( $prefix ) {
+		public static function check_if_new_max_rating_selected() {
 
-			$review_score_prev = absint( arp_get_option( $prefix . 'max_review_score_number' ) );
+			$review_score_prev = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
 			$review_score_new  = absint( $_POST['arp_max_review_score_number'] );
 
 			if ( $review_score_prev !== $review_score_new && 5 === $review_score_new ) {

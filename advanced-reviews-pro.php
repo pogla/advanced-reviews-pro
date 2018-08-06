@@ -30,6 +30,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 define( 'PLUGIN_NAME_VERSION', '1.0.0' );
 
+define( 'ARP_PREFIX', 'arp_' );
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-advanced-reviews-pro-activator.php

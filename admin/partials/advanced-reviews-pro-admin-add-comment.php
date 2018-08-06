@@ -164,7 +164,7 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 							</select>
 						</td>
 					</tr>
-					<?php if ( 'on' === arp_get_option( $this->prefix . 'enable_images_checkbox' ) ) { ?>
+					<?php if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_images_checkbox' ) ) { ?>
 						<tr>
 							<td class="first"><label for="selected-images">Upload images</label></td>
 							<td>

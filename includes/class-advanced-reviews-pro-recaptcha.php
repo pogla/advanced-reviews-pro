@@ -32,15 +32,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Recaptcha' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Prefix.
-		 *
-		 * @since    1.0.0
-		 * @access   private
-		 * @var      string    $prefix    Prefix for cmb2 fields.
-		 */
-		private $prefix = 'arp_';
-
-		/**
 		 * @since    1.0.0
 		 */
 		public function __construct() {
@@ -50,7 +41,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Recaptcha' ) ) {
 
 			if ( is_product() ) {
 
-				$site_key = arp_get_option( $this->prefix . 'recaptcha_site_key_text' );
+				$site_key = arp_get_option( ARP_PREFIX . 'recaptcha_site_key_text' );
 
 				if ( $site_key ) {
 					echo sprintf( '<div class="g-recaptcha" data-sitekey="%s"></div>', esc_attr( $site_key ) );
@@ -67,9 +58,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Recaptcha' ) ) {
 		 */
 		public function validate_captcha() {
 
-			if ( 'on' === arp_get_option( $this->prefix . 'enable_recaptcha_checkbox' ) ) {
+			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_recaptcha_checkbox' ) ) {
 
-				$secret_key = arp_get_option( $this->prefix . 'recaptcha_secret_key_text' );
+				$secret_key = arp_get_option( ARP_PREFIX . 'recaptcha_secret_key_text' );
 
 				if ( $secret_key ) {
 

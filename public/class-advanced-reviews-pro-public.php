@@ -67,15 +67,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Public' ) ) {
 		}
 
 		/**
-		 * Prefix.
-		 *
-		 * @since    1.0.0
-		 * @access   private
-		 * @var      string    $prefix    Prefix for cmb2 fields.
-		 */
-		private $prefix = 'arp_';
-
-		/**
 		 * Register the stylesheets for the public-facing side of the site.
 		 *
 		 * @since    1.0.0
@@ -123,11 +114,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Public' ) ) {
 				'security' => $ajax_nonce,
 			) );
 
-			if ( is_product() && 'on' === arp_get_option( $this->prefix . 'enable_recaptcha_checkbox' ) ) {
+			if ( is_product() && 'on' === arp_get_option( ARP_PREFIX . 'enable_recaptcha_checkbox' ) ) {
 
-				if ( arp_get_option( $this->prefix . 'recaptcha_site_key_text' ) ) {
+				if ( arp_get_option( ARP_PREFIX . 'recaptcha_site_key_text' ) ) {
 
-					wp_enqueue_script( $this->prefix . 'recaptcha_api', 'https://www.google.com/recaptcha/api.js?onload=onloadCallback', array( $this->plugin_name ), $this->version, true );
+					wp_enqueue_script( ARP_PREFIX . 'recaptcha_api', 'https://www.google.com/recaptcha/api.js?onload=onloadCallback', array( $this->plugin_name ), $this->version, true );
 				}
 			}
 		}

@@ -33,15 +33,6 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Prefix.
-		 *
-		 * @since    1.0.0
-		 * @access   private
-		 * @var      string    $prefix    Prefix for cmb2 fields.
-		 */
-		private $prefix = 'arp_';
-
-		/**
 		 * @since    1.0.0
 		 */
 		public function __construct() {
@@ -68,16 +59,16 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 		public function get_headers() {
 
 
-			$reply_address = arp_get_option( $this->prefix . 'reply_to_email_text', 1, get_bloginfo( 'admin_email' ) );
-			$reply_name    = arp_get_option( $this->prefix . 'reply_to_name_text', 1 );
-			$bbc_address   = arp_get_option( $this->prefix . 'bbc_email_text', 1 );
-			$from_address  = arp_get_option( $this->prefix . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
-			$from_name     = arp_get_option( $this->prefix . 'from_name_text', 1 );
+			$reply_address = arp_get_option( ARP_PREFIX . 'reply_to_email_text', 1, get_bloginfo( 'admin_email' ) );
+			$reply_name    = arp_get_option( ARP_PREFIX . 'reply_to_name_text', 1 );
+			$bbc_address   = arp_get_option( ARP_PREFIX . 'bbc_email_text', 1 );
+			$from_address  = arp_get_option( ARP_PREFIX . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
+			$from_name     = arp_get_option( ARP_PREFIX . 'from_name_text', 1 );
 
 			// If custom from email address is set
 			if ( $from_address ) {
 				add_filter( 'woocommerce_email_from_address', function () {
-					$from_address = arp_get_option( $this->prefix . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
+					$from_address = arp_get_option( ARP_PREFIX . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
 					return $from_address;
 				}, 99 );
 			}
@@ -85,7 +76,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			// If custom from name is set
 			if ( $from_name ) {
 				add_filter( 'woocommerce_email_from_name', function () {
-					$from_name = arp_get_option( $this->prefix . 'from_name_text', 1 );
+					$from_name = arp_get_option( ARP_PREFIX . 'from_name_text', 1 );
 					return $from_name;
 				}, 99 );
 			}
@@ -118,7 +109,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 
 			// setup order object
 			$this->object = new WC_Order( $order_id );
-			$order_items  = Advanced_Reviews_Pro_Reminders::get_limited_ordered_products( $this->object->get_items(), $this->prefix );
+			$order_items  = Advanced_Reviews_Pro_Reminders::get_limited_ordered_products( $this->object->get_items() );
 
 			if ( empty( $order_items ) ) {
 				return;
@@ -127,16 +118,16 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			// Replacements
 			$this->placeholders['{order_date}']          = date_i18n( wc_date_format(), strtotime( $this->object->order_date ) );
 			$this->placeholders['{order_id}']            = $this->object->get_order_number();
-			$this->placeholders['{site_title}']          = arp_get_option( $this->prefix . 'shop_name_text', 1, get_bloginfo( 'name' ) );
+			$this->placeholders['{site_title}']          = arp_get_option( ARP_PREFIX . 'shop_name_text', 1, get_bloginfo( 'name' ) );
 			$this->placeholders['{customer_first_name}'] = $this->object->get_billing_first_name();
 			$this->placeholders['{customer_last_name}']  = $this->object->get_billing_last_name();
 			$this->placeholders['{customer_full_name}']  = $this->object->get_billing_first_name() . ' ' . $this->object->get_billing_last_name();
 			$this->placeholders['{list_of_products}']    = $this->get_links_ordered_items( $order_items );
 			$this->placeholders['{review_link}']         = $this->get_links_ordered_items( $order_items, true );
 
-			$this->heading   = $this->format_string( arp_get_option( $this->prefix . 'email_heading_text', 2 ) );
+			$this->heading   = $this->format_string( arp_get_option( ARP_PREFIX . 'email_heading_text', 2 ) );
 			$this->recipient = $this->object->get_billing_email();
-			$this->subject   = $this->format_string( arp_get_option( $this->prefix . 'email_subject_text', 2 ) );
+			$this->subject   = $this->format_string( arp_get_option( ARP_PREFIX . 'email_subject_text', 2 ) );
 
 			if ( ! $this->is_enabled() || ! $this->recipient ) {
 				return;
@@ -160,7 +151,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			$email_heading = $this->get_heading();
 			$plain_text    = false;
 			$email         = $this;
-			$body          = $this->format_string( arp_get_option( $this->prefix . 'email_body_text', 2 ) );
+			$body          = $this->format_string( arp_get_option( ARP_PREFIX . 'email_body_text', 2 ) );
 
 			include plugin_dir_path( dirname( __FILE__ ) ) . '/public/templates/emails/review-reminder.php';
 

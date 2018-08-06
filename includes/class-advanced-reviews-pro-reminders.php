@@ -33,14 +33,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Prefix.
-		 *
-		 * @since    1.0.0
-		 * @var      string    $prefix    Prefix for cmb2 fields.
-		 */
-		private $prefix = 'arp_';
-
-		/**
 		 * @since    1.0.0
 		 */
 		public function __construct() {
@@ -87,14 +79,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 
 			$order_id             = get_query_var( 'arp-add-reviews' );
 			$order                = wc_get_order( $order_id );
-			$current_session_data = WC()->session->get( $this->prefix . 'products-to-review' );
+			$current_session_data = WC()->session->get( ARP_PREFIX . 'products-to-review' );
 
 			if ( ! is_a( $order, 'WC_Order' ) || $order_id === $current_session_data['order_id'] ) {
 				return;
 			}
 
 			$products    = array( 'order_id' => $order_id );
-			$order_items = self::get_limited_ordered_products( $order->get_items(), $this->prefix );
+			$order_items = self::get_limited_ordered_products( $order->get_items() );
 
 			if ( ! $order_items ) {
 				return;
@@ -104,7 +96,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				$products['items'][] = $order_item->get_product_id();
 			}
 
-			WC()->session->set( $this->prefix . 'products-to-review', $products );
+			WC()->session->set( ARP_PREFIX . 'products-to-review', $products );
 		}
 
 		/**
@@ -123,7 +115,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				return;
 			}
 
-			$next_product_url = $this->get_next_product_url_to_review( $product_id );
+			$next_product_url = self::get_next_product_url_to_review( $product_id );
 
 			if ( false === $next_product_url ) {
 				wp_safe_redirect( $location );
@@ -140,9 +132,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 *
 		 * @return false|string Url of the next product to review
 		 */
-		private function get_next_product_url_to_review( $current_product_id ) {
+		private static function get_next_product_url_to_review( $current_product_id ) {
 
-			$current_session_data = WC()->session->get( $this->prefix . 'products-to-review' );
+			$current_session_data = WC()->session->get( ARP_PREFIX . 'products-to-review' );
 
 			if ( $current_session_data && count( $current_session_data['items'] ) > 0 ) {
 
@@ -156,7 +148,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 					}
 				}
 
-				WC()->session->set( $this->prefix . 'products-to-review', $current_session_data );
+				WC()->session->set( ARP_PREFIX . 'products-to-review', $current_session_data );
 
 				if ( $next_item_id ) {
 					return get_permalink( $next_item_id );
@@ -176,7 +168,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 */
 		public function add_review_reminder_comment_notice( $comment_form ) {
 
-			$current_session_data = WC()->session->get( $this->prefix . 'products-to-review' );
+			$current_session_data = WC()->session->get( ARP_PREFIX . 'products-to-review' );
 
 			if ( $current_session_data && count( $current_session_data['items'] ) > 0 && in_array( get_the_ID(), $current_session_data['items'], true ) ) {
 
@@ -190,16 +182,15 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 * Check which products are eligible
 		 *
 		 * @param $order_items
-		 * @param $prefix
 		 * @since 1.0.0
 		 *
 		 * @return array
 		 */
-		public static function get_limited_ordered_products( $order_items, $prefix ) {
+		public static function get_limited_ordered_products( $order_items ) {
 
-			$only_cats     = array_map( 'intval', arp_get_option( $prefix . 'sending_delay_cats_select', 2 ) );
-			$only_tags     = array_map( 'intval', arp_get_option( $prefix . 'sending_delay_tags_select', 2 ) );
-			$only_products = array_map( 'intval', arp_get_option( $prefix . 'sending_delay_products_select', 2 ) );
+			$only_cats     = array_map( 'intval', arp_get_option( ARP_PREFIX . 'sending_delay_cats_select', 2 ) );
+			$only_tags     = array_map( 'intval', arp_get_option( ARP_PREFIX . 'sending_delay_tags_select', 2 ) );
+			$only_products = array_map( 'intval', arp_get_option( ARP_PREFIX . 'sending_delay_products_select', 2 ) );
 
 			// Check categories
 			if ( $only_cats ) {
@@ -283,8 +274,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				return;
 			}
 
-			$sending_delay      = arp_get_option( $this->prefix . 'sending_delay_text', 2 );
-			$sending_delay_unit = arp_get_option( $this->prefix . 'sending_delay_unit_text', 2 );
+			$sending_delay      = arp_get_option( ARP_PREFIX . 'sending_delay_text', 2 );
+			$sending_delay_unit = arp_get_option( ARP_PREFIX . 'sending_delay_unit_text', 2 );
 
 			if ( ! $sending_delay ) {
 				return;

@@ -32,15 +32,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Prefix.
-		 *
-		 * @since    1.0.0
-		 * @access   private
-		 * @var      string    $prefix    Prefix for cmb2 fields.
-		 */
-		private $prefix = 'arp_';
-
-		/**
 		 * Total images allowed.
 		 *
 		 * @since    1.0.0
@@ -78,8 +69,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/image.php';
 			}
 
-			$this->total_images_allowed = arp_get_option( $this->prefix . 'total_imgs_number' );
-			$this->max_image_size       = arp_get_option( $this->prefix . 'size_imgs_number' );
+			$this->total_images_allowed = arp_get_option( ARP_PREFIX . 'total_imgs_number' );
+			$this->max_image_size       = arp_get_option( ARP_PREFIX . 'size_imgs_number' );
 
 			if ( ! $this->total_images_allowed ) {
 				$this->total_images_allowed = 3;
@@ -165,7 +156,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 					}
 				}
 
-				add_comment_meta( $comment_id, $this->prefix . 'review_images', $images );
+				add_comment_meta( $comment_id, ARP_PREFIX . 'review_images', $images );
 
 			}
 		}
@@ -192,7 +183,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 						continue;
 					}
 
-					$pics       = get_comment_meta( $comment->comment_ID, $this->prefix . 'review_images', true );
+					$pics       = get_comment_meta( $comment->comment_ID, ARP_PREFIX . 'review_images', true );
 					$total_pics = count( $pics );
 
 					if ( $total_pics > 0 ) {

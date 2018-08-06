@@ -32,15 +32,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Prefix.
-		 *
-		 * @since    1.0.0
-		 * @access   private
-		 * @var      string    $prefix    Prefix for cmb2 fields.
-		 */
-		private $prefix = 'arp_';
-
-		/**
 		 * Review score max.
 		 *
 		 * @since    1.0.0

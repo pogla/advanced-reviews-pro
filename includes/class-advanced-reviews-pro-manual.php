@@ -34,15 +34,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Prefix.
-		 *
-		 * @since    1.0.0
-		 * @access   private
-		 * @var      string    $prefix    Prefix for cmb2 fields.
-		 */
-		private $prefix = 'arp_';
-
-		/**
 		 * @since    1.0.0
 		 */
 		public function __construct() {
@@ -54,7 +45,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		 * @since    1.0.0
 		 */
 		public function add_rating_submenu() {
-			add_submenu_page( 'edit-comments.php', 'Add Rating', 'Add rating', 'manage_options', $this->prefix . 'add-custom-rating', array( $this, 'output_add_comment' ) );
+			add_submenu_page( 'edit-comments.php', 'Add Rating', 'Add rating', 'manage_options', ARP_PREFIX . 'add-custom-rating', array( $this, 'output_add_comment' ) );
 		}
 
 		/**
@@ -65,7 +56,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		public function output_add_comment() {
 
 			$users            = get_users();
-			$review_score_max = absint( arp_get_option( $this->prefix . 'max_review_score_number' ) );
+			$review_score_max = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
 			if ( ! $review_score_max ) {
 				$review_score_max = 5;
 			}
@@ -89,7 +80,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 				return;
 			}
 
-			$review_score_max = absint( arp_get_option( $this->prefix . 'max_review_score_number' ) );
+			$review_score_max = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
 			if ( ! $review_score_max ) {
 				$review_score_max = 5;
 			}
@@ -148,7 +139,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 				update_comment_meta( $review_id, 'verified', 0 );
 
 				if ( $selected_images ) {
-					update_comment_meta( $review_id, $this->prefix . 'review_images', explode( ',', $selected_images ) );
+					update_comment_meta( $review_id, ARP_PREFIX . 'review_images', explode( ',', $selected_images ) );
 				}
 
 				$_POST['arp-added-comment'] = true;

@@ -71,15 +71,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 		protected $version;
 
 		/**
-		 * Prefix.
-		 *
-		 * @since    1.0.0
-		 * @access   private
-		 * @var      string    $prefix    Prefix for cmb2 fields.
-		 */
-		private $prefix = 'arp_';
-
-		/**
 		 * Define the core functionality of the plugin.
 		 *
 		 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -101,7 +92,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			$this->load_dependencies();
 
 			// Check max review score
-			Advanced_Reviews_Pro_Max_Review_Score::check_if_new_max_rating_selected( $this->prefix );
+			Advanced_Reviews_Pro_Max_Review_Score::check_if_new_max_rating_selected();
 
 			$this->set_locale();
 			$this->define_admin_hooks();
@@ -220,7 +211,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			$this->loader->add_action( 'cmb2_admin_init', $plugin_admin, 'register_plugin_options' );
 
 			// Manual adding
-			if ( 'on' === arp_get_option( $this->prefix . 'enable_manual_checkbox' ) ) {
+			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_manual_checkbox' ) ) {
 
 				$plugin_review_manual = advanced_reviews_pro_manual();
 				$this->loader->add_action( 'admin_menu', $plugin_review_manual, 'add_rating_submenu' );
@@ -244,7 +235,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 			// reCAPTCHA
-			if ( 'on' === arp_get_option( $this->prefix . 'enable_recaptcha_checkbox' ) ) {
+			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_recaptcha_checkbox' ) ) {
 
 				$plugin_recaptcha = advanced_reviews_pro_recaptcha();
 				$this->loader->add_filter( 'comment_form_submit_field', $plugin_recaptcha, 'output_captcha', 9 );
@@ -252,7 +243,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			}
 
 			// Images
-			if ( 'on' === arp_get_option( $this->prefix . 'enable_images_checkbox' ) ) {
+			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_images_checkbox' ) ) {
 
 				$plugin_review_images = advanced_reviews_pro_images();
 				$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_review_images, 'review_fields_attachment' );
@@ -261,7 +252,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			}
 
 			// Voting
-			if ( 'on' === arp_get_option( $this->prefix . 'enable_votes_checkbox' ) ) {
+			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_votes_checkbox' ) ) {
 
 				$plugin_review_voting = advanced_reviews_pro_voting();
 				$this->loader->add_filter( 'woocommerce_review_after_comment_text', $plugin_review_voting, 'add_voting_to_rating_html' );
@@ -269,13 +260,13 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_action( 'wp_ajax_nopriv_arp_vote', $plugin_review_voting, 'vote' );
 
 				// Sort by votes
-				if ( 'on' === arp_get_option( $this->prefix . 'enable_votes_sorting_checkbox' ) ) {
+				if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_votes_sorting_checkbox' ) ) {
 					$this->loader->add_action( 'parse_comment_query', $plugin_review_voting, 'parse_comment_query' );
 				}
 			}
 
 			// Custom review score
-			$review_score_max = absint( arp_get_option( $this->prefix . 'max_review_score_number' ) );
+			$review_score_max = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
 			if ( ! empty( $review_score_max ) && 5 !== $review_score_max ) {
 
 				$plugin_max_score = advanced_reviews_pro_max_review_score( $review_score_max );
@@ -286,7 +277,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			}
 
 			// Summary
-			if ( 'on' === arp_get_option( $this->prefix . 'enable_summary_checkbox' ) ) {
+			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_summary_checkbox' ) ) {
 
 				if ( ! $review_score_max ) {
 					$review_score_max = 5;
@@ -299,8 +290,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			}
 
 			// Review Reminders
-			$is_auto_reminders   = 'on' === arp_get_option( $this->prefix . 'enable_review_reminder_checkbox', 2 );
-			$is_manual_reminders = 'on' === arp_get_option( $this->prefix . 'enable_manual_review_reminder_checkbox', 2 );
+			$is_auto_reminders   = 'on' === arp_get_option( ARP_PREFIX . 'enable_review_reminder_checkbox', 2 );
+			$is_manual_reminders = 'on' === arp_get_option( ARP_PREFIX . 'enable_manual_review_reminder_checkbox', 2 );
 
 			if ( $is_auto_reminders || $is_manual_reminders ) {
 
