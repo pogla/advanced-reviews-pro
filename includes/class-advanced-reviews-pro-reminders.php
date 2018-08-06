@@ -36,7 +36,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 * Prefix.
 		 *
 		 * @since    1.0.0
-		 * @access   private
 		 * @var      string    $prefix    Prefix for cmb2 fields.
 		 */
 		private $prefix = 'arp_';
@@ -51,6 +50,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 * Add a new WC email for reminders
 		 *
 		 * @param $email_classes
+		 * @since 1.0.0
 		 *
 		 * @return mixed
 		 */
@@ -78,11 +78,195 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 			return $vars;
 		}
 
-		public function handle_multiple_reviews_visit() {
+		/**
+		 * @since 1.0.0
+		 *
+		 * When user visits with arp-add-reviews query var, remember all items to review in the session
+		 */
+		public function handle_multiple_reviews_visit_session() {
 
-			if ( 'true' === get_query_var( 'arp-add-reviews' ) ) {
-				// TODO
+			$order_id             = get_query_var( 'arp-add-reviews' );
+			$order                = wc_get_order( $order_id );
+			$current_session_data = WC()->session->get( $this->prefix . 'products-to-review' );
+
+			if ( ! is_a( $order, 'WC_Order' ) || $order_id === $current_session_data['order_id'] ) {
+				return;
 			}
+
+			$products    = array( 'order_id' => $order_id );
+			$order_items = self::get_limited_ordered_products( $order->get_items(), $this->prefix );
+
+			if ( ! $order_items ) {
+				return;
+			}
+
+			foreach ( $order_items as $order_item ) {
+				$products['items'][] = $order_item->get_product_id();
+			}
+
+			WC()->session->set( $this->prefix . 'products-to-review', $products );
+		}
+
+		/**
+		 * @since 1.0.0
+		 *
+		 * Redirects to the next product to review. Only works with review pre-generated link.
+		 *
+		 * @param $location
+		 */
+		public function redirect_after_review( $location ) {
+
+			$product_id = intval( $_POST['comment_post_ID'] );
+			$product    = wc_get_product( $product_id );
+
+			if ( ! is_a( $product, 'WC_Product' ) ) {
+				return;
+			}
+
+			$next_product_url = $this->get_next_product_url_to_review( $product_id );
+
+			if ( false === $next_product_url ) {
+				wp_safe_redirect( $location );
+			} else {
+				wp_safe_redirect( $next_product_url . '#reviews' );
+			}
+		}
+
+		/**
+		 * Get next product in line to review, remove the current one fro the session
+		 *
+		 * @param $current_product_id
+		 * @since 1.0.0
+		 *
+		 * @return false|string Url of the next product to review
+		 */
+		private function get_next_product_url_to_review( $current_product_id ) {
+
+			$current_session_data = WC()->session->get( $this->prefix . 'products-to-review' );
+
+			if ( $current_session_data && count( $current_session_data['items'] ) > 0 ) {
+
+				$next_item_id = false;
+				foreach ( $current_session_data['items'] as $key => $item ) {
+
+					if ( $current_product_id === $item ) {
+						unset( $current_session_data['items'][ $key ] );
+					} elseif ( false === $next_item_id ) {
+						$next_item_id = $item;
+					}
+				}
+
+				WC()->session->set( $this->prefix . 'products-to-review', $current_session_data );
+
+				if ( $next_item_id ) {
+					return get_permalink( $next_item_id );
+				}
+			}
+
+			return false;
+		}
+
+		/**
+		 * Adds a notice below the comment form. Only show on un-reviewed products from the active reviewing order
+		 *
+		 * @param $comment_form
+		 * @since 1.0.0
+		 *
+		 * @return mixed
+		 */
+		public function add_review_reminder_comment_notice( $comment_form ) {
+
+			$current_session_data = WC()->session->get( $this->prefix . 'products-to-review' );
+
+			if ( $current_session_data && count( $current_session_data['items'] ) > 0 && in_array( get_the_ID(), $current_session_data['items'], true ) ) {
+
+				$comment_form['comment_field'] .= '<p><b>You are reviewing item from your order. After you leave a review, you will be redirected to the next item.</b></p>';
+			}
+
+			return $comment_form;
+		}
+
+		/**
+		 * Check which products are eligible
+		 *
+		 * @param $order_items
+		 * @param $prefix
+		 * @since 1.0.0
+		 *
+		 * @return array
+		 */
+		public static function get_limited_ordered_products( $order_items, $prefix ) {
+
+			$only_cats     = array_map( 'intval', arp_get_option( $prefix . 'sending_delay_cats_select', 2 ) );
+			$only_tags     = array_map( 'intval', arp_get_option( $prefix . 'sending_delay_tags_select', 2 ) );
+			$only_products = array_map( 'intval', arp_get_option( $prefix . 'sending_delay_products_select', 2 ) );
+
+			// Check categories
+			if ( $only_cats ) {
+
+				$included_items = array();
+				foreach ( $order_items as $order_item ) {
+
+					$product_id   = $order_item->get_product_id();
+					$product_cats = get_the_terms( $product_id, 'product_cat' );
+					// Check if product has category
+					foreach ( $product_cats as $product_cat ) {
+
+						if ( in_array( $product_cat->term_id, $only_cats, true ) ) {
+							$included_items[] = $order_item;
+							break;
+						}
+					}
+				}
+
+				$order_items = $included_items;
+			}
+
+			if ( ! $order_items ) {
+				return array();
+			}
+
+			// Check tags
+			if ( $only_tags ) {
+
+				$included_items = array();
+				foreach ( $order_items as $order_item ) {
+
+					$product_id   = $order_item->get_product_id();
+					$product_tags = get_the_terms( $product_id, 'product_tag' );
+					// Check if product has tag
+					foreach ( $product_tags as $product_tag ) {
+
+						if ( in_array( $product_tag->term_id, $only_tags, true ) ) {
+							$included_items[] = $order_item;
+							break;
+						}
+					}
+				}
+
+				$order_items = $included_items;
+			}
+
+			if ( ! $order_items ) {
+				return array();
+			}
+
+			// Check products
+			if ( $only_products ) {
+
+				$included_items = array();
+				foreach ( $order_items as $order_item ) {
+
+					$product_id = $order_item->get_product_id();
+					if ( in_array( $product_id, $only_products, true ) ) {
+						$included_items[] = $order_item;
+					}
+				}
+
+				$order_items = $included_items;
+			}
+
+			return $order_items;
 		}
 
 		/**

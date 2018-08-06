@@ -74,6 +74,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			$from_address  = arp_get_option( $this->prefix . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
 			$from_name     = arp_get_option( $this->prefix . 'from_name_text', 1 );
 
+			// If custom from email address is set
 			if ( $from_address ) {
 				add_filter( 'woocommerce_email_from_address', function () {
 					$from_address = arp_get_option( $this->prefix . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
@@ -81,6 +82,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 				}, 99 );
 			}
 
+			// If custom from name is set
 			if ( $from_name ) {
 				add_filter( 'woocommerce_email_from_name', function () {
 					$from_name = arp_get_option( $this->prefix . 'from_name_text', 1 );
@@ -116,7 +118,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 
 			// setup order object
 			$this->object = new WC_Order( $order_id );
-			$order_items  = self::get_limited_ordered_products( $this->object->get_items(), $this->prefix );
+			$order_items  = Advanced_Reviews_Pro_Reminders::get_limited_ordered_products( $this->object->get_items(), $this->prefix );
 
 			if ( empty( $order_items ) ) {
 				return;
@@ -196,89 +198,6 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			} else {
 				return '<ul>' . $output . '</ul>';
 			}
-		}
-
-		/**
-		 * Check which products are eligible
-		 *
-		 * @param $order_items
-		 * @param $prefix
-		 * @since 1.0.0
-		 *
-		 * @return array
-		 */
-		public static function get_limited_ordered_products( $order_items, $prefix ) {
-
-			$only_cats     = array_map( 'intval', arp_get_option( $prefix . 'sending_delay_cats_select', 2 ) );
-			$only_tags     = array_map( 'intval', arp_get_option( $prefix . 'sending_delay_tags_select', 2 ) );
-			$only_products = array_map( 'intval', arp_get_option( $prefix . 'sending_delay_products_select', 2 ) );
-
-			// Check categories
-			if ( $only_cats ) {
-
-				$included_items = array();
-				foreach ( $order_items as $order_item ) {
-
-					$product_id   = $order_item->get_product_id();
-					$product_cats = get_the_terms( $product_id, 'product_cat' );
-					// Check if product has category
-					foreach ( $product_cats as $product_cat ) {
-
-						if ( in_array( $product_cat->term_id, $only_cats, true ) ) {
-							$included_items[] = $order_item;
-							break;
-						}
-					}
-				}
-
-				$order_items = $included_items;
-			}
-
-			if ( ! $order_items ) {
-				return array();
-			}
-
-			// Check tags
-			if ( $only_tags ) {
-
-				$included_items = array();
-				foreach ( $order_items as $order_item ) {
-
-					$product_id   = $order_item->get_product_id();
-					$product_tags = get_the_terms( $product_id, 'product_tag' );
-					// Check if product has tag
-					foreach ( $product_tags as $product_tag ) {
-
-						if ( in_array( $product_tag->term_id, $only_tags, true ) ) {
-							$included_items[] = $order_item;
-							break;
-						}
-					}
-				}
-
-				$order_items = $included_items;
-			}
-
-			if ( ! $order_items ) {
-				return array();
-			}
-
-			// Check products
-			if ( $only_products ) {
-
-				$included_items = array();
-				foreach ( $order_items as $order_item ) {
-
-					$product_id = $order_item->get_product_id();
-					if ( in_array( $product_id, $only_products, true ) ) {
-						$included_items[] = $order_item;
-					}
-				}
-
-				$order_items = $included_items;
-			}
-
-			return $order_items;
 		}
 
 		/**
