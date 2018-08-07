@@ -13,7 +13,6 @@ jQuery( document ).ready( function( $ ) {
 		};
 	});
 
-
 	/**
 	 * Set up the functionality for CMB2 conditionals.
 	 */
@@ -34,6 +33,7 @@ jQuery( document ).ready( function( $ ) {
 		 * Set up event listener for any changes in the form values, including on new elements.
 		 */
 		changeContext.on( 'change', 'input, textarea, select', function( evt ) {
+
 			var elm       = $( this ),
 				fieldName = $( this ).attr( 'name' ),
 				dependants,
@@ -68,6 +68,8 @@ jQuery( document ).ready( function( $ ) {
 						currentParent    = current.parents( '.cmb-row:first' ),
 						shouldShow       = false;
 
+					if( 'undefined' === typeof currentFieldName ) currentFieldName = current.attr( 'id' );
+
 					// Only check this dependant if we haven't done so before for this parent.
 					// We don't need to check ten times for one radio field with ten options,
 					// the conditionals are for the field, not the option.
@@ -101,6 +103,9 @@ jQuery( document ).ready( function( $ ) {
 							}
 						}
 
+						// console.log(currentFieldName);
+						// console.log(requiredValue);
+
 						// Handle any actions necessary.
 						currentParent.toggle( shouldShow );
 						if ( current.data( 'conditional-required' ) ) {
@@ -125,7 +130,6 @@ jQuery( document ).ready( function( $ ) {
 			}
 		});
 
-
 		/**
 		 * Make sure it also works when the select/deselect all button is clicked for a multi-checkbox.
 		 */
@@ -136,7 +140,6 @@ jQuery( document ).ready( function( $ ) {
 			multiCheck = button.closest( '.cmb-td' ).find( 'input[type=checkbox]:not([disabled])' );
 			multiCheck.trigger( 'change' );
 		});
-
 
 		/**
 		 * Deal with (un)setting the required property on (un)hiding of form elements.
@@ -155,7 +158,6 @@ jQuery( document ).ready( function( $ ) {
 				$( e ).prop( 'required', true );
 			});
 		});
-
 
 		/**
 		 * Set the initial state for elements on page load.
@@ -205,8 +207,8 @@ jQuery( document ).ready( function( $ ) {
 				rowFormElms.filter( ':checked' ).trigger( 'change' );
 			}
 		});
-	}
 
+	}
 
 	/**
 	 * Find all fields which are directly conditional on the current field.
@@ -234,6 +236,7 @@ jQuery( document ).ready( function( $ ) {
 		else {
 			dependants = $( '[data-conditional-id="' + fieldName + '"]', context );
 		}
+
 		return dependants;
 	}
 
@@ -241,6 +244,7 @@ jQuery( document ).ready( function( $ ) {
 	 * Recursively hide all fields which have a dependency on a certain field.
 	 */
 	function CMB2ConditionalsRecursivelyHideDependants( fieldName, elm, context ) {
+
 		var dependants = CMB2ConditionalsFindDependants( fieldName, elm, context );
 		dependants = dependants.filter( ':visible' );
 

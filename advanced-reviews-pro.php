@@ -62,7 +62,7 @@ register_deactivation_hook( __FILE__, 'deactivate_advanced_reviews_pro' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-advanced-reviews-pro.php';
 
 /**
- * Require cmb2 library
+ * Require cmb2 library and add-ons
  */
 require plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
 require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-conditionals/cmb2-conditionals.php';

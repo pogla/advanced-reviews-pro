@@ -459,7 +459,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				'desc'       => __( 'Select products where review reminder should apply. Leave empty to apply to all products!', 'advanced-reviews-pro' ),
 				'id'         => ARP_PREFIX . 'sending_delay_products_select',
 				'type'       => 'pw_multiselect',
-				'options'    => self::get_all_products(),
+				'options'    => self::get_all_posts_by_type( 'product' ),
 				'attributes' => array(
 					'placeholder' => 'Select Products',
 				),
@@ -491,9 +491,323 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				'desc'    => '<b>You can use these variables</b>:<br>{site_title} - Site title<br>{customer_first_name} - Billing first name<br>{customer_last_name} - Billing last name<br>{customer_full_name} - Billing full name<br>{order_id} - Order ID<br>{list_of_products} - List of products to review<br>{review_link} - Link to review all purchased products, one after another<br>{order_date} - Order date',
 				'id'      => ARP_PREFIX . 'email_body_text',
 				'type'    => 'wysiwyg',
-				'default' => 'Howdy {customer_full_name},<br><br>Thank you for your order #{order_id} made on {order_date}!<br><br>We would  love if you could help us by reviewing products that you recently purchased. Please follow <a href="{review_link}">this link</a> that will redirect you after each review you make. <br><br>Or you can review each purchased product separately:<br>{list_of_products}<br><br>Regards,<br>Martin',
+				'default' => 'Howdy {customer_full_name},<br><br>Thank you for your order #{order_id} made on {order_date}!<br><br>We would love if you could help us by reviewing products that you recently purchased. Please follow <a href="{review_link}">this link</a> that will redirect you after each review you make. <br><br>Or you can review each purchased product separately:<br>{list_of_products}<br><br>Regards,<br>Martin',
 			) );
 
+			/**
+			 * TAB 3
+			 *
+			 * Registers options page menu item and form.
+			 */
+			$tab3_options = new_cmb2_box(
+				array(
+					'id'           => ARP_PREFIX . 'option_tab3_metabox',
+					'title'        => esc_html__( 'Review for Discount', 'advanced-reviews-pro' ),
+					'object_types' => array( 'options-page' ),
+					'option_key'   => ARP_PREFIX . 'tab3_options',
+					'parent_slug'  => ARP_PREFIX . 'options',
+					'tab_group'    => ARP_PREFIX . 'main_options',
+					'save_button'  => esc_html__( 'Save', 'advanced-reviews-pro' ),
+				)
+			);
+
+			$tab3_options->add_field( array(
+				'name' => 'Review for Discount',
+				'desc' => 'Settings for review for discount.',
+				'type' => 'title',
+				'id'   => ARP_PREFIX . 'review_discount_settings_title',
+			) );
+
+			$tab3_options->add_field( array(
+				'name' => 'Enable Review for Discount',
+				'desc' => 'Enable generation of discount coupons for customers who provide reviews.',
+				'id'   => ARP_PREFIX . 'enable_review_discount_checkbox',
+				'type' => 'checkbox',
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => 'Review Coupons Settings',
+				'desc'       => 'Settings for review coupons.',
+				'type'       => 'title',
+				'id'         => ARP_PREFIX . 'review_discount_coupon_settings_title',
+				'attributes' => array(
+					'data-conditional-id' => ARP_PREFIX . 'enable_review_discount_checkbox',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Limit to Product Categories', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Select product categories where review reminder should apply. Leave empty to apply to all tags!', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'coupon_type_select',
+				'type'       => 'pw_select',
+				'default'    => 'generate_coupon',
+				'options'    => array(
+					'generate_coupon' => 'Generate Unique Coupon',
+					'existing_coupon' => 'Existing Coupon',
+				),
+				'attributes' => array(
+					'placeholder'         => 'Select Categories',
+					'data-conditional-id' => ARP_PREFIX . 'enable_review_discount_checkbox',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Select Coupon', 'advanced-reviews-pro' ),
+				'desc'       => __( 'This coupon code will be sent to customers who provide reviews.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'existing_coupon_select',
+				'type'       => 'pw_select',
+				'options'    => self::get_all_posts_by_type( 'shop_coupon' ),
+				'attributes' => array(
+					'placeholder'            => 'Select Coupon',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'existing_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Discount Type', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Select a discount type.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_discount_type_select',
+				'type'       => 'pw_select',
+				'options'    => array(
+					'percent'       => 'Percentage discount',
+					'fixed_cart'    => 'Fixed cart discount',
+					'fixed_product' => 'Fixed product discount',
+				),
+				'attributes' => array(
+					'placeholder'            => 'Select Discount Type',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Coupon Amount', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Coupon amount.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_amount_text',
+				'type'       => 'text',
+				'attributes' => array(
+					'type'                   => 'number',
+					'required'               => 'required',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Allow free shipping', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Check this box if the coupon grants free shipping. A <a href="https://docs.woocommerce.com/document/free-shipping/">free shipping method</a> must be enabled in your shipping zone and be set to require "a valid free shipping coupon" (see the "Free Shipping Requires" setting).', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_allow_free_shipping_checkbox',
+				'type'       => 'checkbox',
+				'attributes' => array(
+					'required'               => 'required',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Validity', 'advanced-reviews-pro' ),
+				'desc'       => __( 'How long should the coupon be valid.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_validity_text',
+				'type'       => 'text',
+				'attributes' => array(
+					'type'                   => 'number',
+					'required'               => 'required',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Validity Unit', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Choose the unit for validity. Leave blank for no end date.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_validity_unit_select',
+				'type'       => 'pw_select',
+				'default'    => 'days',
+				'options'    => array(
+					'minutes' => __( 'Minutes', 'advanced-reviews-pro' ),
+					'hours'   => __( 'Hours', 'advanced-reviews-pro' ),
+					'days'    => __( 'Days', 'advanced-reviews-pro' ),
+				),
+				'attributes' => array(
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Minimum spend', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Minimum spend for the generated coupon.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_min_text',
+				'type'       => 'text',
+				'attributes' => array(
+					'type'                   => 'number',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Maximum spend', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Maximum spend for the generated coupon.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_max_text',
+				'type'       => 'text',
+				'attributes' => array(
+					'type'                   => 'number',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Individual Use Only', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Check this box if the coupon cannot be used in conjunction with other coupons.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_individual_use_only_checkbox',
+				'type'       => 'checkbox',
+				'attributes' => array(
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Exclude sale items', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Check this box if the coupon should not apply to items on sale. Per-item coupons will only work if the item is not on sale. Per-cart coupons will only work if there are items in the cart that are not on sale.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_exclude_sale_items_checkbox',
+				'type'       => 'checkbox',
+				'attributes' => array(
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Products', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Products that the coupon will be applied to, or that need to be in the cart in order for the "Fixed cart discount" to be applied.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_products_select',
+				'type'       => 'pw_multiselect',
+				'options'    => self::get_all_posts_by_type( 'product' ),
+				'attributes' => array(
+					'placeholder'            => 'Search for a product',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Exclude Products', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Products that the coupon will not be applied to, or that cannot be in the cart in order for the "Fixed cart discount" to be applied.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_exclude_products_select',
+				'type'       => 'pw_multiselect',
+				'options'    => self::get_all_posts_by_type( 'product' ),
+				'attributes' => array(
+					'placeholder'            => 'Search for a product',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Product Categories', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Product categories that the coupon will be applied to, or that need to be in the cart in order for the "Fixed cart discount" to be applied.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_product_categories_select',
+				'type'       => 'pw_multiselect',
+				'options'    => self::get_taxonomies_by_slug( 'product_cat' ),
+				'attributes' => array(
+					'placeholder'            => 'Any Category',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Exclude Categories', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Product categories that the coupon will be applied to, or that need to be in the cart in order for the "Fixed cart discount" to be applied.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_exclude_product_categories_select',
+				'type'       => 'pw_multiselect',
+				'options'    => self::get_taxonomies_by_slug( 'product_cat' ),
+				'attributes' => array(
+					'placeholder'            => 'No Categories',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Allowed emails', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Whitelist of billing emails to check against when an order is placed. Separate email addresses with commas. You can also use an asterisk (*) to match parts of an email. For example "*@gmail.com" would match all gmail addresses. <b>Use {BUYER_EMAIL} to restrict coupon to email receiver.</b>', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_email_restrict_text',
+				'type'       => 'text',
+				'default'    => '{BUYER_EMAIL}',
+				'attributes' => array(
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Usage limit per coupon', 'advanced-reviews-pro' ),
+				'desc'       => __( 'How many times this coupon can be used before it is void.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_usage_restrict_text',
+				'type'       => 'text',
+				'attributes' => array(
+					'type'                   => 'number',
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Coupon Format', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Format of generated coupon. Use {PREFIX}, {SUFFIX}, {RANDOM-X}. Replace X with a number. X is the number of random characters.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'generate_coupon_format_text',
+				'type'       => 'text',
+				'default'    => '{PREFIX}{RANDOM-10}{SUFFIX}',
+				'attributes' => array(
+					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+					'data-conditional-value' => 'generate_coupon',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => 'Email Template',
+				'desc'       => 'Design your email template. Email is triggered after a customer leaves a review. It is important that the customer is logged in the store.',
+				'type'       => 'title',
+				'id'         => ARP_PREFIX . 'review_coupon_template_title',
+				'attributes' => array(
+					'data-conditional-id' => ARP_PREFIX . 'enable_review_discount_checkbox',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Email Subject', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'review_coupon_email_subject_text',
+				'type'       => 'text',
+				'default'    => '[{site_title}] Thanks for the review',
+				'attributes' => array(
+					'data-conditional-id' => ARP_PREFIX . 'enable_review_discount_checkbox',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'       => __( 'Email Heading', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'review_coupon_email_heading_text',
+				'type'       => 'text',
+				'default'    => 'Here is your coupon',
+				'attributes' => array(
+					'data-conditional-id' => ARP_PREFIX . 'enable_review_discount_checkbox',
+				),
+			) );
+
+			$tab3_options->add_field( array(
+				'name'        => __( 'Email Body', 'advanced-reviews-pro' ),
+				'desc'        => '<b>You can use these variables</b>:<br>{coupon} - Coupon code<br>{site_title} - Site title<br>{customer_first_name} - Billing first name<br>{customer_last_name} - Billing last name<br>{customer_full_name} - Billing full name<br>{coupon_expiration_date} - Coupon expiration datetime<br>{reviewed_product_name} - Product that has been reviewed<br>',
+				'id'          => ARP_PREFIX . 'review_coupon_email_body_text',
+				'type'        => 'wysiwyg',
+				'default'     => 'Howdy {customer_full_name},<br><br>Thank you for your review on {reviewed_product_name}!<br><br>We like to give you a coupon code: <br><br><b>{coupon}</b><br><br> which expires on {coupon_expiration_date}.<br><br>Regards,<br>Martin',
+				'after_field' => '<input type="hidden" id="' . ARP_PREFIX . 'review_coupon_email_body_text" data-conditional-id="' . ARP_PREFIX . 'enable_review_discount_checkbox">',
+			) );
 		}
 
 		/**
@@ -508,11 +822,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 		 */
 		private static function get_taxonomies_by_slug( $tax, $query_args = '' ) {
 
-			$defaults = array(
+			$taxs = get_terms( $tax, wp_parse_args( $query_args, array(
 				'hide_empty' => false,
-			);
-			$args     = wp_parse_args( $query_args, $defaults );
-			$taxs     = get_terms( $tax, $args );
+			) ) );
 
 			$output_taxs = array();
 			foreach ( $taxs as $tax ) {
@@ -523,26 +835,27 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 		}
 
 		/**
-		 * Gets all the products
+		 * Gets all the posts of a type
 		 *
+		 * @param $type
 		 * @since 1.0.0
 		 *
 		 * @return array
 		 */
-		private static function get_all_products() {
+		private static function get_all_posts_by_type( $type ) {
 
-			$products = get_posts( array(
+			$posts = get_posts( array(
 				'posts_per_page' => -1,
-				'post_type'      => 'product',
+				'post_type'      => $type,
 				'post_status'    => 'any',
 			) );
 
-			$output_products = array();
-			foreach ( $products as $product ) {
-				$output_products[ $product->ID ] = '#' . $product->ID . ' - ' . $product->post_title;
+			$output_posts = array();
+			foreach ( $posts as $post ) {
+				$output_posts[ $post->ID ] = '#' . $post->ID . ' - ' . $post->post_title;
 			}
 
-			return $output_products;
+			return $output_posts;
 		}
 
 		/**
@@ -571,6 +884,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 /**
  * Wrapper function around cmb2_get_option
+ *
  * @since  0.1.0
  * @param  string $key     Options array key
  * @param  mixed  $default Optional default value

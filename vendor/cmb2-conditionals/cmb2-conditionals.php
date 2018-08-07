@@ -101,7 +101,7 @@ if ( ! class_exists( 'CMB2_Conditionals' ) ) {
 		 */
 		public function admin_footer() {
 
-			if ( 'admin.php' !== $GLOBALS['pagenow'] || 'arp_options' !== $GLOBALS['plugin_page'] ) {
+			if ( 'admin.php' !== $GLOBALS['pagenow'] ) {
 				return;
 			}
 
