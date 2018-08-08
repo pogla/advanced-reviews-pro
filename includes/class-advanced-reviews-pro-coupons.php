@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Fired during plugin activation
+ * Coupons generation
  *
  * @link       https://maticpogladic.com/
  * @since      1.0.0
@@ -11,9 +11,6 @@
  */
 
 /**
- * Fired during plugin activation.
- *
- * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
  * @package    Advanced_Reviews_Pro
@@ -23,9 +20,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'Advanced_Reviews_Pro_Activator' ) ) {
+if ( ! class_exists( 'Advanced_Reviews_Pro_Coupons' ) ) {
 
-	class Advanced_Reviews_Pro_Activator {
+	class Advanced_Reviews_Pro_Coupons {
 
 		/**
 		 * @var object The single instance of the class
@@ -34,14 +31,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Activator' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Short Description. (use period)
-		 *
-		 * Long Description.
-		 *
 		 * @since    1.0.0
 		 */
-		public static function activate() {
-			Advanced_Reviews_Pro_Max_Review_Score::restore_decimal_ratings();
+		public function __construct() {
 		}
 
 		/**
@@ -70,9 +62,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Activator' ) ) {
  * @return object
  * @since  1.0.0
  */
-if ( ! function_exists( 'advanced_reviews_pro_activator' ) ) {
+if ( ! function_exists( 'advanced_reviews_procoupons' ) ) {
 
-	function advanced_reviews_pro_activator() {
-		return Advanced_Reviews_Pro_Activator::instance();
+	function advanced_reviews_pro_coupons() {
+		return Advanced_Reviews_Pro_Coupons::instance();
 	}
 }

@@ -19,9 +19,7 @@
  * @author     Matic Pogladič <matic.pogladic@gmail.com>
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 
@@ -45,7 +43,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		 * @since    1.0.0
 		 */
 		public function add_rating_submenu() {
-			add_submenu_page( 'edit-comments.php', 'Add Rating', 'Add rating', 'manage_options', ARP_PREFIX . 'add-custom-rating', array( $this, 'output_add_comment' ) );
+			add_submenu_page( 'edit-comments.php', 'Add Review', 'Add Review', 'manage_options', ARP_PREFIX . 'add-custom-rating', array( $this, 'output_add_comment' ) );
 		}
 
 		/**

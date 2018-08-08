@@ -21,9 +21,7 @@
  * @author     Matic Pogladič <matic.pogladic@gmail.com>
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
@@ -921,6 +919,12 @@ function arp_get_option( $key = '', $tab = 1, $default = false ) {
  */
 if ( ! function_exists( 'advanced_reviews_pro_admin' ) ) {
 
+	/**
+	 * @param $plugin_name
+	 * @param $version
+	 *
+	 * @return object
+	 */
 	function advanced_reviews_pro_admin( $plugin_name, $version ) {
 		return Advanced_Reviews_Pro_Admin::instance( $plugin_name, $version );
 	}

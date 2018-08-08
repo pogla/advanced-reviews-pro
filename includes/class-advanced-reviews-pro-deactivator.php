@@ -21,6 +21,8 @@
  * @author     Matic Pogladič <matic.pogladic@gmail.com>
  */
 
+defined( 'ABSPATH' ) || exit;
+
 if ( ! class_exists( 'Advanced_Reviews_Pro_Deactivator' ) ) {
 
 	class Advanced_Reviews_Pro_Deactivator {
