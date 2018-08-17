@@ -284,8 +284,40 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				'type' => 'text_email',
 			) );
 
+			$tab1_options->add_field( array(
+				'name'    => __( 'Limit emails', 'advanced-reviews-pro' ),
+				'desc'    => __( 'Limit emails per user', 'advanced-reviews-pro' ),
+				'id'      => ARP_PREFIX . 'limit_emails_per_user_checkbox',
+				'default' => 'on',
+				'type'    => 'checkbox',
+			) );
+
+			$tab1_options->add_field( array(
+				'name'       => __( 'Days between emails', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Minimum days between emails for user/email. 0 means no limit.', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'emails_limit_text',
+				'type'       => 'text',
+				'default'    => 7,
+				'attributes' => array(
+					'type'                => 'number',
+					'data-conditional-id' => ARP_PREFIX . 'limit_emails_per_user_checkbox',
+				),
+			) );
+
+			$tab1_options->add_field( array(
+				'name'       => __( 'Unlimited emails for Review for Discount', 'advanced-reviews-pro' ),
+				'desc'       => __( 'Force unlimited emails for "Review for Discount" feature', 'advanced-reviews-pro' ),
+				'id'         => ARP_PREFIX . 'force_unlimited_review_emails_checkbox',
+				'type'       => 'checkbox',
+				'default'    => 'on',
+				'attributes' => array(
+					'data-conditional-id' => ARP_PREFIX . 'limit_emails_per_user_checkbox',
+				),
+			) );
+
+
 			/**
-			 * SECTION: Emails
+			 * SECTION: Images
 			 */
 
 			$tab1_options->add_field( array(
@@ -500,7 +532,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab3_options = new_cmb2_box(
 				array(
 					'id'           => ARP_PREFIX . 'option_tab3_metabox',
-					'title'        => esc_html__( 'Review for Discount', 'advanced-reviews-pro' ),
+					'title'        => esc_html__( 'Coupon for Review', 'advanced-reviews-pro' ),
 					'object_types' => array( 'options-page' ),
 					'option_key'   => ARP_PREFIX . 'tab3_options',
 					'parent_slug'  => ARP_PREFIX . 'options',
@@ -580,6 +612,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'fixed_product' => 'Fixed product discount',
 				),
 				'attributes' => array(
+					'required'               => 'required',
 					'placeholder'            => 'Select Discount Type',
 					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 					'data-conditional-value' => 'generate_coupon',
@@ -607,7 +640,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 				'classes'    => ARP_PREFIX . 'tab3_hide',
 				'type'       => 'checkbox',
 				'attributes' => array(
-					'required'               => 'required',
 					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 					'data-conditional-value' => 'generate_coupon',
 				),
@@ -615,31 +647,12 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab3_options->add_field( array(
 				'name'       => __( 'Validity', 'advanced-reviews-pro' ),
-				'desc'       => __( 'How long should the coupon be valid.', 'advanced-reviews-pro' ),
+				'desc'       => __( 'How many days should the coupon be valid.', 'advanced-reviews-pro' ),
 				'id'         => ARP_PREFIX . 'generate_coupon_validity_text',
 				'classes'    => ARP_PREFIX . 'tab3_hide',
 				'type'       => 'text',
 				'attributes' => array(
 					'type'                   => 'number',
-					'required'               => 'required',
-					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
-					'data-conditional-value' => 'generate_coupon',
-				),
-			) );
-
-			$tab3_options->add_field( array(
-				'name'       => __( 'Validity Unit', 'advanced-reviews-pro' ),
-				'desc'       => __( 'Choose the unit for validity. Leave blank for no end date.', 'advanced-reviews-pro' ),
-				'id'         => ARP_PREFIX . 'generate_coupon_validity_unit_select',
-				'classes'    => ARP_PREFIX . 'tab3_hide',
-				'type'       => 'pw_select',
-				'default'    => 'days',
-				'options'    => array(
-					'minutes' => __( 'Minutes', 'advanced-reviews-pro' ),
-					'hours'   => __( 'Hours', 'advanced-reviews-pro' ),
-					'days'    => __( 'Days', 'advanced-reviews-pro' ),
-				),
-				'attributes' => array(
 					'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 					'data-conditional-value' => 'generate_coupon',
 				),
@@ -816,7 +829,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab3_options->add_field( array(
 				'name'    => __( 'Email Body', 'advanced-reviews-pro' ),
-				'desc'    => '<b>You can use these variables</b>:<br>{coupon} - Coupon code<br>{site_title} - Site title<br>{user_first_name} - Billing first name<br>{user_last_name} - Billing last name<br>{user_full_name} - Billing full name<br>{user_display_name} - Billing display name<br>{coupon_expiration_date} - Coupon expiration datetime<br>{reviewed_product_name} - Product that has been reviewed<br>',
+				'desc'    => '<b>You can use these variables</b>:<br>{coupon} - Coupon code<br>{site_title} - Site title<br>{user_first_name} - User first name (Customer if "Review Reminder")<br>{user_last_name} - User last name (Customer if "Review Reminder")<br>{user_full_name} - User full name (Customer if "Review Reminder")<br>{user_display_name} - User display name (Customer full name if "Review Reminder")<br>{coupon_expiration_date} - Coupon expiration datetime<br>{reviewed_product_name} - Product that has been reviewed ("Ordered products" if "Review Reminder")<br>',
 				'id'      => ARP_PREFIX . 'review_coupon_email_body_text',
 				'classes' => ARP_PREFIX . 'tab3_hide',
 				'type'    => 'wysiwyg',

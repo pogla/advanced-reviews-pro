@@ -99,11 +99,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		}
 
 		/**
-		 * @since 1.0.0
 		 *
 		 * Redirects to the next product to review. Only works with review pre-generated link.
 		 *
 		 * @param $location
+		 * @since 1.0.0
 		 *
 		 * @return string $location
 		 */
@@ -113,7 +113,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 			$product    = wc_get_product( $product_id );
 
 			if ( ! is_a( $product, 'WC_Product' ) ) {
-				return;
+				return $location;
 			}
 
 			$next_product_url = self::get_next_product_url_to_review( $product_id );
@@ -126,7 +126,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		}
 
 		/**
-		 * Get next product in line to review, remove the current one fro the session
+		 * Get next product in line to review, remove the current one from the session
 		 *
 		 * @param $current_product_id
 		 * @since 1.0.0
@@ -153,6 +153,13 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 
 				if ( $next_item_id ) {
 					return get_permalink( $next_item_id );
+				}
+
+				// If there is no next product to review
+				if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_coupon_review_reminder_checkbox', 3 ) ) {
+					global $woocommerce;
+					$reminder_email = $woocommerce->mailer()->emails['WC_Review_Coupons_Email'];
+					$reminder_email->trigger_order_review_coupon( $current_session_data['order_id'] );
 				}
 			}
 
@@ -282,20 +289,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				return;
 			}
 
-			$units = 0;
-			switch ( $sending_delay_unit ) {
-				case 'minutes':
-					$units = 60;
-					break;
-				case 'hours':
-					$units = 60 * 60;
-					break;
-				case 'days':
-					$units = 60 * 60 * 60;
-					break;
-			}
-
-			wp_schedule_single_event( time() + ( $sending_delay * $units ), 'send_reminder_review_email_event', array( $order_id ) );
+			wp_schedule_single_event( time() + ( $sending_delay * get_seconds_from_units( $sending_delay_unit ) ), 'send_reminder_review_email_event', array( $order_id ) );
 
 			update_post_meta( $order_id, '_review_reminder_sent', true );
 		}

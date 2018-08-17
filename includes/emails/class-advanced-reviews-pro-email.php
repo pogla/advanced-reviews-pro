@@ -87,5 +87,72 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_WC_Review_Email' ) ) {
 		public function init_form_fields() {
 			$this->form_fields = array();
 		}
+
+		/**
+		 * Validates if we can send email
+		 *
+		 * @param $id
+		 * @param string $type
+		 *
+		 * @return bool
+		 */
+		public function can_send_email( $id, $type = 'order' ) {
+
+			// If emails are limited
+			if ( 'on' !== arp_get_option( ARP_PREFIX . 'limit_emails_per_user_checkbox' ) ) {
+				return true;
+			}
+
+			// If forced review emails
+			if ( 'user' === $type && 'on' === arp_get_option( ARP_PREFIX . 'force_unlimited_review_emails_checkbox' ) ) {
+				return true;
+			}
+
+			$seconds_limit = intval( arp_get_option( ARP_PREFIX . 'emails_limit_text' ) ) * 24 * 60 * 60;
+
+			if ( ! $seconds_limit ) {
+				return true;
+			}
+
+			$last_sent      = 0;
+			$meta_key_order = '_' . ARP_PREFIX . 'order_last_sent_email';
+
+			if ( 'order' === $type ) {
+
+				$email       = get_post_meta( $id, '_billing_email', true );
+				$customer_id = get_post_meta( $id, '_customer_user', true );
+
+				if ( $customer_id ) {
+					$user_info = get_userdata( $customer_id );
+				}
+			} elseif ( 'user' === $type ) {
+				$user_info = get_userdata( $id );
+				$email     = $user_info->user_email;
+			}
+
+			global $wpdb;
+			$orders_sent = $wpdb->get_results( $wpdb->prepare( "SELECT MAX(meta_value) FROM {$wpdb->prefix}postmeta WHERE meta_key = %s AND post_id IN (SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_billing_email' AND meta_value = %s)", array( $meta_key_order, $email ) ) );
+			foreach ( $orders_sent[0] as $result ) {
+				if ( ! empty( $result ) ) {
+					$last_sent = intval( $result );
+				}
+			}
+
+			if ( isset( $user_info ) ) {
+				$user_last_sent = get_user_meta( $user_info->ID, '_' . ARP_PREFIX . 'user_last_sent_email', true );
+
+				if ( $user_last_sent && intval( $user_last_sent ) > $last_sent ) {
+					$last_sent = $user_last_sent;
+				}
+			}
+
+			$start_time = current_time( 'timestamp' ) - $seconds_limit;
+
+			if ( $last_sent > $start_time ) {
+				return false;
+			}
+
+			return true;
+		}
 	}
 }

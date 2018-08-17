@@ -60,10 +60,11 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			}
 
 			// setup order object
-			$this->object = new WC_Order( $order_id );
-			$order_items  = Advanced_Reviews_Pro_Reminders::get_limited_ordered_products( $this->object->get_items() );
+			$this->object    = new WC_Order( $order_id );
+			$order_items     = Advanced_Reviews_Pro_Reminders::get_limited_ordered_products( $this->object->get_items() );
+			$this->recipient = $this->object->get_billing_email();
 
-			if ( empty( $order_items ) ) {
+			if ( ! $this->is_enabled() || ! $this->recipient || empty( $order_items ) || ! $this->can_send_email( $order_id ) ) {
 				return;
 			}
 
@@ -77,14 +78,10 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			$this->placeholders['{list_of_products}']    = $this->get_links_ordered_items( $order_items );
 			$this->placeholders['{review_link}']         = $this->get_links_ordered_items( $order_items, true );
 
-			$this->heading   = $this->format_string( arp_get_option( ARP_PREFIX . 'email_heading_text', 2 ) );
-			$this->recipient = $this->object->get_billing_email();
-			$this->subject   = $this->format_string( arp_get_option( ARP_PREFIX . 'email_subject_text', 2 ) );
+			$this->heading = $this->format_string( arp_get_option( ARP_PREFIX . 'email_heading_text', 2 ) );
+			$this->subject = $this->format_string( arp_get_option( ARP_PREFIX . 'email_subject_text', 2 ) );
 
-			if ( ! $this->is_enabled() || ! $this->recipient ) {
-				return;
-			}
-
+			update_post_meta( $order_id, '_' . ARP_PREFIX . 'order_last_sent_email', current_time( 'timestamp' ) );
 			// Woohoo, send the email!
 			$this->send( $this->recipient, $this->subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
 		}
@@ -105,7 +102,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			$email         = $this;
 			$body          = $this->format_string( arp_get_option( ARP_PREFIX . 'email_body_text', 2 ) );
 
-			include plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . 'public/templates/emails/review-reminder.php';
+			include plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . 'public/templates/emails/review-email.php';
 
 			return ob_get_clean();
 		}

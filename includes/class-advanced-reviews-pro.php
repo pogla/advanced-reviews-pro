@@ -129,6 +129,12 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-i18n.php';
 
 			/**
+			 * The class responsible for orchestrating the actions and filters of the
+			 * core plugin.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-functions.php';
+
+			/**
 			 * Include reviews class.
 			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-recaptcha.php';
@@ -316,7 +322,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				}
 			}
 
-			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_review_discount_checkbox', 3 ) ) {
+			// Review for discount
+			$is_review_for_discount             = 'on' === arp_get_option( ARP_PREFIX . 'enable_review_discount_checkbox', 3 );
+			$is_review_for_discount_on_reminder = 'on' === arp_get_option( ARP_PREFIX . 'enable_coupon_review_reminder_checkbox', 3 );
+
+			if ( $is_review_for_discount || ( $is_review_for_discount_on_reminder && ( $is_auto_reminders || $is_manual_reminders ) ) ) {
 
 				$review_coupons = advanced_reviews_pro_coupons();
 				$this->loader->add_filter( 'woocommerce_email_classes', $review_coupons, 'add_review_coupons_woocommerce_email' );
