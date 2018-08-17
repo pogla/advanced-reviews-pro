@@ -164,6 +164,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-reminders.php';
 
 			/**
+			 * Coupons class
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-coupons.php';
+
+			/**
 			 * The class responsible for defining all actions that occur in the admin area.
 			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-advanced-reviews-pro-admin.php';
@@ -309,6 +314,13 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 					$this->loader->add_action( 'woocommerce_order_actions', $plugin_review_reminders, 'add_reminder_order_action' );
 					$this->loader->add_action( 'woocommerce_order_action_wc_review_reminder_action', $plugin_review_reminders, 'process_reminder_order_action' );
 				}
+			}
+
+			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_review_discount_checkbox', 3 ) ) {
+
+				$review_coupons = advanced_reviews_pro_coupons();
+				$this->loader->add_filter( 'woocommerce_email_classes', $review_coupons, 'add_review_coupons_woocommerce_email' );
+				$this->loader->add_filter( 'comment_post_redirect', $review_coupons, 'send_coupon_after_review', 9 );
 			}
 		}
 

@@ -46,7 +46,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 */
 		public function add_review_reminder_woocommerce_email( $email_classes ) {
 
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-reminders-email.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/emails/class-advanced-reviews-pro-email.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/emails/class-advanced-reviews-pro-reminders-email.php';
 
 			// add the email class to the list of email classes that WooCommerce loads
 			$email_classes['WC_Review_Reminder_Email'] = wc_review_reminder_email();
@@ -103,6 +104,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 * Redirects to the next product to review. Only works with review pre-generated link.
 		 *
 		 * @param $location
+		 *
+		 * @return string $location
 		 */
 		public function redirect_after_review( $location ) {
 
@@ -116,9 +119,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 			$next_product_url = self::get_next_product_url_to_review( $product_id );
 
 			if ( false === $next_product_url ) {
-				wp_safe_redirect( $location );
+				return $location;
 			} else {
-				wp_safe_redirect( $next_product_url . '#reviews' );
+				return $next_product_url . '#reviews';
 			}
 		}
 
@@ -339,11 +342,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 */
 		public function send_reminder_review_email( $order_id ) {
 
-			$order = wc_get_order( $order_id );
-
 			global $woocommerce;
 			$reminder_email = $woocommerce->mailer()->emails['WC_Review_Reminder_Email'];
-			$reminder_email->trigger( $order_id, $order );
+			$reminder_email->trigger( $order_id );
 		}
 
 		/**

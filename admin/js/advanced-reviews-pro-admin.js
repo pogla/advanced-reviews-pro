@@ -67,9 +67,16 @@ jQuery( document ).ready( function( $ ) {
 			});
 
 			image_frame.open();
+		} )
+		.on( 'init, change', '#arp_enable_coupon_review_reminder_checkbox, #arp_enable_review_discount_checkbox', function () {
+			if ( ! $( '#arp_enable_coupon_review_reminder_checkbox' ).is( ':checked' ) && ! $( '#arp_enable_review_discount_checkbox' ).is( ':checked' ) ) {
+				$( '.arp_tab3_hide' ).addClass( 'is-hidden' );
+			} else {
+				$( '.arp_tab3_hide' ).removeClass( 'is-hidden' );
+			}
 		} );
 
-	$( '#arp-selected-product' ).trigger( 'init' );
+	$( '#arp_enable_coupon_review_reminder_checkbox' ).trigger( 'init' );
 
 	// Ajax request to refresh the image preview
 	function refreshImages( ids ){

@@ -216,6 +216,11 @@ jQuery( document ).ready( function( $ ) {
 	 * Allows for within group dependencies and multi-check dependencies.
 	 */
 	function CMB2ConditionalsFindDependants( fieldName, elm, context ) {
+
+		if ( ! fieldName ) {
+			return [];
+		}
+
 		var inGroup, iterator, dependants;
 
 		// Remove the empty [] at the end of a multi-check field.

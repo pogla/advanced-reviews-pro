@@ -301,13 +301,16 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		 */
 		public static function check_if_new_max_rating_selected() {
 
-			$review_score_prev = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
-			$review_score_new  = absint( $_POST['arp_max_review_score_number'] );
+			if ( isset( $_POST['arp_max_review_score_number'] ) ) {
 
-			if ( $review_score_prev !== $review_score_new && 5 === $review_score_new ) {
-				self::cleanup_decimal_ratings();
-			} elseif ( $review_score_prev !== $review_score_new && 5 === $review_score_prev ) {
-				self::restore_decimal_ratings();
+				$review_score_prev = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
+				$review_score_new  = absint( $_POST['arp_max_review_score_number'] );
+
+				if ( $review_score_prev !== $review_score_new && 5 === $review_score_new ) {
+					self::cleanup_decimal_ratings();
+				} elseif ( $review_score_prev !== $review_score_new && 5 === $review_score_prev ) {
+					self::restore_decimal_ratings();
+				}
 			}
 		}
 
