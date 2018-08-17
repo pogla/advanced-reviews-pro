@@ -289,7 +289,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				return;
 			}
 
-			wp_schedule_single_event( time() + ( $sending_delay * get_seconds_from_units( $sending_delay_unit ) ), 'send_reminder_review_email_event', array( $order_id ) );
+			wp_schedule_single_event( time() + ( $sending_delay * Advanced_Reviews_Pro_Functions::get_seconds_from_units( $sending_delay_unit ) ), 'send_reminder_review_email_event', array( $order_id ) );
 
 			update_post_meta( $order_id, '_review_reminder_sent', true );
 		}

@@ -110,7 +110,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_WC_Review_Email' ) ) {
 
 			$seconds_limit = intval( arp_get_option( ARP_PREFIX . 'emails_limit_text' ) ) * 24 * 60 * 60;
 
-			if ( ! $seconds_limit ) {
+			if ( 0 >= $seconds_limit ) {
 				return true;
 			}
 
@@ -148,7 +148,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_WC_Review_Email' ) ) {
 
 			$start_time = current_time( 'timestamp' ) - $seconds_limit;
 
-			if ( $last_sent > $start_time ) {
+			if ( $last_sent && $last_sent > $start_time ) {
 				return false;
 			}
 

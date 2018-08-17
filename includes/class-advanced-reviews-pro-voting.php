@@ -57,8 +57,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 			global $is_comment_summary;
 
 			if ( is_product() && true !== $is_comment_summary ) {
-
-				$q->query_vars['meta_key'] = 'arp_total_votes';
+				$q->query_vars['meta_key'] = ARP_PREFIX . 'total_votes';
 				$q->query_vars['orderby']  = 'meta_value_num';
 				$q->query_vars['order']    = 'DESC';
 			}

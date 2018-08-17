@@ -301,7 +301,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		 */
 		public static function check_if_new_max_rating_selected() {
 
-			if ( isset( $_POST['arp_max_review_score_number'] ) ) {
+			if ( isset( $_POST[ ARP_PREFIX . 'max_review_score_number' ] ) ) {
 
 				$review_score_prev = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
 				$review_score_new  = absint( $_POST['arp_max_review_score_number'] );
