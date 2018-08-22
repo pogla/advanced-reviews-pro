@@ -33,6 +33,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Activator' ) ) {
 		 */
 		protected static $_instance = null;
 
+		/* @var $errors array */
+		protected static $errors = array();
+
 		/**
 		 * Short Description. (use period)
 		 *

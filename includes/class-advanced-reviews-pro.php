@@ -69,6 +69,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 		protected $version;
 
 		/**
+		 *
+		 * @since    1.0.0
+		 * @access   protected
+		 * @var      array    $errors
+		 */
+		protected static $errors = array();
+
+		/**
 		 * Define the core functionality of the plugin.
 		 *
 		 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -78,6 +86,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 		 * @since    1.0.0
 		 */
 		public function __construct() {
+			add_action( 'admin_notices', array( __CLASS__, 'admin_notices' ), 8 );
+		}
+
+		public function init() {
 
 			if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
 				$this->version = PLUGIN_NAME_VERSION;
@@ -98,7 +110,85 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			$this->set_locale();
 			$this->define_admin_hooks();
 			$this->define_public_hooks();
+		}
 
+		/**
+		 * Check if we can activate plugin
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return bool
+		 */
+		public static function check() {
+
+			$passed = true;
+
+			/* translators: 1: Plugin name */
+			$inactive_text = '<strong>' . sprintf( __( '%s is inactive.', 'advanced-reviews-pro' ), ARP_NAME ) . '</strong>';
+
+			if ( version_compare( phpversion(), ARP_MIN_PHP_VER, '<' ) ) {
+				/* translators: 1: inactive text, 2: plugin name */
+				self::$errors[] = sprintf( __( '%1$s The plugin requires PHP version %2$s or newer.', 'advanced-reviews-pro' ), $inactive_text, ARP_MIN_PHP_VER );
+				$passed         = false;
+			} elseif ( ! self::is_woocommerce_version_ok() ) {
+				/* translators: 1: inactive text, 2: plugin name */
+				self::$errors[] = sprintf( __( '%1$s The plugin requires WooCommerce version %2$s or newer.', 'advanced-reviews-pro' ), $inactive_text, ARP_MIN_WC_VER );
+				$passed         = false;
+			} elseif ( ! self::is_wp_version_ok() ) {
+				/* translators: 1: inactive text, 2: plugin name */
+				self::$errors[] = sprintf( __( '%1$s The plugin requires WordPress version %2$s or newer.', 'advanced-reviews-pro' ), $inactive_text, ARP_MIN_WP_VER );
+				$passed         = false;
+			}
+
+			return $passed;
+		}
+
+		/**
+		 * Check WC version
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return bool
+		 */
+		protected static function is_woocommerce_version_ok() {
+
+			if ( ! function_exists( 'WC' ) ) {
+				return false;
+			};
+			if ( ! ARP_MIN_WC_VER ) {
+				return true;
+			};
+			return version_compare( WC()->version, ARP_MIN_WC_VER, '>=' );
+		}
+
+
+		/**
+		 * Check WP version
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return bool
+		 */
+		protected static function is_wp_version_ok() {
+			global $wp_version;
+			if ( ! ARP_MIN_WP_VER ) {
+				return true;
+			}
+			return version_compare( $wp_version, ARP_MIN_WP_VER, '>=' );
+		}
+
+		/**
+		 * Admin notices
+		 *
+		 * @since 1.0.0
+		 */
+		public static function admin_notices() {
+			if ( empty( self::$errors ) ) {
+				return;
+			};
+			echo '<div class="notice notice-error"><p>';
+			echo implode( '<br>', self::$errors ); // WPCS XSS ok.
+			echo '</p></div>';
 		}
 
 		/**

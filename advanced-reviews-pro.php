@@ -27,6 +27,10 @@ defined( 'ABSPATH' ) || exit;
  */
 define( 'ARP_VERSION', '1.0.0' );
 define( 'ARP_PREFIX', 'arp_' );
+define( 'ARP_NAME', 'Advanced Reviews Pro' );
+define( 'ARP_MIN_PHP_VER', '5.6' );
+define( 'ARP_MIN_WP_VER', '4.4.0' );
+define( 'ARP_MIN_WC_VER', '3.0.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -48,36 +52,27 @@ function deactivate_advanced_reviews_pro() {
 	$deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_advanced_reviews_pro' );
-register_deactivation_hook( __FILE__, 'deactivate_advanced_reviews_pro' );
-
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-advanced-reviews-pro.php';
 
-/**
- * Require cmb2 library and add-ons
- */
-require plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
-require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-conditionals/cmb2-conditionals.php';
-require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-select2/cmb-field-select2.php';
+$plugin = advanced_reviews_pro();
 
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
- */
-function run_advanced_reviews_pro() {
+if ( $plugin::check() ) {
 
-	$plugin = advanced_reviews_pro();
+	$plugin->init();
+
+	register_activation_hook( __FILE__, 'activate_advanced_reviews_pro' );
+	register_deactivation_hook( __FILE__, 'deactivate_advanced_reviews_pro' );
+
+	/**
+	 * Require cmb2 library and add-ons
+	 */
+	require plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
+	require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-conditionals/cmb2-conditionals.php';
+	require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-select2/cmb-field-select2.php';
+
 	$plugin->run();
 }
-run_advanced_reviews_pro();
-
-
