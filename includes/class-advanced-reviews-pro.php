@@ -229,6 +229,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_action( 'admin_menu', $plugin_review_manual, 'add_rating_submenu' );
 				$this->loader->add_action( 'wp_ajax_arp_get_images', $plugin_review_manual, 'arp_get_images' );
 				$this->loader->add_action( 'wp_loaded', $plugin_review_manual, 'submit_new_comment' );
+				$this->loader->add_action( 'add_meta_boxes', $plugin_review_manual, 'add_images_meta_box' );
+				$this->loader->add_action( 'edit_comment', $plugin_review_manual, 'save_images_edit_comment' );
 			}
 		}
 
@@ -274,8 +276,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_filter( 'woocommerce_review_after_comment_text', $plugin_review_voting, 'add_voting_to_rating_html' );
 				$this->loader->add_action( 'wp_ajax_arp_vote', $plugin_review_voting, 'vote' );
 				$this->loader->add_action( 'wp_ajax_nopriv_arp_vote', $plugin_review_voting, 'vote' );
-
-				$this->loader->add_action( 'pre_get_posts', $plugin_review_voting, 'test' );
 
 				// Sort by votes
 				if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_votes_sorting_checkbox' ) ) {

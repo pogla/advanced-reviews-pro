@@ -94,6 +94,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_WC_Review_Email' ) ) {
 		/**
 		 * Validates if we can send email
 		 *
+		 * @since 1.0.0
 		 * @param $id
 		 * @param string $type
 		 *

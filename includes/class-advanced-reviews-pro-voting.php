@@ -31,16 +31,16 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Allow unlimited admin vodes.
+		 * Allow unlimited admin votes.
 		 *
-		 * @since    1.0.0
-		 * @access   private
-		 * @var      bool    $allow_admin
+		 * @since  1.0.0
+		 * @access private
+		 * @var    bool    $allow_admin
 		 */
 		private $allow_admin;
 
 		/**
-		 * @since    1.0.0
+		 * @since 1.0.0
 		 */
 		public function __construct() {
 			include ABSPATH . 'wp-includes/pluggable.php';
@@ -49,6 +49,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 
 		/**
 		 * Order ratings by votes
+		 *
+		 * @since 1.0.0
 		 *
 		 * @param $q
 		 */
@@ -125,11 +127,13 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 		/**
 		 * Create a vote on rating via AJAX
 		 *
+		 * Response codes:
 		 * 1 - Cheating
 		 * 2 - Already voted
 		 * 3 - Registered vote successful
 		 * 4 - Unregistered vote successful
 		 *
+		 * @since 1.0.0
 		 */
 		public function vote() {
 
@@ -235,6 +239,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 
 		/**
 		 * Updates comment/rating with votes data
+		 *
+		 * @since 1.0.0
 		 *
 		 * @param $comment_id
 		 * @param $vote_type

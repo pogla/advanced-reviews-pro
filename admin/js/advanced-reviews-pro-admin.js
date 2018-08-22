@@ -104,7 +104,7 @@ jQuery( document ).ready(
 			};
 
 			$.post(
-				ajaxurl, data, function(response) {
+				ajaxurl, data, function( response ) {
 
 					if ( true === response.success ) {
 

@@ -54,7 +54,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 		 * @access   private
 		 * @var      array    $allowed_types
 		 */
-		private $allowed_types = array( 'png', 'gif', 'jpg', 'jpeg' );
+		private $allowed_types;
 
 		/**
 		 * @since    1.0.0
@@ -69,6 +69,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 
 			$this->total_images_allowed = arp_get_option( ARP_PREFIX . 'total_imgs_number' );
 			$this->max_image_size       = arp_get_option( ARP_PREFIX . 'size_imgs_number' );
+			$this->allowed_types        = apply_filters( 'arp_allowed_file_types', array( 'png', 'gif', 'jpg', 'jpeg' ) );
 
 			if ( ! $this->total_images_allowed ) {
 				$this->total_images_allowed = 3;
@@ -94,8 +95,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 			$post_id = get_the_ID();
 
 			$comment_form['comment_field'] .= '<p><label for="comment_image_' . $post_id . '">';
-			/* translators: %d: max images to upload */
-			$comment_form['comment_field'] .= sprintf( __( 'Upload up to %1$d images for your review <br><span style="font-size: 0.8rem;opacity: .8;font-weight: normal;">(Allowed image size is %2$s MB. Allowed image types are: jpg, png, jpeg, gif.)</span>', 'advanced-reviews-pro' ), $this->total_images_allowed, $this->max_image_size );
+			/* translators: %1$d: number of images, %2$s: max images to upload, %3$s: file extensions */
+			$comment_form['comment_field'] .= sprintf( __( 'Upload up to %1$d images for your review <br><span style="font-size: 0.8rem;opacity: .8;font-weight: normal;">(Allowed image size is %2$s MB. Allowed image types are: %3$s.)</span>', 'advanced-reviews-pro' ), $this->total_images_allowed, $this->max_image_size, implode( ', ', $this->allowed_types ) );
 			$comment_form['comment_field'] .= '</label><input type="file" multiple="multiple" name="review_image_' . $post_id . '[]" id="review_image" />';
 			$comment_form['comment_field'] .= '</p>';
 
@@ -112,8 +113,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 		 */
 		public function save_review_images( $comment_id, $comment ) {
 
+			$product_id = get_comment( $comment_id )->comment_post_ID;
+			$product    = wc_get_product( $product_id );
+
 			// Return if not product review
-			if ( ! is_product() || 0 !== intval( $comment->comment_parent ) ) {
+			if ( ! is_a( $product, 'WC_Product' ) || 0 !== intval( $comment->comment_parent ) ) {
 				return;
 			}
 
@@ -131,14 +135,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 				for ( $i = 0; $i < $files_count; $i++ ) {
 
 					if ( ( 1048576 * $this->max_image_size ) < $_FILES[ $comment_image_id ]['size'][ $i ] ) {
-						$this->error_comment_files( $comment_id, 'File size is too large!' );
+						$this->error_comment_files( $comment_id, __( 'File size is too large!', 'advanced-reviews-pro' ) );
 					}
 
 					$file_name_parts = explode( '.', $_FILES[ $comment_image_id ]['name'][ $i ] );
 					$file_ext        = $file_name_parts[ count( $file_name_parts ) - 1 ];
 
 					if ( ! in_array( strtolower( trim( $file_ext ) ), $this->allowed_types, true ) ) {
-						$this->error_comment_files( $comment_id, 'Wrong file extension!' );
+						$this->error_comment_files( $comment_id, __( 'Wrong file extension!', 'advanced-reviews-pro' ) );
 					}
 				}
 
@@ -150,7 +154,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 					if ( ! is_wp_error( $attachment_id ) ) {
 						$images[] = $attachment_id;
 					} else {
-						$this->error_comment_files( $comment_id, 'Error uploading file. ' );
+						$this->error_comment_files( $comment_id, __( 'Error uploading file.', 'advanced-reviews-pro' ) );
 					}
 				}
 
@@ -159,6 +163,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 			}
 		}
 
+		/**
+		 * Displays review images
+		 *
+		 * @since 1.0.0
+		 * @param $comments
+		 *
+		 * @return mixed
+		 */
 		public function display_review_image( $comments ) {
 
 			// Return if not product review
@@ -167,12 +179,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 			}
 
 			if ( count( $comments ) > 0 ) {
-
-				//check WooCommerce version because PhotoSwipe lightbox is only supported in version 3.0+
-				$class_a = 'arp-comment-a-old';
-				if ( ( version_compare( WC()->version, '3.0', '>=' ) ) ) {
-					$class_a = 'arp-comment-a';
-				}
 
 				foreach ( $comments as $comment ) {
 
@@ -194,7 +200,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 							$shop_img                  = wp_get_attachment_image_src( $pics[ $i ] );
 							$comment->comment_content .= '<div class="arv-comment-image">';
 							/* translators: #%1$d: image name */
-							$comment->comment_content .= '<img data-natural-width="' . $img_meta['width'] . '" data-natural-height="' . $img_meta['height'] . '" data-full-src="' . $full_img_src . '" class="' . $class_a . '" src="' . $shop_img[0] . '" alt="' . sprintf( __( 'Image #%1$d from ', 'advanced-reviews-pro' ), $i + 1 ) . $comment->comment_author . '">';
+							$comment->comment_content .= '<img data-natural-width="' . $img_meta['width'] . '" data-natural-height="' . $img_meta['height'] . '" data-full-src="' . $full_img_src . '" src="' . $shop_img[0] . '" alt="' . sprintf( __( 'Image #%1$d from ', 'advanced-reviews-pro' ), $i + 1 ) . $comment->comment_author . '">';
 							$comment->comment_content .= '</div>';
 						}
 						$comment->comment_content .= '<div style="clear:both;"></div></div>';
@@ -214,7 +220,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 		 */
 		private function error_comment_files( $comment_id, $error_msg ) {
 			wp_delete_comment( $comment_id, true );
-			wp_die( esc_attr( $error_msg ), esc_attr( __( 'Comment Submission Failure' ) ), array( 'back_link' => true ) );
+			wp_die( esc_attr( $error_msg ), __( 'Comment Submission Failure', 'advanced-reviews-pro' ), array( 'back_link' => true ) ); // WPCS XSS ok.
 		}
 
 		/**

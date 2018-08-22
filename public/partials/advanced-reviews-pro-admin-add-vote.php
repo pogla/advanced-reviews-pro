@@ -15,13 +15,19 @@ $total_score = get_comment_meta( $comment_id, 'arp_total_votes', true );
 $classes     = $user_voted ? ' selected ' : '';
 
 if ( ! $total_score ) {
-	$total_score = 'Vote';
+	$total_score = __( 'Vote', 'advanced-reviews-pro' );
 }
+
+do_action( 'arp_before_voting_html', $total_score );
 
 ?>
 
 <div class="arp-vote-wrapper">
-	<div class="arp-vote down <?php echo esc_html( $classes ); ?>" data-vote="down" data-allow-admin="<?php echo $allow_admin; ?>" data-product="<?php echo esc_html( $product_id ); ?>" data-comment="<?php echo esc_html( $comment_id ); ?>" style="background-image: url(<?php echo $assets_url . 'down.svg'; ?>);"></div>
-	<div class="arp-total-votes"><?php echo esc_html( $total_score ); ?></div>
-	<div class="arp-vote up <?php echo esc_html( $classes ); ?>" data-vote="up" data-allow-admin="<?php echo $allow_admin; ?>" data-product="<?php echo esc_html( $product_id ); ?>" data-comment="<?php echo esc_html( $comment_id ); ?>" style="background-image: url(<?php echo $assets_url . 'up.svg'; ?>);"></div>
+	<div class="arp-vote down <?php echo $classes; // WPCS XSS ok. ?>" data-vote="down" data-allow-admin="<?php echo $allow_admin; // WPCS XSS ok. ?>" data-product="<?php echo $product_id; // WPCS XSS ok. ?>" data-comment="<?php echo $comment_id; // WPCS XSS ok ?>" style="background-image: url(<?php echo $assets_url . 'down.svg'; // WPCS XSS ok ?>);"></div>
+	<div class="arp-total-votes"><?php echo $total_score; // WPCS XSS ok ?></div>
+	<div class="arp-vote up <?php echo $classes; // WPCS XSS ok ?>" data-vote="up" data-allow-admin="<?php echo $allow_admin; // WPCS XSS ok ?>" data-product="<?php echo $product_id; // WPCS XSS ok ?>" data-comment="<?php echo $comment_id; // WPCS XSS ok ?>" style="background-image: url(<?php echo $assets_url . 'up.svg'; // WPCS XSS ok ?>);"></div>
 </div>
+
+<?php
+do_action( 'arp_after_voting_html', $total_score );
+?>

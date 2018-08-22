@@ -61,24 +61,24 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 	$comment_link = get_permalink( $_POST['selected-product'] ) . '#comment-' . $_POST['arp-review-id'];
 	?>
 	<br>
-	<?php if ( isset( $_POST['arp-added-comment'] ) ) { ?>
+	<?php if ( isset( $_POST['arp-added-comment'] ) ) : ?>
 		<div class="notice notice-success is-dismissible">
-			<p><?php _e( 'Comment added! Check it out: ', 'advanced-reviews-pro' ); ?><a target="_blank" href="<?php echo $comment_link; ?>"><?php echo $comment_link; ?></a></p>
+			<p><?php _e( 'Comment added! Check it out: ', 'advanced-reviews-pro' ); // WPCS XSS ok. ?><a target="_blank" href="<?php echo $comment_link; // WPCS XSS ok. ?>"><?php echo $comment_link; // WPCS XSS ok. ?></a></p>
 		</div>
-	<?php } elseif ( isset( $_POST['arp-added-comment-error'] ) ) { ?>
+	<?php elseif ( isset( $_POST['arp-added-comment-error'] ) ) : ?>
 		<div class="notice notice-error is-dismissible">
-			<p><?php _e( 'There has been an error adding your custom comment!', 'advanced-reviews-pro' ); ?></p>
+			<p><?php _e( 'There has been an error adding your custom comment!', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></p>
 		</div>
 	<?php
-}
+	endif;
 }
 
 ?>
 
 <div id="post-body-content" class="edit-form-section edit-comment-section wrap">
 	<div class="title-wrapper" >
-		<h3 class="metabox-title">Add Rating</h3>
-		<p class="metabox-description">On this screen you can add ratings yourself.</p>
+		<h3 class="metabox-title"><?php _e( 'Add Rating', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></h3>
+		<p class="metabox-description"><?php _e( 'On this screen you can add ratings yourself', 'advanced-reviews-pro' ); // WPCS XSS ok. ?>.</p>
 	</div>
 	<form name="arp-add-custom-rating" method="post">
 		<?php wp_nonce_field( 'add_rating_action', 'add_rating_nonce' ); ?>
@@ -86,11 +86,12 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 			<fieldset>
 				<table class="form-table editcomment">
 					<tbody>
+					<?php do_action( 'arp_before_add_manual_review_form' ); ?>
 					<tr>
-						<td class="first"><label for="selected-user">Select User:</label></td>
+						<td class="first"><label for="selected-user"><?php _e( 'Select User', 'advanced-reviews-pro' ); // WPCS XSS ok. ?>:</label></td>
 						<td>
 							<select name="selected-user" id="selected-user">
-								<option value="guest">Guest</option>
+								<option value="guest"><?php _e( 'Guest', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></option>
 								<?php
 								foreach ( $users as $user ) {
 									$user_data = wp_json_encode(
@@ -101,36 +102,36 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 											'display_name' => $user->data->display_name,
 										)
 									);
-									echo "<option value='{$user->data->ID}' data-userdata='{$user_data}'>{$user->data->display_name} (#{$user->data->ID})</option>";
+									echo "<option value='{$user->data->ID}' data-userdata='{$user_data}'>{$user->data->display_name} (#{$user->data->ID})</option>"; // WPCS XSS ok.
 								}
 								?>
 							</select>
 						</td>
 					</tr>
 					<tr class="hide-if-guest">
-						<td class="first"><label for="name">Name: *</label></td>
+						<td class="first"><label for="name"><?php _e( 'Name', 'advanced-reviews-pro' ); // WPCS XSS ok. ?>: *</label></td>
 						<td><input class="full-width" type="text" name="author-name" value="" id="author-name" required></td>
 					</tr>
 					<tr class="hide-if-guest">
-						<td class="first"><label for="email">Email: *</label></td>
+						<td class="first"><label for="email"><?php _e( 'Email', 'advanced-reviews-pro' ); // WPCS XSS ok. ?>: *</label></td>
 						<td>
 							<input class="full-width" type="email" name="author-email" value="" id="author-email" required>
 						</td>
 					</tr>
 					<tr class="hide-if-guest">
-						<td class="first"><label for="newcomment_author_url">URL:</label></td>
+						<td class="first"><label for="newcomment_author_url"><?php _e( 'URL', 'advanced-reviews-pro' ); // WPCS XSS ok. ?>:</label></td>
 						<td>
 							<input class="full-width" type="text" name="newcomment_author_url" id="newcomment_author_url">
 						</td>
 					</tr>
 					<tr>
-						<td class="first"><label for="comment_date">Comment Date:</label></td>
+						<td class="first"><label for="comment_date"><?php _e( 'Comment Date', 'advanced-reviews-pro' ); // WPCS XSS ok. ?>:</label></td>
 						<td>
 							<input class="full-width" type="datetime-local" name="comment_date" id="comment_date">
 						</td>
 					</tr>
 					<tr>
-						<td class="first"><label for="name">Comment</label></td>
+						<td class="first"><label for="name"><?php _e( 'Comment', 'advanced-reviews-pro' ); // WPCS XSS ok. ?>:</label></td>
 						<td>
 							<?php
 							wp_editor(
@@ -145,25 +146,25 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 						</td>
 					</tr>
 					<tr>
-						<td class="first"><label for="selected-rating">Rating</label></td>
+						<td class="first"><label for="selected-rating"><?php _e( 'Rating', 'advanced-reviews-pro' ); // WPCS XSS ok. ?>:</label></td>
 						<td>
 							<select name="selected-rating">
 								<?php
 								for ( $i = 1; $i <= $review_score_max; $i++ ) {
-									echo '<option value="' . esc_attr( $i ) . '">' . esc_html( $i ) . '</option>';
+									echo '<option value="' . $i . '">' . $i . '</option>'; // WPCS XSS ok.
 								}
 								?>
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td class="first"><label for="selected-product">Select a Product</label></td>
+						<td class="first"><label for="selected-product"><?php _e( 'Select a Product', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></label></td>
 						<td>
 							<select name="selected-product" id="arp-selected-product">
 								<?php
 								foreach ( $products as $product ) {
 									$product_title = get_the_title( $product->ID );
-									echo "<option value='{$product->ID}'>{$product_title} (#{$product->ID})</option>";
+									echo "<option value='{$product->ID}'>{$product_title} (#{$product->ID})</option>"; // WPCS XSS ok.
 								}
 								?>
 							</select>
@@ -171,17 +172,18 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 					</tr>
 					<?php if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_images_checkbox' ) ) { ?>
 						<tr>
-							<td class="first"><label for="selected-images">Upload images</label></td>
+							<td class="first"><label for="selected-images"><?php _e( 'Upload images', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></label></td>
 							<td>
-								<a href="javascript:" class="arp-insert-media">Add files</a>
+								<a href="javascript:" class="arp-insert-media button"><?php _e( 'Add Media', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></a>
 								<input type="hidden" name="arp-selected-imgs" id="arp-selected-imgs">
 								<div id="selected-images"></div>
 							</td>
 						</tr>
 					<?php } ?>
+					<?php do_action( 'arp_after_add_manual_review_form' ); ?>
 					<tr>
 						<td>
-							<button type="submit" class="button-primary">Add Review</button>
+							<button type="submit" class="button-primary"><?php _e( 'Add Review', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></button>
 						</td>
 					</tr>
 					</tbody>

@@ -33,6 +33,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Functions' ) ) {
 		/**
 		 * Transform minutes, hours, days to seconds
 		 *
+		 * @since 1.0.0
 		 * @param $type
 		 *
 		 * @return float|int
@@ -57,6 +58,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Functions' ) ) {
 
 		/**
 		 * Update all the comments with meta, so the sorting will work
+		 *
+		 * @since 1.0.0
 		 */
 		public static function update_comments_with_meta() {
 
@@ -89,6 +92,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Functions' ) ) {
 		/**
 		 * Add comment meta when comment created
 		 *
+		 * @since 1.0.0
 		 * @param $comment_id
 		 *
 		 * @return mixed|void
@@ -98,7 +102,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Functions' ) ) {
 			$product_id = get_comment( $comment_id )->comment_post_ID;
 			$product    = wc_get_product( $product_id );
 
-			if ( ! is_a( $product, 'WC_Product' ) ) {
+			if ( ! $product ) {
 				return;
 			}
 

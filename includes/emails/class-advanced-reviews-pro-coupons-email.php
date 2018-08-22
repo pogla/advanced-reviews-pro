@@ -36,9 +36,9 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 		public function __construct() {
 
 			$this->id    = 'wc_review_coupon';
-			$this->title = 'Review Coupons';
+			$this->title = __( 'Review Coupons', 'advanced-reviews-pro' );
 			/* translators: %1$s: Link */
-			$this->description = sprintf( __( 'Review coupons email. Edit settings %1$shere%2$s.' ), '<a href="' . admin_url( 'admin.php?page=arp_tab3_options' ) . '">', '</a>' );
+			$this->description = sprintf( __( 'Review coupons email. Edit settings %1$shere%2$s.', 'advanced-reviews-pro' ), '<a href="' . admin_url( 'admin.php?page=arp_tab3_options' ) . '">', '</a>' );
 
 			// Call parent constructor to load any other defaults not explicity defined here
 			parent::__construct();
@@ -86,13 +86,18 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 
 			update_user_meta( $user_id, '_' . ARP_PREFIX . 'user_last_sent_email', current_time( 'timestamp' ) );
 
+			do_action_ref_array( 'arp_before_send_review_coupon_email', array( &$this ) );
+
 			// Woohoo, send the email!
 			$this->send( $this->recipient, $this->subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
+
+			do_action( 'arp_after_send_review_coupon_email', $user_id, $product, $comment_id );
 		}
 
 		/**
 		 * Trigger email after reminder order review
 		 *
+		 * @since 1.0.0
 		 * @param $order_id
 		 */
 		public function trigger_order_review_coupon( $order_id ) {
@@ -125,8 +130,12 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 
 			update_post_meta( $order_id, '_' . ARP_PREFIX . 'order_last_sent_email', current_time( 'timestamp' ) );
 
+			do_action_ref_array( 'arp_before_send_review_order_coupon_email', array( &$this ) );
+
 			// Woohoo, send the email!
 			$this->send( $this->recipient, $this->subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
+
+			do_action( 'arp_after_send_review_order_coupon_email', $order_id );
 
 		}
 
@@ -153,6 +162,7 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 		/**
 		 * Get coupon code. Maybe generate coupon.
 		 *
+		 * @since 1.0.0
 		 * @param $id
 		 * @param $user_email
 		 * @param string $type
@@ -166,18 +176,12 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 
 				$coupon_id = arp_get_option( ARP_PREFIX . 'existing_coupon_select', 3 );
 
-				if ( ! $coupon_id ) {
-					return array(
-						'coupon_code'            => __( 'No Coupon', 'advanced-reviews-pro' ),
-						'coupon_expiration_date' => '',
-					);
+				if ( $coupon_id ) {
+					return apply_filters( 'arp_get_existing_coupon', array(
+						'coupon_code'            => wc_get_coupon_code_by_id( $coupon_id ),
+						'coupon_expiration_date' => get_post_meta( $coupon_id, 'expiry_date', true ),
+					) );
 				}
-
-				return array(
-					'coupon_code'            => wc_get_coupon_code_by_id( $coupon_id ),
-					'coupon_expiration_date' => get_post_meta( $coupon_id, 'expiry_date', true ),
-				);
-
 			} elseif ( 'generate_coupon' === $coupon_type ) {
 
 				$discount_type       = arp_get_option( ARP_PREFIX . 'generate_coupon_discount_type_select', 3, 'percent' );
@@ -196,8 +200,11 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 				$usage_limit         = arp_get_option( ARP_PREFIX . 'generate_coupon_usage_restrict_text', 3 );
 				$format              = arp_get_option( ARP_PREFIX . 'generate_coupon_format_text', 3 );
 
+				// TODO: check if coupon exists and repeat
 				preg_match_all( '/{(.*?)}/', $format, $matches );
+
 				$matches = $matches[0];
+
 				foreach ( $matches as $key => $match ) {
 					if ( false !== strpos( $match, 'RANDOM' ) ) {
 						$matches[ $key ] = substr( str_shuffle( 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' ), 0, preg_replace( '/[^0-9]/', '', $match ) );
@@ -217,91 +224,86 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 					)
 				);
 
-				if ( ! $coupon_id ) {
-					return array(
-						'coupon_code'            => __( 'No Coupon', 'advanced-reviews-pro' ),
-						'coupon_expiration_date' => '',
-					);
-				}
+				if ( $coupon_id ) {
+					if ( $allowed_emails ) {
+						$allowed_emails = explode( ',', $allowed_emails );
 
-				if ( $allowed_emails ) {
-					$allowed_emails = explode( ',', $allowed_emails );
-
-					foreach ( $allowed_emails as $key => $allowed_email ) {
-						if ( '{BUYER_EMAIL}' === $allowed_email ) {
-							$allowed_emails[ $key ] = $user_email;
-							break;
+						foreach ( $allowed_emails as $key => $allowed_email ) {
+							if ( '{BUYER_EMAIL}' === $allowed_email ) {
+								$allowed_emails[ $key ] = $user_email;
+								break;
+							}
 						}
+						update_post_meta( $coupon_id, 'customer_email', $allowed_emails );
 					}
-					update_post_meta( $coupon_id, 'customer_email', $allowed_emails );
+
+					if ( $min_spend ) {
+						update_post_meta( $coupon_id, 'minimum_amount', floatval( $min_spend ) );
+					}
+
+					if ( $max_spend ) {
+						update_post_meta( $coupon_id, 'maximum_amount', floatval( $max_spend ) );
+					}
+
+					if ( $usage_limit ) {
+						update_post_meta( $coupon_id, 'usage_limit', absint( $usage_limit ) );
+					}
+
+					if ( $limit_products ) {
+						update_post_meta( $coupon_id, 'product_ids', implode( ',', $limit_products ) );
+					}
+
+					if ( $exclude_products ) {
+						update_post_meta( $coupon_id, 'exclude_product_ids', implode( ',', $exclude_products ) );
+					}
+
+					if ( $limit_cats ) {
+						update_post_meta( $coupon_id, 'product_categories', implode( ',', $limit_cats ) );
+					}
+
+					if ( $exclude_cats ) {
+						update_post_meta( $coupon_id, 'exclude_product_categories', implode( ',', $exclude_cats ) );
+					}
+
+					if ( $validity ) {
+						$expiry_date = date( 'Y-m-d', current_time( 'timestamp', 0 ) + ( 24 * 60 * 60 * $validity ) );
+						update_post_meta( $coupon_id, 'expiry_date', $expiry_date );
+						update_post_meta( $coupon_id, 'date_expires', strtotime( $expiry_date ) );
+					}
+
+					update_post_meta( $coupon_id, 'individual_use', 'on' === $individual_use ? 'yes' : '' );
+					update_post_meta( $coupon_id, 'free_shipping', 'on' === $allow_free_shipping ? 'yes' : '' );
+					update_post_meta( $coupon_id, 'exclude_sale_items', 'on' === $exclude_sale_items ? 'yes' : '' );
+					update_post_meta( $coupon_id, 'discount_type', $discount_type );
+					update_post_meta( $coupon_id, 'coupon_amount', floatval( $coupon_amount ) );
+					update_post_meta( $coupon_id, ARP_PREFIX . 'auto_generated', true );
+
+					if ( 'review' === $type ) {
+						update_post_meta( $coupon_id, ARP_PREFIX . 'generated_from_comment_id', $id );
+					} elseif ( 'order' === $type ) {
+						update_post_meta( $coupon_id, ARP_PREFIX . 'generated_from_order_id', $id );
+					}
+
+					return apply_filters( 'arp_get_generated_coupon', array(
+						'coupon_code'            => wc_get_coupon_code_by_id( $coupon_id ),
+						'coupon_expiration_date' => isset( $expiry_date ) ? $expiry_date : __( 'Never', 'advanced-reviews-pro' ),
+					) );
 				}
-
-				if ( $min_spend ) {
-					update_post_meta( $coupon_id, 'minimum_amount', floatval( $min_spend ) );
-				}
-
-				if ( $max_spend ) {
-					update_post_meta( $coupon_id, 'maximum_amount', floatval( $max_spend ) );
-				}
-
-				if ( $usage_limit ) {
-					update_post_meta( $coupon_id, 'usage_limit', absint( $usage_limit ) );
-				}
-
-				if ( $limit_products ) {
-					update_post_meta( $coupon_id, 'product_ids', implode( ',', $limit_products ) );
-				}
-
-				if ( $exclude_products ) {
-					update_post_meta( $coupon_id, 'exclude_product_ids', implode( ',', $exclude_products ) );
-				}
-
-				if ( $limit_cats ) {
-					update_post_meta( $coupon_id, 'product_categories', implode( ',', $limit_cats ) );
-				}
-
-				if ( $exclude_cats ) {
-					update_post_meta( $coupon_id, 'exclude_product_categories', implode( ',', $exclude_cats ) );
-				}
-
-				if ( $validity ) {
-					$expiry_date = date( 'Y-m-d', current_time( 'timestamp', 0 ) + ( 24 * 60 * 60 * $validity ) );
-					update_post_meta( $coupon_id, 'expiry_date', $expiry_date );
-					update_post_meta( $coupon_id, 'date_expires', strtotime( $expiry_date ) );
-				}
-
-				update_post_meta( $coupon_id, 'individual_use', 'on' === $individual_use ? 'yes' : '' );
-				update_post_meta( $coupon_id, 'free_shipping', 'on' === $allow_free_shipping ? 'yes' : '' );
-				update_post_meta( $coupon_id, 'exclude_sale_items', 'on' === $exclude_sale_items ? 'yes' : '' );
-				update_post_meta( $coupon_id, 'discount_type', $discount_type );
-				update_post_meta( $coupon_id, 'coupon_amount', floatval( $coupon_amount ) );
-				update_post_meta( $coupon_id, ARP_PREFIX . 'auto_generated', true );
-
-				if ( 'review' === $type ) {
-					update_post_meta( $coupon_id, ARP_PREFIX . 'generated_from_comment_id', $id );
-				} elseif ( 'order' === $type ) {
-					update_post_meta( $coupon_id, ARP_PREFIX . 'generated_from_order_id', $id );
-				}
-
-				return array(
-					'coupon_code'            => wc_get_coupon_code_by_id( $coupon_id ),
-					'coupon_expiration_date' => isset( $expiry_date ) ? $expiry_date : __( 'Never', 'advanced-reviews-pro' ),
-				);
 			}
 
-			return array(
+			return apply_filters( 'arp_get_empty_coupon', array(
 				'coupon_code'            => __( 'No Coupon', 'advanced-reviews-pro' ),
 				'coupon_expiration_date' => '',
-			);
+			) );
 		}
 
 		/**
 		 * Class Instance
 		 *
 		 * @static
-		 * @return object instance
-		 *
 		 * @since  1.0.0
+		 *
+		 * @return object instance
 		 */
 		public static function instance() {
 

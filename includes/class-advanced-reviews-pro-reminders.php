@@ -152,7 +152,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				WC()->session->set( ARP_PREFIX . 'products-to-review', $current_session_data );
 
 				if ( $next_item_id ) {
-					return get_permalink( $next_item_id );
+					return apply_filters( 'arp_redirect_to_next_product', get_permalink( $next_item_id ), $next_item_id );
 				}
 
 				// If there is no next product to review
@@ -180,7 +180,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 
 			if ( $current_session_data && count( $current_session_data['items'] ) > 0 && in_array( get_the_ID(), $current_session_data['items'], true ) ) {
 
-				$comment_form['comment_field'] .= '<p><b>You are reviewing item from your order. After you leave a review, you will be redirected to the next item.</b></p>';
+				$comment_form['comment_field'] .= '<p><b>' . __( 'You are reviewing item from your order. After you leave a review, you will be redirected to the next item.', 'advanced-reviews-pro' ) . '</b></p>';
 			}
 
 			return $comment_form;
@@ -265,7 +265,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				$order_items = $included_items;
 			}
 
-			return $order_items;
+			return apply_filters( 'arp_get_limited_ordered_products', $order_items );
 		}
 
 		/**

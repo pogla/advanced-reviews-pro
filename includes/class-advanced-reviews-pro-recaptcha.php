@@ -52,6 +52,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Recaptcha' ) ) {
 		/**
 		 * Validates captcha on review submit
 		 *
+		 * @since 1.0.0
 		 * @throws Exception
 		 */
 		public function validate_captcha() {
@@ -87,7 +88,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Recaptcha' ) ) {
 					$result   = json_decode( $response );
 
 					if ( true !== $result->success ) {
-						wp_die( '<p>reCAPTCHA is not valid!</p>', esc_attr( __( 'Comment Submission Failure' ) ), array( 'back_link' => true ) );
+						wp_die( __( '<p>reCAPTCHA is not valid!</p>', 'advanced-reviews-pro' ), __( 'Comment Submission Failure', 'advanced-reviews-pro' ), array( 'back_link' => true ) ); // WPCS XSS ok.
 					}
 				}
 			}

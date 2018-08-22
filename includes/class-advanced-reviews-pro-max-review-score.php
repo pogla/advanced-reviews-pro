@@ -90,7 +90,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		}
 
 		/**
-		 * Changes the number of stars in comment form
+		 * Changes the number of stars in comment form.
 		 *
 		 * @since 1.0.0
 		 *
@@ -100,19 +100,24 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		 */
 		public function custom_review_stars( $comment_form ) {
 
+			// Replace select
 			$custom_comment_form = '';
 			if ( get_option( 'woocommerce_enable_review_rating' ) === 'yes' ) {
 
-				$custom_comment_form .= '<div class="comment-form-rating"><div class="comment-form-rating"><label for="rating">' . esc_html__( 'Your rating', 'woocommerce' ) . '</label>';
 				$custom_comment_form .= '<select name="arp-rating" id="arp-rating" aria-required="true" required>';
 				for ( $i = 0; $i <= $this->max_score; $i++ ) {
 					$custom_comment_form .= '<option value="' . ( 0 === $i ? '' : $i ) . '">' . $i . '</option>';
 				}
 				$custom_comment_form .= '</select>';
-				$custom_comment_form .= '</div>';
 			}
 
-			$comment_form['comment_field'] = $custom_comment_form . '<p class="comment-form-comment"><label for="comment">' . esc_html__( 'Your review', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" required></textarea></p>';
+			$output             = '';
+			$split_comment_form = explode( '<select', $comment_form['comment_field'] );
+			$output            .= $split_comment_form[0] . $custom_comment_form;
+			$split_comment_form = explode( '</select>', $split_comment_form[1] );
+			$output            .= $split_comment_form[1];
+
+			$comment_form['comment_field'] = $output;
 
 			return $comment_form;
 		}
@@ -139,7 +144,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 
 			ob_start();
 
-			if ( is_product() ) {
+			if ( is_product() && ! isset( $GLOBALS['comment'] ) ) {
 
 				$rating_db = $rating;
 
@@ -275,7 +280,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		}
 
 		/**
-		 * Get closest full number rating
+		 * Get closest full/int number rating
 		 *
 		 * @since 1.0.0
 		 *
@@ -302,7 +307,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		}
 
 		/**
-		 *  When changing max review ratings, we clean up or repopulate comment meta
+		 *  When changing max review ratings setting, we clean up or repopulate comment meta
 		 *
 		 * @since 1.0.0
 		 *
@@ -330,9 +335,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 		public static function restore_decimal_ratings() {
 
 			global $wpdb;
-			$results = $wpdb->get_results(
-				$wpdb->prepare( "SELECT meta_key,meta_value,comment_id FROM $wpdb->commentmeta WHERE meta_key = 'arp_old_rating' OR meta_key = 'rating'", array() )
-			);
+			$results = $wpdb->get_results( "SELECT meta_key,meta_value,comment_id FROM $wpdb->commentmeta WHERE meta_key = 'arp_old_rating' OR meta_key = 'rating'" );
 
 			$structured_results = array();
 
@@ -362,9 +365,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 			global $wpdb;
 
 			// Get decimal rating numbers
-			$results = $wpdb->get_results(
-				$wpdb->prepare( "SELECT meta_value,comment_id FROM $wpdb->commentmeta WHERE meta_key = 'rating' AND meta_value LIKE '%.%'", array() )
-			);
+			$results = $wpdb->get_results( "SELECT meta_value,comment_id FROM $wpdb->commentmeta WHERE meta_key = 'rating' AND meta_value LIKE '%.%'" );
 
 			if ( $results ) {
 				foreach ( $results as $result ) {

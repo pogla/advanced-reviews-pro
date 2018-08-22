@@ -92,6 +92,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 			global $is_comment_summary;
 
 			$filter_score = get_query_var( 'arp-rating', false );
+
 			if ( is_product() && $filter_score && true !== $is_comment_summary ) {
 				$meta_query_args = self::get_meta_query_by_score( absint( $filter_score ), $this->review_score_max );
 				if ( ! $q->query_vars['meta_query'] ) {
@@ -165,13 +166,13 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 					'key'     => 'rating',
 					'value'   => $start_range,
 					'compare' => '>',
-					'type'    => 'string',
+					'type'    => 'numeric',
 				),
 				array(
 					'key'     => 'rating',
 					'value'   => $end_range,
 					'compare' => '<=',
-					'type'    => 'string',
+					'type'    => 'numeric',
 				),
 			);
 		}

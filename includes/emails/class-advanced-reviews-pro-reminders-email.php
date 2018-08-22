@@ -82,8 +82,13 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			$this->subject = $this->format_string( arp_get_option( ARP_PREFIX . 'email_subject_text', 2 ) );
 
 			update_post_meta( $order_id, '_' . ARP_PREFIX . 'order_last_sent_email', current_time( 'timestamp' ) );
+
+			do_action_ref_array( 'arp_before_send_reminder_email', array( &$this ) );
+
 			// Woohoo, send the email!
 			$this->send( $this->recipient, $this->subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
+
+			do_action( 'arp_after_send_reminder_email', $order_id );
 		}
 
 		/**
@@ -133,11 +138,9 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 				$output .= '<li><a href="' . $link . '">' . $order_item->get_name() . '</a></li>';
 			}
 
-			if ( $is_single ) {
-				return $output;
-			} else {
-				return '<ul>' . $output . '</ul>';
-			}
+			$output = $is_single ? $output : '<ul>' . $output . '</ul>';
+
+			return apply_filters( 'arp_get_links_ordered_items', $output, $is_single, $order_items );
 		}
 
 		/**

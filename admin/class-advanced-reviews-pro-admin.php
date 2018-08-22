@@ -112,7 +112,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/advanced-reviews-pro-admin.js', array( 'jquery' ), $this->version, false );
 
-			$comment_id = esc_attr( $_GET['c'] );
+			$comment_id = isset( $_GET['c'] ) ? esc_attr( $_GET['c'] ) : false;
+
 			if ( 'comment' === get_current_screen()->id && $comment_id ) {
 
 				wp_enqueue_script( $this->plugin_name . 'max-score', plugin_dir_url( __FILE__ ) . 'js/advanced-reviews-pro-max-score.js', array( 'jquery' ), $this->version, false );
@@ -141,16 +142,16 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab1_options = new_cmb2_box(
 				array(
 					'id'           => ARP_PREFIX . 'option_metabox',
-					'title'        => esc_html__( 'Advanced Reviews Pro', 'advanced-reviews-pro' ),
+					'title'        => __( 'Advanced Reviews Pro', 'advanced-reviews-pro' ),
 					'object_types' => array( 'options-page' ),
 					'option_key'   => ARP_PREFIX . 'options',
 					'tab_group'    => ARP_PREFIX . 'main_options',
-					'tab_title'    => 'General Options',
+					'tab_title'    => __( 'General Options', 'advanced-reviews-pro' ),
 					'icon_url'     => 'dashicons-star-half',
-					'menu_title'   => esc_html__( 'Advanced Reviews', 'advanced-reviews-pro' ),
+					'menu_title'   => __( 'Advanced Reviews', 'advanced-reviews-pro' ),
 					'capability'   => 'manage_options',
 					'position'     => 50,
-					'save_button'  => esc_html__( 'Save', 'advanced-reviews-pro' ),
+					'save_button'  => __( 'Save', 'advanced-reviews-pro' ),
 				)
 			);
 
@@ -160,8 +161,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'General',
-					'desc' => 'General settings.',
+					'name' => __( 'General', 'advanced-reviews-pro' ),
+					'desc' => __( 'General settings.', 'advanced-reviews-pro' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'general_settings_title',
 				)
@@ -169,8 +170,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'Reviews Summary',
-					'desc' => 'Enable display of a histogram table with a summary of reviews on a product page.',
+					'name' => __( 'Reviews Summary', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable display of a histogram table with a summary of reviews on a product page.', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_summary_checkbox',
 					'type' => 'checkbox',
 				)
@@ -178,8 +179,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'Manual Reviews',
-					'desc' => 'Enable manual review generation via admin panel.',
+					'name' => __( 'Manual Reviews', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable manual review generation via admin panel.', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_manual_checkbox',
 					'type' => 'checkbox',
 				)
@@ -206,8 +207,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'Vote for Reviews',
-					'desc' => 'Settings for review voting.',
+					'name' => __( 'Vote for Reviews', 'advanced-reviews-pro' ),
+					'desc' => __( 'Settings for review voting.', 'advanced-reviews-pro' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'voting_title',
 				)
@@ -215,8 +216,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'Vote for Reviews',
-					'desc' => 'Enable people to upvote or downvote reviews. The plugin allows one vote per review per person. If the person is a guest, the plugin uses cookies and IP addresses to identify this visitor.',
+					'name' => __( 'Vote for Reviews', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable people to upvote or downvote reviews. The plugin allows one vote per review per person. If the person is a guest, the plugin uses cookies and IP addresses to identify this visitor.', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_votes_checkbox',
 					'type' => 'checkbox',
 				)
@@ -224,8 +225,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name'       => 'Admin Votes',
-					'desc'       => 'Allow logged-in administrators to make unlimited votes.',
+					'name'       => __( 'Admin Votes', 'advanced-reviews-pro' ),
+					'desc'       => __( 'Allow logged-in administrators to make unlimited votes.', 'advanced-reviews-pro' ),
 					'id'         => ARP_PREFIX . 'enable_votes_admin_checkbox',
 					'type'       => 'checkbox',
 					'attributes' => array(
@@ -236,8 +237,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name'       => 'Sort Reviews by Votes',
-					'desc'       => 'Sort product reviews by the total score of votes.',
+					'name'       => __( 'Sort Reviews by Votes', 'advanced-reviews-pro' ),
+					'desc'       => __( 'Sort product reviews by the total score of votes.', 'advanced-reviews-pro' ),
 					'id'         => ARP_PREFIX . 'enable_votes_sorting_checkbox',
 					'type'       => 'checkbox',
 					'attributes' => array(
@@ -252,8 +253,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'Emails',
-					'desc' => 'Configure email settings.',
+					'name' => __( 'Emails', 'advanced-reviews-pro' ),
+					'desc' => __( 'Configure email settings.', 'advanced-reviews-pro' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'email_settings_title',
 				)
@@ -359,8 +360,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'Images',
-					'desc' => 'Enable attaching images to reviews left on WooCommerce product pages.',
+					'name' => __( 'Images', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable attaching images to reviews left on WooCommerce product pages.', 'advanced-reviews-pro' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'images_settings_title',
 				)
@@ -368,8 +369,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'Enable',
-					'desc' => 'Enable Images on Reviews',
+					'name' => __( 'Enable', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable Images on Reviews', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_images_checkbox',
 					'type' => 'checkbox',
 				)
@@ -409,8 +410,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'reCAPTCHA V2',
-					'desc' => 'Eliminate fake and spam reviews.',
+					'name' => __( 'reCAPTCHA V2', 'advanced-reviews-pro' ),
+					'desc' => __( 'Eliminate fake and spam reviews.', 'advanced-reviews-pro' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'recaptcha_settings_title',
 				)
@@ -418,8 +419,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => 'Enable',
-					'desc' => 'Enable reCAPTCHA',
+					'name' => __( 'Enable', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable reCAPTCHA', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_recaptcha_checkbox',
 					'type' => 'checkbox',
 				)
@@ -428,7 +429,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab1_options->add_field(
 				array(
 					'name'       => __( 'reCAPTCHA V2 Site Key', 'advanced-reviews-pro' ),
-					'desc'       => sprintf( 'reCAPTCHA V2 site key. %sHow to get reCAPTCHA?%s', '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
+					/* translators: 1: link start, 2: link end */
+					'desc'       => sprintf( __( 'reCAPTCHA V2 site key. %1$sHow to get reCAPTCHA?%2$s', 'advanced-reviews-pro' ), '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
 					'id'         => ARP_PREFIX . 'recaptcha_site_key_text',
 					'type'       => 'text',
 					'attributes' => array(
@@ -440,7 +442,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab1_options->add_field(
 				array(
 					'name'       => __( 'reCAPTCHA V2 Secret Key', 'advanced-reviews-pro' ),
-					'desc'       => sprintf( 'reCAPTCHA V2 secret key. %sHow to get reCAPTCHA?%s', '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
+					/* translators: 1: link start, 2: link end */
+					'desc'       => sprintf( __( 'reCAPTCHA V2 secret key. %1$sHow to get reCAPTCHA?%2$s', 'advanced-reviews-pro' ), '<a href="http://2bcoding.com/how-to-get-google-recaptcha-v2-api-keys/" target="_blank">', '</a>' ),
 					'id'         => ARP_PREFIX . 'recaptcha_secret_key_text',
 					'type'       => 'text',
 					'attributes' => array(
@@ -457,19 +460,19 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab2_options = new_cmb2_box(
 				array(
 					'id'           => ARP_PREFIX . 'option_tab2_metabox',
-					'title'        => esc_html__( 'Review Reminder', 'advanced-reviews-pro' ),
+					'title'        => __( 'Review Reminder', 'advanced-reviews-pro' ),
 					'object_types' => array( 'options-page' ),
 					'option_key'   => ARP_PREFIX . 'tab2_options',
 					'parent_slug'  => ARP_PREFIX . 'options',
 					'tab_group'    => ARP_PREFIX . 'main_options',
-					'save_button'  => esc_html__( 'Save', 'advanced-reviews-pro' ),
+					'save_button'  => __( 'Save', 'advanced-reviews-pro' ),
 				)
 			);
 
 			$tab2_options->add_field(
 				array(
-					'name' => 'Review Reminder',
-					'desc' => 'Settings for review reminder.',
+					'name' => __( 'Review Reminder', 'advanced-reviews-pro' ),
+					'desc' => __( 'Settings for review reminder.', 'advanced-reviews-pro' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'review_reminder_settings_title',
 				)
@@ -477,8 +480,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab2_options->add_field(
 				array(
-					'name' => 'Enable Automatic Review Reminders',
-					'desc' => 'Enable automatic review reminders.',
+					'name' => __( 'Enable Automatic Review Reminders', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable automatic review reminders.', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_review_reminder_checkbox',
 					'type' => 'checkbox',
 				)
@@ -486,8 +489,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab2_options->add_field(
 				array(
-					'name' => 'Enable Manual Review Reminders',
-					'desc' => 'Enable manual sending of follow-up emails with a reminder to submit a review. Manual reminders can be sent for completed orders pages.',
+					'name' => __( 'Enable Manual Review Reminders', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable manual sending of follow-up emails with a reminder to submit a review. Manual reminders can be sent for completed orders pages.', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_manual_review_reminder_checkbox',
 					'type' => 'checkbox',
 				)
@@ -533,7 +536,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'pw_multiselect',
 					'options'    => self::get_taxonomies_by_slug( 'product_cat' ),
 					'attributes' => array(
-						'placeholder' => 'Select Categories',
+						'placeholder' => __( 'Select Categories', 'advanced-reviews-pro' ),
 					),
 				)
 			);
@@ -546,7 +549,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'pw_multiselect',
 					'options'    => self::get_taxonomies_by_slug( 'product_tag' ),
 					'attributes' => array(
-						'placeholder' => 'Select Tags',
+						'placeholder' => __( 'Select Tags', 'advanced-reviews-pro' ),
 					),
 				)
 			);
@@ -559,15 +562,15 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'pw_multiselect',
 					'options'    => self::get_all_posts_by_type( 'product' ),
 					'attributes' => array(
-						'placeholder' => 'Select Products',
+						'placeholder' => __( 'Select Products', 'advanced-reviews-pro' ),
 					),
 				)
 			);
 
 			$tab2_options->add_field(
 				array(
-					'name' => 'Email Template',
-					'desc' => 'Design your email template.',
+					'name' => __( 'Email Template', 'advanced-reviews-pro' ),
+					'desc' => __( 'Design your email template.', 'advanced-reviews-pro' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'review_reminder_template_title',
 				)
@@ -578,7 +581,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'name'    => __( 'Email Subject', 'advanced-reviews-pro' ),
 					'id'      => ARP_PREFIX . 'email_subject_text',
 					'type'    => 'text',
-					'default' => '[{site_title}] Review Your Experience with Us',
+					'default' => '[{site_title}] ' . __( 'Review Your Experience with Us', 'advanced-reviews-pro' ),
 				)
 			);
 
@@ -587,14 +590,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'name'    => __( 'Email Heading', 'advanced-reviews-pro' ),
 					'id'      => ARP_PREFIX . 'email_heading_text',
 					'type'    => 'text',
-					'default' => 'Thanks for your order. Please take a moment and review our products.',
+					'default' => __( 'Thanks for your order. Please take a moment and review our products.', 'advanced-reviews-pro' ),
 				)
 			);
 
 			$tab2_options->add_field(
 				array(
 					'name'    => __( 'Email Body', 'advanced-reviews-pro' ),
-					'desc'    => '<b>You can use these variables</b>:<br>{site_title} - Site title<br>{customer_first_name} - Billing first name<br>{customer_last_name} - Billing last name<br>{customer_full_name} - Billing full name<br>{order_id} - Order ID<br>{list_of_products} - List of products to review<br>{review_link} - Link to review all purchased products, one after another<br>{order_date} - Order date',
+					'desc'    => __( '<b>You can use these variables</b>:<br>{site_title} - Site title<br>{customer_first_name} - Billing first name<br>{customer_last_name} - Billing last name<br>{customer_full_name} - Billing full name<br>{order_id} - Order ID<br>{list_of_products} - List of products to review<br>{review_link} - Link to review all purchased products, one after another<br>{order_date} - Order date', 'advanced-reviews-pro' ),
 					'id'      => ARP_PREFIX . 'email_body_text',
 					'type'    => 'wysiwyg',
 					'default' => 'Howdy {customer_full_name},<br><br>Thank you for your order #{order_id} made on {order_date}!<br><br>We would love if you could help us by reviewing products that you recently purchased. Please follow <a href="{review_link}">this link</a> that will redirect you after each review you make. <br><br>Or you can review each purchased product separately:<br>{list_of_products}<br><br>Regards,<br>Martin',
@@ -609,19 +612,19 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab3_options = new_cmb2_box(
 				array(
 					'id'           => ARP_PREFIX . 'option_tab3_metabox',
-					'title'        => esc_html__( 'Coupon for Review', 'advanced-reviews-pro' ),
+					'title'        => __( 'Coupon for Review', 'advanced-reviews-pro' ),
 					'object_types' => array( 'options-page' ),
 					'option_key'   => ARP_PREFIX . 'tab3_options',
 					'parent_slug'  => ARP_PREFIX . 'options',
 					'tab_group'    => ARP_PREFIX . 'main_options',
-					'save_button'  => esc_html__( 'Save', 'advanced-reviews-pro' ),
+					'save_button'  => __( 'Save', 'advanced-reviews-pro' ),
 				)
 			);
 
 			$tab3_options->add_field(
 				array(
-					'name' => 'Review for Discount',
-					'desc' => 'Settings for review for discount.',
+					'name' => __( 'Review for Discount', 'advanced-reviews-pro' ),
+					'desc' => __( 'Settings for review for discount.', 'advanced-reviews-pro' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'review_discount_settings_title',
 				)
@@ -629,8 +632,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab3_options->add_field(
 				array(
-					'name' => 'Enable Review for Discount',
-					'desc' => 'Enable generation of discount coupons for customers who provide reviews.',
+					'name' => __( 'Enable Review for Discount', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable generation of discount coupons for customers who provide reviews.', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_review_discount_checkbox',
 					'type' => 'checkbox',
 				)
@@ -638,8 +641,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab3_options->add_field(
 				array(
-					'name' => 'Enable on Review Reminder',
-					'desc' => 'Send email when user finishes with reviewing their order. User gets redirected after each review and on the last review triggers this email. Only works with pre-generated link {review_link}.',
+					'name' => __( 'Enable on Review Reminder', 'advanced-reviews-pro' ),
+					'desc' => __( 'Send email when user finishes with reviewing their order. User gets redirected after each review and on the last review triggers this email. Only works with pre-generated link {review_link}.', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_coupon_review_reminder_checkbox',
 					'type' => 'checkbox',
 				)
@@ -647,8 +650,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab3_options->add_field(
 				array(
-					'name'    => 'Review Coupons Settings',
-					'desc'    => 'Settings for review coupons.',
+					'name'    => __( 'Review Coupons Settings', 'advanced-reviews-pro' ),
+					'desc'    => __( 'Settings for review coupons.', 'advanced-reviews-pro' ),
 					'type'    => 'title',
 					'id'      => ARP_PREFIX . 'review_discount_coupon_settings_title',
 					'classes' => ARP_PREFIX . 'tab3_hide',
@@ -664,11 +667,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'pw_select',
 					'default'    => 'generate_coupon',
 					'options'    => array(
-						'generate_coupon' => 'Generate Unique Coupon',
-						'existing_coupon' => 'Existing Coupon',
+						'generate_coupon' => __( 'Generate Unique Coupon', 'advanced-reviews-pro' ),
+						'existing_coupon' => __( 'Existing Coupon', 'advanced-reviews-pro' ),
 					),
 					'attributes' => array(
-						'placeholder' => 'Select Categories',
+						'placeholder' => __( 'Select Categories', 'advanced-reviews-pro' ),
 					),
 				)
 			);
@@ -682,7 +685,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'pw_select',
 					'options'    => self::get_all_posts_by_type( 'shop_coupon' ),
 					'attributes' => array(
-						'placeholder'            => 'Select Coupon',
+						'placeholder'            => __( 'Select Coupon', 'advanced-reviews-pro' ),
 						'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 						'data-conditional-value' => 'existing_coupon',
 					),
@@ -697,13 +700,13 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'classes'    => ARP_PREFIX . 'tab3_hide',
 					'type'       => 'pw_select',
 					'options'    => array(
-						'percent'       => 'Percentage discount',
-						'fixed_cart'    => 'Fixed cart discount',
-						'fixed_product' => 'Fixed product discount',
+						'percent'       => __( 'Percentage discount', 'advanced-reviews-pro' ),
+						'fixed_cart'    => __( 'Fixed cart discount', 'advanced-reviews-pro' ),
+						'fixed_product' => __( 'Fixed product discount', 'advanced-reviews-pro' ),
 					),
 					'attributes' => array(
 						'required'               => 'required',
-						'placeholder'            => 'Select Discount Type',
+						'placeholder'            => __( 'Select Discount Type', 'advanced-reviews-pro' ),
 						'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 						'data-conditional-value' => 'generate_coupon',
 					),
@@ -822,7 +825,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'pw_multiselect',
 					'options'    => self::get_all_posts_by_type( 'product' ),
 					'attributes' => array(
-						'placeholder'            => 'Search for a product',
+						'placeholder'            => __( 'Search for a product', 'advanced-reviews-pro' ),
 						'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 						'data-conditional-value' => 'generate_coupon',
 					),
@@ -838,7 +841,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'pw_multiselect',
 					'options'    => self::get_all_posts_by_type( 'product' ),
 					'attributes' => array(
-						'placeholder'            => 'Search for a product',
+						'placeholder'            => __( 'Search for a product', 'advanced-reviews-pro' ),
 						'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 						'data-conditional-value' => 'generate_coupon',
 					),
@@ -854,7 +857,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'pw_multiselect',
 					'options'    => self::get_taxonomies_by_slug( 'product_cat' ),
 					'attributes' => array(
-						'placeholder'            => 'Any Category',
+						'placeholder'            => __( 'Any Category', 'advanced-reviews-pro' ),
 						'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 						'data-conditional-value' => 'generate_coupon',
 					),
@@ -870,7 +873,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'pw_multiselect',
 					'options'    => self::get_taxonomies_by_slug( 'product_cat' ),
 					'attributes' => array(
-						'placeholder'            => 'No Categories',
+						'placeholder'            => __( 'No Categories', 'advanced-reviews-pro' ),
 						'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 						'data-conditional-value' => 'generate_coupon',
 					),
@@ -884,7 +887,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'id'         => ARP_PREFIX . 'generate_coupon_email_restrict_text',
 					'classes'    => ARP_PREFIX . 'tab3_hide',
 					'type'       => 'text',
-					'default'    => '{BUYER_EMAIL}',
+					'default'    => __( '{BUYER_EMAIL}', 'advanced-reviews-pro' ),
 					'attributes' => array(
 						'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
 						'data-conditional-value' => 'generate_coupon',
@@ -924,8 +927,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab3_options->add_field(
 				array(
-					'name'    => 'Email Template',
-					'desc'    => 'Design your email template. Email is triggered after a customer leaves a review. Only works if the customer is logged in the store.',
+					'name'    => __( 'Email Template', 'advanced-reviews-pro' ),
+					'desc'    => __( 'Design your email template. Email is triggered after a customer leaves a review. Only works if the customer is logged in the store.', 'advanced-reviews-pro' ),
 					'type'    => 'title',
 					'id'      => ARP_PREFIX . 'review_coupon_template_title',
 					'classes' => ARP_PREFIX . 'tab3_hide',
@@ -938,7 +941,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'id'      => ARP_PREFIX . 'review_coupon_email_subject_text',
 					'classes' => ARP_PREFIX . 'tab3_hide',
 					'type'    => 'text',
-					'default' => '[{site_title}] Thanks for the review',
+					'default' => '[{site_title}] ' . __( 'Thanks for the review', 'advanced-reviews-pro' ),
 				)
 			);
 
@@ -948,14 +951,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'id'      => ARP_PREFIX . 'review_coupon_email_heading_text',
 					'classes' => ARP_PREFIX . 'tab3_hide',
 					'type'    => 'text',
-					'default' => 'Here is your coupon',
+					'default' => __( 'Here is your coupon', 'advanced-reviews-pro' ),
 				)
 			);
 
 			$tab3_options->add_field(
 				array(
 					'name'    => __( 'Email Body', 'advanced-reviews-pro' ),
-					'desc'    => '<b>You can use these variables</b>:<br>{coupon} - Coupon code<br>{site_title} - Site title<br>{user_first_name} - User first name (Customer if "Review Reminder")<br>{user_last_name} - User last name (Customer if "Review Reminder")<br>{user_full_name} - User full name (Customer if "Review Reminder")<br>{user_display_name} - User display name (Customer full name if "Review Reminder")<br>{coupon_expiration_date} - Coupon expiration datetime<br>{reviewed_product_name} - Product that has been reviewed ("Ordered products" if "Review Reminder")<br>',
+					'desc'    => __( '<b>You can use these variables</b>:<br>{coupon} - Coupon code<br>{site_title} - Site title<br>{user_first_name} - User first name (Customer if "Review Reminder")<br>{user_last_name} - User last name (Customer if "Review Reminder")<br>{user_full_name} - User full name (Customer if "Review Reminder")<br>{user_display_name} - User display name (Customer full name if "Review Reminder")<br>{coupon_expiration_date} - Coupon expiration datetime<br>{reviewed_product_name} - Product that has been reviewed ("Ordered products" if "Review Reminder")<br>', 'advanced-reviews-pro' ),
 					'id'      => ARP_PREFIX . 'review_coupon_email_body_text',
 					'classes' => ARP_PREFIX . 'tab3_hide',
 					'type'    => 'wysiwyg',
@@ -985,11 +988,12 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			);
 
 			$output_taxs = array();
+
 			foreach ( $taxs as $tax ) {
 				$output_taxs[ $tax->term_id ] = '#' . $tax->term_id . ' - ' . $tax->name;
 			}
 
-			return $output_taxs;
+			return apply_filters( 'arp_get_taxonomies_by_slug', $output_taxs );
 		}
 
 		/**
@@ -1011,11 +1015,12 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			);
 
 			$output_posts = array();
+
 			foreach ( $posts as $post ) {
 				$output_posts[ $post->ID ] = '#' . $post->ID . ' - ' . $post->post_title;
 			}
 
-			return $output_posts;
+			return apply_filters( 'arp_get_all_posts_by_type', $output_posts );
 		}
 
 		/**
@@ -1045,7 +1050,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 /**
  * Wrapper function around cmb2_get_option
  *
- * @since  0.1.0
+ * @since  1.0.0
  * @param  string $key     Options array key
  * @param  mixed  $default Optional default value
  * @param  $tab   $int     Tab
@@ -1070,7 +1075,7 @@ function arp_get_option( $key = '', $tab = 1, $default = false ) {
 		$val = $opts[ $key ];
 	}
 
-	return $val;
+	return apply_filters( 'arp_get_option', $val );
 }
 
 /**

@@ -38,12 +38,73 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		}
 
 		/**
+		 * Saves images on comment save
+		 *
+		 * @param $comment_id
+		 * @since 1.0.0
+		 */
+		public function save_images_edit_comment( $comment_id ) {
+
+			if ( ! isset( $_POST['arp-selected-imgs'] ) ) {
+				return;
+			}
+
+			$selected_images = $_POST['arp-selected-imgs'];
+
+			if ( $selected_images ) {
+				update_comment_meta( $comment_id, ARP_PREFIX . 'review_images', explode( ',', $selected_images ) );
+			}
+		}
+
+		/**
+		 * Adds meta box for images on edit review screen
+		 *
+		 * @since 1.0.0
+		 */
+		public function add_images_meta_box() {
+
+			$screen    = get_current_screen();
+			$screen_id = $screen ? $screen->id : '';
+
+			if ( 'comment' === $screen_id && isset( $_GET['c'] ) && metadata_exists( 'comment', $_GET['c'], 'rating' ) ) {
+				add_meta_box( 'woocommerce-review-images', __( 'Images', 'advanced-reviews-pro' ), array( $this, 'comment_images_meta_box_html' ), 'comment', 'normal', 'low' );
+			}
+		}
+
+		/**
+		 * HTML for meta box for images
+		 *
+		 * @since 1.0.0
+		 */
+		public function comment_images_meta_box_html() {
+
+			$comment_id = $_GET['c'];
+
+			$pics = get_comment_meta( $comment_id, ARP_PREFIX . 'review_images', true );
+			$pics = $pics ? $pics : array();
+
+			echo '<a href="javascript:" class="arp-insert-media button">' . __( 'Add Media', 'advanced-reviews-pro' ) . '</a><br><br>'; // WPCS: XSS ok.
+			echo '<input type="hidden" name="arp-selected-imgs" id="arp-selected-imgs" value="' . implode( ',', $pics ) . '">'; // WPCS: XSS ok.
+
+			echo '<div id="selected-images">';
+
+			if ( $pics ) {
+				foreach ( $pics as $pic ) {
+					echo wp_get_attachment_image( $pic, 'shop_thumbnail' );
+				}
+			}
+
+			echo '</div>';
+
+		}
+
+		/**
 		 * Add submenu page
 		 *
 		 * @since    1.0.0
 		 */
 		public function add_rating_submenu() {
-			add_submenu_page( 'edit-comments.php', 'Add Review', 'Add Review', 'manage_options', ARP_PREFIX . 'add-custom-rating', array( $this, 'output_add_comment' ) );
+			add_submenu_page( 'edit-comments.php', __( 'Add Review', 'advanced-reviews-pro' ), __( 'Add Review', 'advanced-reviews-pro' ), 'manage_options', ARP_PREFIX . 'add-custom-rating', array( $this, 'output_add_comment' ) );
 		}
 
 		/**
@@ -72,7 +133,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		}
 
 		/**
-		 * Submits a new comment
+		 * Submits a new manual comment
+		 *
+		 * @since 1.0.0
 		 */
 		public function submit_new_comment() {
 
