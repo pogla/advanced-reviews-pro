@@ -74,7 +74,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 		 * @access   protected
 		 * @var      array    $errors
 		 */
-		protected static $errors = array();
+		public static $errors = array();
 
 		/**
 		 * Define the core functionality of the plugin.
@@ -91,8 +91,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 
 		public function init() {
 
-			if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-				$this->version = PLUGIN_NAME_VERSION;
+			if ( defined( 'ARP_VERSION' ) ) {
+				$this->version = ARP_VERSION;
 			} else {
 				$this->version = '1.0.0';
 			}
@@ -126,7 +126,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			/* translators: 1: Plugin name */
 			$inactive_text = '<strong>' . sprintf( __( '%s is inactive.', 'advanced-reviews-pro' ), ARP_NAME ) . '</strong>';
 
-			if ( version_compare( phpversion(), ARP_MIN_PHP_VER, '<' ) ) {
+			if ( version_compare( phpversion(), ARP_MIN_PHP_VER, '<=' ) ) {
 				/* translators: 1: inactive text, 2: plugin name */
 				self::$errors[] = sprintf( __( '%1$s The plugin requires PHP version %2$s or newer.', 'advanced-reviews-pro' ), $inactive_text, ARP_MIN_PHP_VER );
 				$passed         = false;
@@ -311,8 +311,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 			$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 			$this->loader->add_action( 'cmb2_admin_init', $plugin_admin, 'register_plugin_options' );
+			$this->loader->add_action( 'plugin_action_links_' . basename( dirname( __DIR__ ) ) . '/advanced-reviews-pro.php', $plugin_admin, 'plugin_action_links' );
 
-			// Manual adding
+			// Manual reviews adding
 			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_manual_checkbox' ) ) {
 
 				$plugin_review_manual = advanced_reviews_pro_manual();

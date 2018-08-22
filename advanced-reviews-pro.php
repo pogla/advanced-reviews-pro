@@ -33,6 +33,35 @@ define( 'ARP_MIN_WP_VER', '4.4.0' );
 define( 'ARP_MIN_WC_VER', '3.0.0' );
 
 /**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and public-facing site hooks.
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/class-advanced-reviews-pro.php';
+
+function arp_load_plugin() {
+
+	$plugin = advanced_reviews_pro();
+
+	if ( $plugin::check() ) {
+
+		$plugin->init();
+
+		register_activation_hook( __FILE__, 'activate_advanced_reviews_pro' );
+		register_deactivation_hook( __FILE__, 'deactivate_advanced_reviews_pro' );
+
+		/**
+		 * Require cmb2 library and add-ons
+		 */
+		require plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
+		require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-conditionals/cmb2-conditionals.php';
+		require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-select2/cmb-field-select2.php';
+
+		$plugin->run();
+	}
+}
+add_action( 'plugins_loaded', 'arp_load_plugin', 8 );
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-advanced-reviews-pro-activator.php
  */
@@ -50,29 +79,4 @@ function deactivate_advanced_reviews_pro() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-advanced-reviews-pro-deactivator.php';
 	$deactivator = advanced_reviews_pro_deactivator();
 	$deactivator::deactivate();
-}
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-advanced-reviews-pro.php';
-
-$plugin = advanced_reviews_pro();
-
-if ( $plugin::check() ) {
-
-	$plugin->init();
-
-	register_activation_hook( __FILE__, 'activate_advanced_reviews_pro' );
-	register_deactivation_hook( __FILE__, 'deactivate_advanced_reviews_pro' );
-
-	/**
-	 * Require cmb2 library and add-ons
-	 */
-	require plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
-	require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-conditionals/cmb2-conditionals.php';
-	require plugin_dir_path( __FILE__ ) . 'vendor/cmb2-select2/cmb-field-select2.php';
-
-	$plugin->run();
 }

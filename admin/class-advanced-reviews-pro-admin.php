@@ -67,6 +67,21 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 		}
 
 		/**
+		 * Show action links on the plugin screen.
+		 *
+		 * @since   1.0.0
+		 * @param   mixed $links Plugin Action links.
+		 * @return  array
+		 */
+		public static function plugin_action_links( $links ) {
+			$action_links = array(
+				'settings' => '<a href="' . admin_url( 'admin.php?page=arp_options' ) . '" aria-label="' . esc_attr__( 'View Advanced Reviews Pro Settings', 'advanced-reviews-pro' ) . '">' . esc_html__( 'Settings', 'advanced-reviews-pro' ) . '</a>',
+			);
+
+			return array_merge( $action_links, $links );
+		}
+
+		/**
 		 * Register the stylesheets for the admin area.
 		 *
 		 * @since    1.0.0
