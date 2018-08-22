@@ -207,14 +207,15 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 					}
 				}
 
-				$coupon_id = wp_insert_post( array(
-					'post_title'   => sanitize_title( implode( '', $matches ) ),
-					'post_content' => '',
-					'post_status'  => 'publish',
-					'post_author'  => 1,
-					'post_type'    => 'shop_coupon',
-				) );
-
+				$coupon_id = wp_insert_post(
+					array(
+						'post_title'   => sanitize_title( implode( '', $matches ) ),
+						'post_content' => '',
+						'post_status'  => 'publish',
+						'post_author'  => 1,
+						'post_type'    => 'shop_coupon',
+					)
+				);
 
 				if ( ! $coupon_id ) {
 					return array(

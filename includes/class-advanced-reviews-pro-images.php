@@ -184,7 +184,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 					$pics       = get_comment_meta( $comment->comment_ID, ARP_PREFIX . 'review_images', true );
 					$total_pics = count( $pics );
 
-					if ( $total_pics > 0 ) {
+					if ( $pics && $total_pics > 0 ) {
 
 						$comment->comment_content .= '<p class="arv-comment-image-text">' . ( 1 === $total_pics ? __( 'Uploaded image:', 'advanced-reviews-pro' ) : __( 'Uploaded images:', 'advanced-reviews-pro' ) ) . '</p>';
 						$comment->comment_content .= '<div class="arv-comment-images">';

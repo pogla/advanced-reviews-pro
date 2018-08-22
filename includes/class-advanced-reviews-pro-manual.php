@@ -59,12 +59,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 				$review_score_max = 5;
 			}
 
-			$products = get_posts( array(
-				'post_type'      => 'product',
-				'posts_per_page' => -1,
-				'orderby'        => 'ID',
-				'order'          => 'ASC',
-			) );
+			$products = get_posts(
+				array(
+					'post_type'      => 'product',
+					'posts_per_page' => -1,
+					'orderby'        => 'ID',
+					'order'          => 'ASC',
+				)
+			);
 
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/advanced-reviews-pro-admin-add-comment.php';
 		}
@@ -155,7 +157,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		 */
 		public function arp_get_images() {
 
-			if( isset( $_POST['ids'] ) ){
+			if ( isset( $_POST['ids'] ) ) {
 
 				$ids    = explode( ',', $_POST['ids'] );
 				$images = array();
@@ -164,9 +166,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 					$images[] = wp_get_attachment_image( $id, 'shop_thumbnail' );
 				}
 
-				wp_send_json_success( array(
-					'images' => $images,
-				) );
+				wp_send_json_success(
+					array(
+						'images' => $images,
+					)
+				);
 			} else {
 				wp_send_json_error();
 			}

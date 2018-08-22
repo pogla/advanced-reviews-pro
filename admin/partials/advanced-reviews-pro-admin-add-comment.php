@@ -69,7 +69,8 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 		<div class="notice notice-error is-dismissible">
 			<p><?php _e( 'There has been an error adding your custom comment!', 'advanced-reviews-pro' ); ?></p>
 		</div>
-	<?php }
+	<?php
+}
 }
 
 ?>
@@ -92,12 +93,14 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 								<option value="guest">Guest</option>
 								<?php
 								foreach ( $users as $user ) {
-									$user_data = wp_json_encode( array(
-										'ID'           => $user->data->ID,
-										'user_email'   => $user->data->user_email,
-										'user_url'     => $user->data->user_url,
-										'display_name' => $user->data->display_name,
-									) );
+									$user_data = wp_json_encode(
+										array(
+											'ID'           => $user->data->ID,
+											'user_email'   => $user->data->user_email,
+											'user_url'     => $user->data->user_url,
+											'display_name' => $user->data->display_name,
+										)
+									);
 									echo "<option value='{$user->data->ID}' data-userdata='{$user_data}'>{$user->data->display_name} (#{$user->data->ID})</option>";
 								}
 								?>
@@ -130,12 +133,14 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 						<td class="first"><label for="name">Comment</label></td>
 						<td>
 							<?php
-							wp_editor( '', 'comment-content', array(
-								'media_buttons' => false,
-								'textarea_name' => 'comment-content',
-								'textarea_rows' => 10,
-								'teeny'         => true,
-							) );
+							wp_editor(
+								'', 'comment-content', array(
+									'media_buttons' => false,
+									'textarea_name' => 'comment-content',
+									'textarea_rows' => 10,
+									'teeny'         => true,
+								)
+							);
 							?>
 						</td>
 					</tr>

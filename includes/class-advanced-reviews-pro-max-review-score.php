@@ -133,17 +133,16 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 			global $post;
 			global $wp_query;
 
-			if ( ! $post ) {
+			if ( ! $post || 'product' !== $post->post_type ) {
 				return $html;
 			}
 
-			$comment_id = get_comment_ID();
-
-			$rating_db = get_comment_meta( $comment_id, 'rating', true );
-
 			ob_start();
 
-			if ( is_product() && ! $comment_id ) {
+			if ( is_product() ) {
+
+				$rating_db = $rating;
+
 				// Overall rating on single product
 				?>
 
@@ -169,6 +168,15 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Max_Review_Score' ) ) {
 				<?php
 
 			} elseif ( is_product() && $wp_query->queried_object_id === $post->ID ) {
+
+				$comment_id = get_comment_ID();
+
+				if ( ! $comment_id ) {
+					return $html;
+				}
+
+				$rating_db = get_comment_meta( $comment_id, 'rating', true );
+
 				// Ratings on single product
 				?>
 

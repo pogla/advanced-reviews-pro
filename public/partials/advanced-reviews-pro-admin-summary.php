@@ -10,7 +10,7 @@
  * @subpackage Advanced_Reviews_Pro/admin/partials
  */
 
-$assets_url  = plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'public/images/';
+$assets_url = plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'public/images/';
 
 ?>
 
@@ -51,8 +51,8 @@ $filter_score = get_query_var( 'arp-rating', false );
 if ( $filter_score ) {
 	?>
 		<div class="arp-rating-filter-wrapper">
-			<h4 class="arp-rating-filter-subtitle"><?php echo sprintf( __( 'Ratings With %1$d Star%2$s', 'advanced-reviews-pro' ), esc_html( $filter_score ), '1' === $filter_score ? '' : 's'); ?></h4>
-			<a href="<?php echo remove_query_arg( 'arp-rating' ); ?>"><?php _e( 'View All Ratings', 'advanced-reviews-pro' ) ?></a>
+			<h4 class="arp-rating-filter-subtitle"><?php echo sprintf( __( 'Ratings With %1$d Star%2$s', 'advanced-reviews-pro' ), esc_html( $filter_score ), '1' === $filter_score ? '' : 's' ); ?></h4>
+			<a href="<?php echo remove_query_arg( 'arp-rating' ); ?>"><?php _e( 'View All Ratings', 'advanced-reviews-pro' ); ?></a>
 		</div>
 	<?php
 }

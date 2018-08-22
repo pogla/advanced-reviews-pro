@@ -45,7 +45,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_WC_Review_Email' ) ) {
 		 */
 		public function get_headers() {
 
-
 			$reply_address = arp_get_option( ARP_PREFIX . 'reply_to_email_text', 1, get_bloginfo( 'admin_email' ) );
 			$reply_name    = arp_get_option( ARP_PREFIX . 'reply_to_name_text', 1 );
 			$bbc_address   = arp_get_option( ARP_PREFIX . 'bbc_email_text', 1 );
@@ -54,18 +53,22 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_WC_Review_Email' ) ) {
 
 			// If custom from email address is set
 			if ( $from_address ) {
-				add_filter( 'woocommerce_email_from_address', function () {
-					$from_address = arp_get_option( ARP_PREFIX . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
-					return $from_address;
-				}, 99 );
+				add_filter(
+					'woocommerce_email_from_address', function () {
+						$from_address = arp_get_option( ARP_PREFIX . 'from_email_text', 1, get_bloginfo( 'admin_email' ) );
+						return $from_address;
+					}, 99
+				);
 			}
 
 			// If custom from name is set
 			if ( $from_name ) {
-				add_filter( 'woocommerce_email_from_name', function () {
-					$from_name = arp_get_option( ARP_PREFIX . 'from_name_text', 1 );
-					return $from_name;
-				}, 99 );
+				add_filter(
+					'woocommerce_email_from_name', function () {
+						$from_name = arp_get_option( ARP_PREFIX . 'from_name_text', 1 );
+						return $from_name;
+					}, 99
+				);
 			}
 
 			$header  = 'Content-Type: ' . $this->get_content_type() . '\r\n';

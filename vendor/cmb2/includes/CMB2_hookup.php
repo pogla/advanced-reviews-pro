@@ -342,12 +342,12 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 
 			} else {
 
-				$before = array_slice( $columns, 0, absint( $column['position'] ) );
+				$before                 = array_slice( $columns, 0, absint( $column['position'] ) );
 				$before[ $field['id'] ] = $column['name'];
-				$columns = $before + $columns;
+				$columns                = $before + $columns;
 			}
 
-			$column['field'] = $field;
+			$column['field']               = $field;
 			$this->columns[ $field['id'] ] = $column;
 		}
 
@@ -361,12 +361,14 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	 */
 	public function column_display( $column_name, $object_id ) {
 		if ( isset( $this->columns[ $column_name ] ) ) {
-				$field = new CMB2_Field( array(
-					'field_args'  => $this->columns[ $column_name ]['field'],
-					'object_type' => $this->object_type,
-					'object_id'   => $this->cmb->object_id( $object_id ),
-					'cmb_id'      => $this->cmb->cmb_id,
-				) );
+				$field = new CMB2_Field(
+					array(
+						'field_args'  => $this->columns[ $column_name ]['field'],
+						'object_type' => $this->object_type,
+						'object_id'   => $this->cmb->object_id( $object_id ),
+						'cmb_id'      => $this->cmb->cmb_id,
+					)
+				);
 
 				$this->cmb->get_field( $field )->render_column();
 		}
@@ -425,7 +427,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 		 * To output the fields 'naked' (without a postbox wrapper/style), then
 		 * add a `'remove_box_wrap' => true` to your metabox registration array.
 		 */
-		$add_wrap = ! empty( $title ) || ! $this->cmb->prop( 'remove_box_wrap' );
+		$add_wrap   = ! empty( $title ) || ! $this->cmb->prop( 'remove_box_wrap' );
 		$add_handle = $add_wrap && ! empty( $title );
 
 		// Open the context-box wrap.

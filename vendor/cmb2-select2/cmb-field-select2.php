@@ -31,12 +31,14 @@ class PW_CMB2_Field_Select2 {
 			$field_type_object->type = new CMB2_Type_Select( $field_type_object );
 		}
 
-		echo $field_type_object->select( array(
-			'class'            => 'pw_select2 pw_select',
-			'desc'             => $field_type_object->_desc( true ),
-			'options'          => '<option></option>' . $field_type_object->concat_items(),
-			'data-placeholder' => $field->args( 'attributes', 'placeholder' ) ? $field->args( 'attributes', 'placeholder' ) : $field->args( 'description' ),
-		) );
+		echo $field_type_object->select(
+			array(
+				'class'            => 'pw_select2 pw_select',
+				'desc'             => $field_type_object->_desc( true ),
+				'options'          => '<option></option>' . $field_type_object->concat_items(),
+				'data-placeholder' => $field->args( 'attributes', 'placeholder' ) ? $field->args( 'attributes', 'placeholder' ) : $field->args( 'description' ),
+			)
+		);
 	}
 
 	/**
@@ -49,16 +51,18 @@ class PW_CMB2_Field_Select2 {
 			$field_type_object->type = new CMB2_Type_Select( $field_type_object );
 		}
 
-		$a = $field_type_object->parse_args( 'pw_multiselect', array(
-			'multiple'         => 'multiple',
-			'style'            => 'width: 99%',
-			'class'            => 'pw_select2 pw_multiselect',
-			'name'             => $field_type_object->_name() . '[]',
-			'id'               => $field_type_object->_id(),
-			'desc'             => $field_type_object->_desc( true ),
-			'options'          => $this->get_pw_multiselect_options( $field_escaped_value, $field_type_object ),
-			'data-placeholder' => $field->args( 'attributes', 'placeholder' ) ? $field->args( 'attributes', 'placeholder' ) : $field->args( 'description' ),
-		) );
+		$a = $field_type_object->parse_args(
+			'pw_multiselect', array(
+				'multiple'         => 'multiple',
+				'style'            => 'width: 99%',
+				'class'            => 'pw_select2 pw_multiselect',
+				'name'             => $field_type_object->_name() . '[]',
+				'id'               => $field_type_object->_id(),
+				'desc'             => $field_type_object->_desc( true ),
+				'options'          => $this->get_pw_multiselect_options( $field_escaped_value, $field_type_object ),
+				'data-placeholder' => $field->args( 'attributes', 'placeholder' ) ? $field->args( 'attributes', 'placeholder' ) : $field->args( 'description' ),
+			)
+		);
 
 		$attrs = $field_type_object->concat_attrs( $a, array( 'desc', 'options' ) );
 		echo sprintf( '<select%s>%s</select>%s', $attrs, $a['options'], $a['desc'] );
@@ -79,7 +83,7 @@ class PW_CMB2_Field_Select2 {
 		}
 
 		$selected_items = '';
-		$other_items = '';
+		$other_items    = '';
 
 		foreach ( $options as $option_value => $option_label ) {
 
@@ -92,7 +96,7 @@ class PW_CMB2_Field_Select2 {
 			// Split options into those which are selected and the rest
 			if ( in_array( $option_value, (array) $field_escaped_value ) ) {
 				$option['checked'] = true;
-				$selected_items .= $field_type_object->select_option( $option );
+				$selected_items   .= $field_type_object->select_option( $option );
 			} else {
 				$other_items .= $field_type_object->select_option( $option );
 			}
@@ -129,7 +133,7 @@ class PW_CMB2_Field_Select2 {
 		}
 
 		foreach ( $meta_value as $key => $val ) {
-			$meta_value[$key] = array_map( 'sanitize_text_field', $val );
+			$meta_value[ $key ] = array_map( 'sanitize_text_field', $val );
 		}
 
 		return $meta_value;
@@ -144,7 +148,7 @@ class PW_CMB2_Field_Select2 {
 		}
 
 		foreach ( $meta_value as $key => $val ) {
-			$meta_value[$key] = array_map( 'esc_attr', $val );
+			$meta_value[ $key ] = array_map( 'esc_attr', $val );
 		}
 
 		return $meta_value;
