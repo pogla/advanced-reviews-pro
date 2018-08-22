@@ -65,6 +65,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Coupons' ) ) {
 		 */
 		public function send_coupon_after_review( $location ) {
 
+			if ( ! isset( $_POST['comment_post_ID'] ) || ! isset( $_POST['comment_ID'] ) ) {
+				return $location;
+			}
+
 			$product_id = intval( $_POST['comment_post_ID'] );
 			$comment_id = intval( $_POST['comment_ID'] );
 			$user_id    = get_current_user_id();

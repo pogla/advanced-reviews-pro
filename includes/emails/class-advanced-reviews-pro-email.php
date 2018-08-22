@@ -76,7 +76,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_WC_Review_Email' ) ) {
 			$header .= 'Reply-to: ' . $reply_name . ' <' . $reply_address . '>\r\n';
 
 			if ( $bbc_address ) {
-				$header .= 'Bcc: ' . implode( ',', $bbc_address ) . "\r\n";
+				if ( is_array( $bbc_address ) ) {
+					$bbc_address = implode( ',', $bbc_address );
+				}
+				$header .= 'Bcc: ' . $bbc_address . "\r\n";
 			}
 
 			return apply_filters( 'arp_woocommerce_reminder_email_headers', $header, $this->id, $this->object );

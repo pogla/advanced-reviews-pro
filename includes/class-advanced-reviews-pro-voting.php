@@ -102,7 +102,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 			if ( $user->exists() ) {
 
 				$voted_comments = get_user_meta( $user->ID, ARP_PREFIX . 'voted_comments', true );
-				if ( in_array( absint( $comment_id ), $voted_comments, true ) ) {
+				if ( $voted_comments && in_array( absint( $comment_id ), $voted_comments, true ) ) {
 					return true;
 				}
 			}
@@ -110,13 +110,13 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 			$ip        = $_SERVER['REMOTE_ADDR'];
 			$voted_ips = get_comment_meta( $comment_id, ARP_PREFIX . 'voted_ips', true );
 
-			if ( in_array( $ip, $voted_ips, true ) ) {
+			if ( $voted_ips && in_array( $ip, $voted_ips, true ) ) {
 				return true;
 			}
 
 			if ( isset( $_COOKIE[ ARP_PREFIX . 'reviews-voted' ] ) ) {
 				$voted_reviews = explode( ',', $_COOKIE[ ARP_PREFIX . 'reviews-voted' ] );
-				if ( in_array( absint( $comment_id ), $voted_reviews, true ) ) {
+				if ( $voted_reviews && in_array( absint( $comment_id ), $voted_reviews, true ) ) {
 					return true;
 				}
 			}
