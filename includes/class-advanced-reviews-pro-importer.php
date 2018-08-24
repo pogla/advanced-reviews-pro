@@ -183,6 +183,20 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Importer' ) ) {
 				}
 			}
 
+			$videos = $this->get_value( 'videos' );
+
+			if ( $videos ) {
+				$videos = explode( ',', $videos );
+
+				foreach ( $videos as $key => $video ) {
+					if ( ! is_numeric( $video ) ) {
+						if ( ! wp_get_attachment_url( $video ) ) {
+							unset( $videos[ $key ] );
+						}
+					}
+				}
+			}
+
 			$author_id = $this->get_value( 'author-id' );
 
 			if ( ! $author_id || ! is_numeric( $author_id ) ) {
@@ -213,6 +227,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Importer' ) ) {
 			}
 
 			update_comment_meta( $comment_id, ARP_PREFIX . 'review_images', $images );
+			update_comment_meta( $comment_id, ARP_PREFIX . 'review_videos', $videos );
 			update_comment_meta( $comment_id, ARP_PREFIX . 'total_votes', $total_votes );
 
 			do_action( 'arp_after_imported_comment', $comment_id );

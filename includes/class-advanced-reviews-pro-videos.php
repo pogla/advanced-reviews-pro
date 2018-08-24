@@ -19,9 +19,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
+if ( ! class_exists( 'Advanced_Reviews_Pro_Videos' ) ) {
 
-	class Advanced_Reviews_Pro_Images {
+	class Advanced_Reviews_Pro_Videos {
 
 		/**
 		 * @var object The single instance of the class
@@ -30,22 +30,22 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Total images allowed.
+		 * Total videos allowed.
 		 *
 		 * @since    1.0.0
 		 * @access   private
-		 * @var      string    $total_images_allowed
+		 * @var      string    $total_videos_allowed
 		 */
-		private $total_images_allowed;
+		private $total_videos_allowed;
 
 		/**
-		 * Max image size.
+		 * Max video size.
 		 *
 		 * @since    1.0.0
 		 * @access   private
-		 * @var      string    $max_image_size
+		 * @var      string    $max_video_size
 		 */
-		private $max_image_size;
+		private $max_video_size;
 
 		/**
 		 * Allowed file types.
@@ -67,15 +67,15 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/image.php';
 			}
 
-			$this->total_images_allowed = arp_get_option( ARP_PREFIX . 'total_imgs_number' );
-			$this->max_image_size       = arp_get_option( ARP_PREFIX . 'size_imgs_number' );
-			$this->allowed_types        = apply_filters( 'arp_allowed_file_types', array( 'png', 'gif', 'jpg', 'jpeg' ) );
+			$this->total_videos_allowed = arp_get_option( ARP_PREFIX . 'total_imgs_number' );
+			$this->max_video_size       = arp_get_option( ARP_PREFIX . 'size_imgs_number' );
+			$this->allowed_types        = apply_filters( 'arp_allowed_file_types', array( 'mp4', 'avi', 'mov' ) );
 
-			if ( ! $this->total_images_allowed ) {
-				$this->total_images_allowed = 3;
+			if ( ! $this->total_videos_allowed ) {
+				$this->total_videos_allowed = 3;
 			}
-			if ( ! $this->max_image_size ) {
-				$this->max_image_size = 2;
+			if ( ! $this->max_video_size ) {
+				$this->max_video_size = 2;
 			}
 		}
 
@@ -94,10 +94,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 
 			$post_id = get_the_ID();
 
-			$comment_form['comment_field'] .= '<p><label for="comment_image_' . $post_id . '">';
-			/* translators: %1$d: number of images, %2$s: max images to upload, %3$s: file extensions */
-			$comment_form['comment_field'] .= sprintf( __( 'Upload up to %1$d images for your review <br><span style="font-size: 0.8rem;opacity: .8;font-weight: normal;">(Allowed image size is %2$s MB. Allowed image types are: %3$s.)</span>', 'advanced-reviews-pro' ), $this->total_images_allowed, $this->max_image_size, implode( ', ', $this->allowed_types ) );
-			$comment_form['comment_field'] .= '</label><input type="file" multiple="multiple" name="review_image_' . $post_id . '[]" id="review_image" />';
+			$comment_form['comment_field'] .= '<p><label for="comment_video_' . $post_id . '">';
+			/* translators: %1$d: number of videos, %2$s: max videos to upload, %3$s: file extensions */
+			$comment_form['comment_field'] .= sprintf( __( 'Upload up to %1$d videos for your review <br><span style="font-size: 0.8rem;opacity: .8;font-weight: normal;">(Allowed video size is %2$s MB. Allowed video types are: %3$s.)</span>', 'advanced-reviews-pro' ), $this->total_videos_allowed, $this->max_video_size, implode( ', ', $this->allowed_types ) );
+			$comment_form['comment_field'] .= '</label><input type="file" multiple="multiple" name="review_video_' . $post_id . '[]" id="review_video" />';
 			$comment_form['comment_field'] .= '</p>';
 
 			return $comment_form;
@@ -111,7 +111,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 		 *
 		 * @since    1.0.0
 		 */
-		public function save_review_images( $comment_id, $comment ) {
+		public function save_review_videos( $comment_id, $comment ) {
 
 			$product_id = get_comment( $comment_id )->comment_post_ID;
 			$product    = wc_get_product( $product_id );
@@ -122,27 +122,27 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 			}
 
 			$post_id          = $comment->comment_post_ID;
-			$comment_image_id = 'review_image_' . $post_id;
+			$comment_video_id = 'review_video_' . $post_id;
 
-			if ( is_array( $_FILES[ $comment_image_id ]['name'] ) ) {
-				$files_count = count( $_FILES[ $comment_image_id ]['name'] );
+			if ( is_array( $_FILES[ $comment_video_id ]['name'] ) ) {
+				$files_count = count( $_FILES[ $comment_video_id ]['name'] );
 
-				if ( ! $_FILES[ $comment_image_id ]['size'][0] ) {
+				if ( ! $_FILES[ $comment_video_id ]['size'][0] ) {
 					return;
 				}
 
 				// Delete comment if too many files
-				if ( $files_count > $this->total_images_allowed ) {
-					$this->error_comment_files( $comment_id, 'Too many images!' );
+				if ( $files_count > $this->total_videos_allowed ) {
+					$this->error_comment_files( $comment_id, 'Too many videos!' );
 				}
 
 				for ( $i = 0; $i < $files_count; $i++ ) {
 
-					if ( ( 1048576 * $this->max_image_size ) < $_FILES[ $comment_image_id ]['size'][ $i ] ) {
+					if ( ( 1048576 * $this->max_video_size ) < $_FILES[ $comment_video_id ]['size'][ $i ] ) {
 						$this->error_comment_files( $comment_id, __( 'File size is too large!', 'advanced-reviews-pro' ) );
 					}
 
-					$file_name_parts = explode( '.', $_FILES[ $comment_image_id ]['name'][ $i ] );
+					$file_name_parts = explode( '.', $_FILES[ $comment_video_id ]['name'][ $i ] );
 					$file_ext        = $file_name_parts[ count( $file_name_parts ) - 1 ];
 
 					if ( ! in_array( strtolower( trim( $file_ext ) ), $this->allowed_types, true ) ) {
@@ -150,32 +150,38 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 					}
 				}
 
-				$images = array();
+				$videos = array();
 				for ( $i = 0; $i < $files_count; $i++ ) {
 
-					$comment_image_file = wp_upload_bits( $comment_id . '-' . $i . '-' . $_FILES[ $comment_image_id ]['name'][ $i ], '', file_get_contents( $_FILES[ $comment_image_id ]['tmp_name'][ $i ] ) );
-					$attachment_id      = media_sideload_image( $comment_image_file['url'], $post_id, null, 'id' );
-					if ( ! is_wp_error( $attachment_id ) ) {
-						$images[] = $attachment_id;
+					$file = array(
+						'name'     => $_FILES[ $comment_video_id ]['name'][ $i ],
+						'tmp_name' => $_FILES[ $comment_video_id ]['tmp_name'][ $i ],
+						'error'    => 0,
+						'size'     => filesize( $_FILES[ $comment_video_id ]['size'][ $i ] ),
+					);
+
+					$video_id = media_handle_sideload( $file, null );
+
+					if ( $video_id && ! is_wp_error( $video_id ) ) {
+						$videos[] = $video_id;
 					} else {
 						$this->error_comment_files( $comment_id, __( 'Error uploading file.', 'advanced-reviews-pro' ) );
 					}
 				}
 
-				add_comment_meta( $comment_id, ARP_PREFIX . 'review_images', $images );
-
+				add_comment_meta( $comment_id, ARP_PREFIX . 'review_videos', $videos );
 			}
 		}
 
 		/**
-		 * Displays review images
+		 * Displays review videos
 		 *
 		 * @since 1.0.0
 		 * @param $comments
 		 *
 		 * @return mixed
 		 */
-		public function display_review_image( $comments ) {
+		public function display_review_video( $comments ) {
 
 			// Return if not product review
 			if ( ! is_product() ) {
@@ -191,20 +197,18 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
 						continue;
 					}
 
-					$pics       = get_comment_meta( $comment->comment_ID, ARP_PREFIX . 'review_images', true );
-					$total_pics = count( $pics );
+					$videos     = get_comment_meta( $comment->comment_ID, ARP_PREFIX . 'review_videos', true );
+					$total_pics = count( $videos );
 
-					if ( $pics && $total_pics > 0 ) {
+					if ( $videos && $total_pics > 0 ) {
 
-						$comment->comment_content .= '<p class="arv-comment-image-text">' . ( 1 === $total_pics ? __( 'Uploaded image:', 'advanced-reviews-pro' ) : __( 'Uploaded images:', 'advanced-reviews-pro' ) ) . '</p>';
-						$comment->comment_content .= '<div class="arv-comment-images">';
+						$comment->comment_content .= '<p class="arv-comment-video-text">' . ( 1 === $total_pics ? __( 'Uploaded video:', 'advanced-reviews-pro' ) : __( 'Uploaded videos:', 'advanced-reviews-pro' ) ) . '</p>';
+						$comment->comment_content .= '<div class="arv-comment-videos">';
 						for ( $i = 0; $i < $total_pics; $i++ ) {
-							$img_meta                  = wp_get_attachment_metadata( $pics[ $i ] );
-							$full_img_src              = wp_get_attachment_url( $pics[ $i ] );
-							$shop_img                  = wp_get_attachment_image_src( $pics[ $i ] );
-							$comment->comment_content .= '<div class="arv-comment-image">';
-							/* translators: #%1$d: image name */
-							$comment->comment_content .= '<img data-natural-width="' . $img_meta['width'] . '" data-natural-height="' . $img_meta['height'] . '" data-full-src="' . $full_img_src . '" src="' . $shop_img[0] . '" alt="' . sprintf( __( 'Image #%1$d from ', 'advanced-reviews-pro' ), $i + 1 ) . $comment->comment_author . '">';
+							$full_img_src              = wp_get_attachment_url( $videos[ $i ] );
+							$comment->comment_content .= '<div class="arv-comment-video">';
+							/* translators: #%1$d: video name */
+							$comment->comment_content .= '<video class="arp-review-video" controls src="' . $full_img_src . '" alt="' . sprintf( __( 'Video #%1$d from ', 'advanced-reviews-pro' ), $i + 1 ) . $comment->comment_author . '">';
 							$comment->comment_content .= '</div>';
 						}
 						$comment->comment_content .= '<div style="clear:both;"></div></div>';
@@ -253,9 +257,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Images' ) ) {
  * @return object
  * @since  1.0.0
  */
-if ( ! function_exists( 'advanced_reviews_pro_images' ) ) {
+if ( ! function_exists( 'advanced_reviews_pro_videos' ) ) {
 
-	function advanced_reviews_pro_images() {
-		return Advanced_Reviews_Pro_Images::instance();
+	function advanced_reviews_pro_videos() {
+		return Advanced_Reviews_Pro_Videos::instance();
 	}
 }

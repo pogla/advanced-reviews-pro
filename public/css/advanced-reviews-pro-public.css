@@ -3,7 +3,8 @@
  * included in this file.
  */
 
-.arv-comment-images {
+.arv-comment-images,
+.arv-comment-videos {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -12,8 +13,16 @@
 
 .arv-comment-images .arv-comment-image{
 	width: 25%;
+	max-width: 200px;
 	padding: 0 10px 10px;
 	text-align: center;
+}
+
+.arv-comment-video {
+    width: 25%;
+    max-width: 200px;
+    padding: 0 10px 10px;
+    text-align: center;
 }
 
 .arv-comment-images .arv-comment-image img{

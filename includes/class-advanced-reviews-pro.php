@@ -243,6 +243,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-images.php';
 
 			/**
+			 * Include reviews images class.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-videos.php';
+
+			/**
 			 * Include reviews manual class.
 			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-manual.php';
@@ -367,6 +372,15 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_review_images, 'review_fields_attachment' );
 				$this->loader->add_filter( 'wp_insert_comment', $plugin_review_images, 'save_review_images', 10, 2 );
 				$this->loader->add_filter( 'comments_array', $plugin_review_images, 'display_review_image', 12 );
+			}
+
+			// Videos
+			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_videos_checkbox' ) ) {
+
+				$plugin_review_images = advanced_reviews_pro_videos();
+				$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_review_images, 'review_fields_attachment' );
+				$this->loader->add_filter( 'wp_insert_comment', $plugin_review_images, 'save_review_videos', 10, 2 );
+				$this->loader->add_filter( 'comments_array', $plugin_review_images, 'display_review_video', 12 );
 			}
 
 			// Voting

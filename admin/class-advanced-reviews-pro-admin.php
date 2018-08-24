@@ -420,6 +420,56 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			);
 
 			/**
+			 * SECTION: Videos
+			 */
+
+			$tab1_options->add_field(
+				array(
+					'name' => __( 'Videos', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable attaching videos to reviews left on WooCommerce product pages.', 'advanced-reviews-pro' ),
+					'type' => 'title',
+					'id'   => ARP_PREFIX . 'videos_settings_title',
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name' => __( 'Enable', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable Videos on Reviews', 'advanced-reviews-pro' ),
+					'id'   => ARP_PREFIX . 'enable_videos_checkbox',
+					'type' => 'checkbox',
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name'       => __( 'Total Videos', 'advanced-reviews-pro' ),
+					'desc'       => __( 'Maximum amount of videos to be left on a single review.', 'advanced-reviews-pro' ),
+					'id'         => ARP_PREFIX . 'total_videos_number',
+					'type'       => 'text',
+					'default'    => 3,
+					'attributes' => array(
+						'type'                => 'number',
+						'data-conditional-id' => ARP_PREFIX . 'enable_videos_checkbox',
+					),
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name'       => __( 'Video Size', 'advanced-reviews-pro' ),
+					'desc'       => __( 'Maximum size of video (MB).', 'advanced-reviews-pro' ),
+					'id'         => ARP_PREFIX . 'size_videos_number',
+					'type'       => 'text',
+					'default'    => 5,
+					'attributes' => array(
+						'type'                => 'number',
+						'data-conditional-id' => ARP_PREFIX . 'enable_videos_checkbox',
+					),
+				)
+			);
+
+			/**
 			 * SECTION: reCAPTCHA V2
 			 */
 
@@ -1042,20 +1092,20 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 		 */
 		protected static function get_import_description() {
 
-			$fields_description  = '<p class="cmb2-metabox-description">';
-			$fields_description .= '<br>Product ID *: product or variation id';
-			$fields_description .= '<br>Rating *: Rating from 1 to 5. Can also be decimal - if max review score is not 5.';
-			$fields_description .= '<br>Date: Date of the review.';
-			$fields_description .= '<br>Total Votes: Total votes for review. Visible if voting enabled.';
-			$fields_description .= '<br>Images: Images separated by comma. Can be image id from media library or url - gets downloaded to media library.';
-			$fields_description .= '<br>Author ID: User id';
-			$fields_description .= '<br>Author Name: Author Name';
-			$fields_description .= '<br>Author Name: Author Name';
-			$fields_description .= '<br>Author URL: Author URL';
-			$fields_description .= '<br><br>Save page before processing the file!';
-			$fields_description .= '</p>';
+			$descriptions = array(
+				__( 'Product ID *: product or variation id', 'advanced-reviews-pro' ),
+				__( 'Rating *: Rating from 1 to 5. Can also be decimal - if max review score is not 5.', 'advanced-reviews-pro' ),
+				__( 'Date: Date of the review.', 'advanced-reviews-pro' ),
+				__( 'Total Votes: Total votes for review. Visible if voting enabled.', 'advanced-reviews-pro' ),
+				__( 'Images: Images separated by comma. Can be image id from media library or url - gets downloaded to media library.', 'advanced-reviews-pro' ),
+				__( 'Videos: Videos separated by comma. Only works with video id from media library.', 'advanced-reviews-pro' ),
+				__( 'Author ID: User id', 'advanced-reviews-pro' ),
+				__( 'Author Name: Author Name', 'advanced-reviews-pro' ),
+				__( 'Author Email: Author Email', 'advanced-reviews-pro' ),
+				__( 'Author URL: Author URL', 'advanced-reviews-pro' ),
+			);
 
-			return $fields_description;
+			return '<p class="cmb2-metabox-description">' . implode( '<br>', $descriptions ) . '</p>';
 		}
 
 		/**

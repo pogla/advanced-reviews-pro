@@ -1,2 +1,2 @@
-Product ID,Rating,Date,Comment,Total Votes,Images,Author ID,Author Name,Author Email,Author URL
-117,4,2018-07-12 08:15:53,Test comment import,11,"https://images.pexels.com/photos/1343504/pexels-photo-1343504.jpeg,254",1,Name,email@domain.com,domain.com
+Product ID,Rating,Date,Comment,Total Votes,Images,Videos,Author ID,Author Name,Author Email,Author URL
+117,4,2018-07-12 08:15:53,Test comment import,11,"https://images.pexels.com/photos/1343504/pexels-photo-1343504.jpeg,254","281,280",1,Name,email@domain.com,domain.com
