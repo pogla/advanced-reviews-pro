@@ -2,8 +2,7 @@ jQuery( document ).ready(
 	function( $ ) {
 
 			$( 'body' )
-			.on(
-				'change', '#selected-user', function () {
+			.on( 'change', '#selected-user', function () {
 					if ( 'guest' !== $( this ).val() ) {
 						$( '.hide-if-guest' ).hide();
 						$( '#author-email, #author-name' ).attr( "disabled", true );
@@ -11,10 +10,8 @@ jQuery( document ).ready(
 						$( '.hide-if-guest' ).show();
 						$( '#author-email, #author-name' ).attr( "disabled", false );
 					}
-				}
-			)
-			.on(
-				'click', '.arp-insert-media', function(e) {
+				} )
+			.on( 'click', '.arp-insert-media', function(e) {
 
 					e.preventDefault();
 
@@ -81,17 +78,14 @@ jQuery( document ).ready(
 					);
 
 					image_frame.open();
-				}
-			)
-			.on(
-				'init, change', '#arp_enable_coupon_review_reminder_checkbox, #arp_enable_review_discount_checkbox', function () {
+				} )
+			.on( 'init, change', '#arp_enable_coupon_review_reminder_checkbox, #arp_enable_review_discount_checkbox', function () {
 					if ( ! $( '#arp_enable_coupon_review_reminder_checkbox' ).is( ':checked' ) && ! $( '#arp_enable_review_discount_checkbox' ).is( ':checked' ) ) {
 						  $( '.arp_tab3_hide' ).addClass( 'is-hidden' );
 					} else {
 						  $( '.arp_tab3_hide' ).removeClass( 'is-hidden' );
 					}
-				}
-			);
+				} );
 
 			$( '#arp_enable_coupon_review_reminder_checkbox' ).trigger( 'init' );
 

@@ -233,6 +233,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-recaptcha.php';
 
 			/**
+			 * Include reviews class.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-importer.php';
+
+			/**
 			 * Include reviews images class.
 			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-images.php';
@@ -312,6 +317,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 			$this->loader->add_action( 'cmb2_admin_init', $plugin_admin, 'register_plugin_options' );
 			$this->loader->add_action( 'plugin_action_links_' . basename( dirname( __DIR__ ) ) . '/advanced-reviews-pro.php', $plugin_admin, 'plugin_action_links' );
+			$this->loader->add_action( 'admin_footer', $plugin_admin, 'clear_errors_transient' );
+
+			$plugin_importer = advanced_reviews_pro_importer();
+			$this->loader->add_action( 'admin_post_' . ARP_PREFIX . 'process_import', $plugin_importer, 'process_import' );
 
 			// Manual reviews adding
 			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_manual_checkbox' ) ) {

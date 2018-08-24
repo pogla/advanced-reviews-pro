@@ -980,6 +980,137 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'default' => 'Howdy {user_display_name},<br><br>Thank you for your review on {reviewed_product_name}!<br><br>We like to give you a coupon code: <br><br><b>{coupon}</b><br><br> which expires on {coupon_expiration_date}.<br><br>Regards,<br>Martin',
 				)
 			);
+
+			/**
+			 * TAB 4
+			 *
+			 * Registers options page menu item and form.
+			 */
+			$tab4_options = new_cmb2_box(
+				array(
+					'id'           => ARP_PREFIX . 'option_tab4_metabox',
+					'title'        => __( 'Import Reviews', 'advanced-reviews-pro' ),
+					'object_types' => array( 'options-page' ),
+					'option_key'   => ARP_PREFIX . 'tab4_options',
+					'parent_slug'  => ARP_PREFIX . 'options',
+					'tab_group'    => ARP_PREFIX . 'main_options',
+					'save_button'  => __( 'Save', 'advanced-reviews-pro' ),
+				)
+			);
+
+			$tab4_options->add_field(
+				array(
+					'name' => __( 'Import Reviews', 'advanced-reviews-pro' ),
+					'desc' => __( 'Import Reviews.', 'advanced-reviews-pro' ),
+					'type' => 'title',
+					'id'   => ARP_PREFIX . 'import_reviews_settings_title',
+				)
+			);
+
+			$tab4_options->add_field( array(
+				'name'       => __( 'Upload File', 'advanced-reviews-pro' ),
+				/* translators: 1: a tag, 2: closing a tag */
+				'desc'       => sprintf( __( 'Upload csv file. %1$sDownload%2$s example file.', 'advanced-reviews-pro' ), '<a href="' . ARP_PLUGIN_URL . 'admin/assets/example.csv">', '</a>' ),
+				'id'         => ARP_PREFIX . 'import_reviews_file',
+				'type'       => 'file',
+				'text'       => array(
+					'add_upload_file_text' => __( 'Upload File', 'advanced-reviews-pro' ),
+				),
+				'options'    => array(
+					'url' => false,
+				),
+				'query_args' => array(
+					'type' => array(
+						'text/plain',
+						'text/csv',
+						'application/vnd.ms-excel',
+						'application/csv',
+						'application/x-csv',
+					),
+				),
+				'after'      => self::get_import_description(),
+				'after_row'  => $this->get_import_form_html(),
+			) );
+		}
+
+		/**
+		 * Form description for import
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return string
+		 */
+		protected static function get_import_description() {
+
+			$fields_description  = '<p class="cmb2-metabox-description">';
+			$fields_description .= '<br>Product ID *: product or variation id';
+			$fields_description .= '<br>Rating *: Rating from 1 to 5. Can also be decimal - if max review score is not 5.';
+			$fields_description .= '<br>Date: Date of the review.';
+			$fields_description .= '<br>Total Votes: Total votes for review. Visible if voting enabled.';
+			$fields_description .= '<br>Images: Images separated by comma. Can be image id from media library or url - gets downloaded to media library.';
+			$fields_description .= '<br>Author ID: User id';
+			$fields_description .= '<br>Author Name: Author Name';
+			$fields_description .= '<br>Author Name: Author Name';
+			$fields_description .= '<br>Author URL: Author URL';
+			$fields_description .= '<br><br>Save page before processing the file!';
+			$fields_description .= '</p>';
+
+			return $fields_description;
+		}
+
+		/**
+		 * Get html for import reviews button with errors
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return string
+		 */
+		private function get_import_form_html() {
+
+			$file_id = arp_get_option( ARP_PREFIX . 'import_reviews_file_id', 4 );
+
+			if ( ! $file_id ) {
+				return '';
+			}
+
+			ob_start();
+
+			$errors = get_transient( get_current_user_id() . '_arp_errors' );
+
+			if ( $errors ) {
+				foreach ( $errors as $error ) {
+					?>
+					<p style="color: red;"><?php esc_attr_e( $error ); ?></p>
+					<?php
+				}
+			}
+
+			$success = get_transient( get_current_user_id() . '_arp_success' );
+
+			if ( $success ) {
+				?>
+				<p style="color: #46b450;"><?php esc_attr_e( 'Import successful!', 'advanced-reviews-pro' ); ?></p>
+				<?php
+			}
+			?>
+			<p>
+				<a class="button button-primary" href="<?php echo esc_url_raw( wp_nonce_url( admin_url( 'admin-post.php?action=' . ARP_PREFIX . 'process_import' ), ARP_PREFIX . 'process_import', ARP_PREFIX . 'process_import_nonce' ) ); ?>" ><?php esc_attr_e( 'Process File', 'advanced-reviews-pro' ); ?></a>
+			</p>
+			<?php
+			$output = ob_get_contents();
+			ob_end_clean();
+
+			return $output;
+		}
+
+		/**
+		 * Clears transient we are using for import errors
+		 *
+		 * @since 1.0.0
+		 */
+		public function clear_errors_transient() {
+			delete_transient( get_current_user_id() . '_arp_errors' );
+			delete_transient( get_current_user_id() . '_arp_success' );
 		}
 
 		/**
