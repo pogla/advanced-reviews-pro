@@ -1,3 +1,7 @@
 .is-hidden {
 	display: none !important;
 }
+
+.arp-video-preview {
+    width: 100px;
+}

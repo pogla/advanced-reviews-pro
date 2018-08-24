@@ -57,6 +57,46 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		}
 
 		/**
+		 * Saves videos on comment save
+		 *
+		 * @param $comment_id
+		 * @since 1.0.0
+		 */
+		public function save_videos_edit_comment( $comment_id ) {
+
+			if ( ! isset( $_POST['arp-selected-videos'] ) ) {
+				return;
+			}
+
+			$selected_videos = $_POST['arp-selected-videos'];
+
+			if ( $selected_videos ) {
+				update_comment_meta( $comment_id, ARP_PREFIX . 'review_videos', explode( ',', $selected_videos ) );
+			}
+		}
+
+		/**
+		 * Saves total votes on comment save
+		 *
+		 * @param $comment_id
+		 * @since 1.0.0
+		 */
+		public function save_total_votes_edit_comment( $comment_id ) {
+
+			if ( ! isset( $_POST['arp-total-votes'] ) ) {
+				return;
+			}
+
+			$total_votes = $_POST['arp-total-votes'];
+
+			if ( $total_votes ) {
+				update_comment_meta( $comment_id, ARP_PREFIX . 'total_votes', $total_votes );
+			} else {
+				update_comment_meta( $comment_id, ARP_PREFIX . 'total_votes', 0 );
+			}
+		}
+
+		/**
 		 * Adds meta box for images on edit review screen
 		 *
 		 * @since 1.0.0
@@ -72,6 +112,36 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		}
 
 		/**
+		 * Adds meta box for videos on edit review screen
+		 *
+		 * @since 1.0.0
+		 */
+		public function add_videos_meta_box() {
+
+			$screen    = get_current_screen();
+			$screen_id = $screen ? $screen->id : '';
+
+			if ( 'comment' === $screen_id && isset( $_GET['c'] ) && metadata_exists( 'comment', $_GET['c'], 'rating' ) ) {
+				add_meta_box( 'woocommerce-review-videos', __( 'Videos', 'advanced-reviews-pro' ), array( $this, 'comment_videos_meta_box_html' ), 'comment', 'normal', 'low' );
+			}
+		}
+
+		/**
+		 * Adds meta box for videos on edit review screen
+		 *
+		 * @since 1.0.0
+		 */
+		public function add_total_votes_meta_box() {
+
+			$screen    = get_current_screen();
+			$screen_id = $screen ? $screen->id : '';
+
+			if ( 'comment' === $screen_id && isset( $_GET['c'] ) && metadata_exists( 'comment', $_GET['c'], 'rating' ) ) {
+				add_meta_box( 'woocommerce-review-total-votes', __( 'Total Votes', 'advanced-reviews-pro' ), array( $this, 'comment_total_votes_meta_box_html' ), 'comment', 'normal', 'low' );
+			}
+		}
+
+		/**
 		 * HTML for meta box for images
 		 *
 		 * @since 1.0.0
@@ -83,7 +153,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 			$pics = get_comment_meta( $comment_id, ARP_PREFIX . 'review_images', true );
 			$pics = $pics ? $pics : array();
 
-			echo '<a href="javascript:" class="arp-insert-media button">' . __( 'Add Media', 'advanced-reviews-pro' ) . '</a><br><br>'; // WPCS: XSS ok.
+			echo '<a href="javascript:" class="arp-insert-media button" data-type="image">' . __( 'Add Media', 'advanced-reviews-pro' ) . '</a><br><br>'; // WPCS: XSS ok.
 			echo '<input type="hidden" name="arp-selected-imgs" id="arp-selected-imgs" value="' . implode( ',', $pics ) . '">'; // WPCS: XSS ok.
 
 			echo '<div id="selected-images">';
@@ -96,6 +166,46 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 
 			echo '</div>';
 
+		}
+
+		/**
+		 * HTML for meta box for videos
+		 *
+		 * @since 1.0.0
+		 */
+		public function comment_videos_meta_box_html() {
+
+			$comment_id = $_GET['c'];
+
+			$videos = get_comment_meta( $comment_id, ARP_PREFIX . 'review_videos', true );
+			$videos = $videos ? $videos : array();
+
+			echo '<a href="javascript:" class="arp-insert-media button" data-type="video">' . __( 'Add Media', 'advanced-reviews-pro' ) . '</a><br><br>'; // WPCS: XSS ok.
+			echo '<input type="hidden" name="arp-selected-videos" id="arp-selected-videos" value="' . implode( ',', $videos ) . '">'; // WPCS: XSS ok.
+
+			echo '<div id="selected-videos">';
+
+			if ( $videos ) {
+				foreach ( $videos as $video ) {
+					echo '<video src="' . wp_get_attachment_url( $video ) . '" class="arp-video-preview"></video>'; // WPCS: XSS ok.
+				}
+			}
+
+			echo '</div>';
+		}
+
+		/**
+		 * HTML for meta box for total votes
+		 *
+		 * @since 1.0.0
+		 */
+		public function comment_total_votes_meta_box_html() {
+
+			$comment_id = $_GET['c'];
+
+			$total_votes = get_comment_meta( $comment_id, ARP_PREFIX . 'total_votes', true );
+
+			echo '<input type="number" name="arp-total-votes" value="' . $total_votes . '">'; // WPCS: XSS ok.
 		}
 
 		/**
@@ -169,7 +279,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 			$comment_content  = $_POST['comment-content'];
 			$selected_product = $_POST['selected-product'];
 			$selected_date    = $_POST['comment_date'];
+			$total_votes      = $_POST['total-votes'];
 			$selected_images  = $_POST['arp-selected-imgs'];
+			$selected_videos  = $_POST['arp-selected-videos'];
 
 			if ( ! $selected_date ) {
 				$selected_date     = date( 'Y-m-d G-i-s' );
@@ -205,6 +317,16 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 					update_comment_meta( $review_id, ARP_PREFIX . 'review_images', explode( ',', $selected_images ) );
 				}
 
+				if ( $selected_videos ) {
+					update_comment_meta( $review_id, ARP_PREFIX . 'review_videos', explode( ',', $selected_videos ) );
+				}
+
+				if ( $total_votes ) {
+					update_comment_meta( $review_id, ARP_PREFIX . 'total_votes', $total_votes );
+				} else {
+					update_comment_meta( $review_id, ARP_PREFIX . 'total_votes', 0 );
+				}
+
 				$_POST['arp-added-comment'] = true;
 				$_POST['arp-review-id']     = $review_id;
 
@@ -218,22 +340,41 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-		public function arp_get_images() {
+		public function arp_get_files() {
 
 			if ( isset( $_POST['ids'] ) ) {
 
-				$ids    = explode( ',', $_POST['ids'] );
-				$images = array();
+				$ids = explode( ',', $_POST['ids'] );
 
-				foreach ( $ids as $id ) {
-					$images[] = wp_get_attachment_image( $id, 'shop_thumbnail' );
+				if ( 'image' === $_POST['type'] ) {
+
+					$images = array();
+
+					foreach ( $ids as $id ) {
+						$images[] = wp_get_attachment_image( $id, 'shop_thumbnail' );
+					}
+
+					wp_send_json_success(
+						array(
+							'images' => $images,
+						)
+					);
 				}
 
-				wp_send_json_success(
-					array(
-						'images' => $images,
-					)
-				);
+				if ( 'video' === $_POST['type'] ) {
+
+					$videos = array();
+
+					foreach ( $ids as $id ) {
+						$videos[] = '<video src="' . wp_get_attachment_url( $id ) . '" class="arp-video-preview"></video>';
+					}
+
+					wp_send_json_success(
+						array(
+							'images' => $videos,
+						)
+					);
+				}
 			} else {
 				wp_send_json_error();
 			}

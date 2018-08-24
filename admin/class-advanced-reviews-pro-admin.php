@@ -194,10 +194,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name' => __( 'Manual Reviews', 'advanced-reviews-pro' ),
-					'desc' => __( 'Enable manual review generation via admin panel.', 'advanced-reviews-pro' ),
-					'id'   => ARP_PREFIX . 'enable_manual_checkbox',
-					'type' => 'checkbox',
+					'name'  => __( 'Manual Reviews', 'advanced-reviews-pro' ),
+					'desc'  => __( 'Enable manual review generation via admin panel.', 'advanced-reviews-pro' ),
+					'id'    => ARP_PREFIX . 'enable_manual_checkbox',
+					'type'  => 'checkbox',
+					'after' => 'on' === arp_get_option( ARP_PREFIX . 'enable_manual_checkbox' ) ? '<span class="cmb2-metabox-description"><a href="' . admin_url( 'edit-comments.php?page=arp_add-custom-rating' ) . '">' . __( 'Add Review', 'advanced-reviews-pro' ) . '</a></span>' : '',
 				)
 			);
 

@@ -332,10 +332,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 
 				$plugin_review_manual = advanced_reviews_pro_manual();
 				$this->loader->add_action( 'admin_menu', $plugin_review_manual, 'add_rating_submenu' );
-				$this->loader->add_action( 'wp_ajax_arp_get_images', $plugin_review_manual, 'arp_get_images' );
+				$this->loader->add_action( 'wp_ajax_arp_get_files', $plugin_review_manual, 'arp_get_files' );
 				$this->loader->add_action( 'wp_loaded', $plugin_review_manual, 'submit_new_comment' );
 				$this->loader->add_action( 'add_meta_boxes', $plugin_review_manual, 'add_images_meta_box' );
+				$this->loader->add_action( 'add_meta_boxes', $plugin_review_manual, 'add_videos_meta_box' );
+				$this->loader->add_action( 'add_meta_boxes', $plugin_review_manual, 'add_total_votes_meta_box' );
 				$this->loader->add_action( 'edit_comment', $plugin_review_manual, 'save_images_edit_comment' );
+				$this->loader->add_action( 'edit_comment', $plugin_review_manual, 'save_videos_edit_comment' );
+				$this->loader->add_action( 'edit_comment', $plugin_review_manual, 'save_total_votes_edit_comment' );
 			}
 		}
 
@@ -380,7 +384,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$plugin_review_images = advanced_reviews_pro_videos();
 				$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_review_images, 'review_fields_attachment' );
 				$this->loader->add_filter( 'wp_insert_comment', $plugin_review_images, 'save_review_videos', 10, 2 );
-				$this->loader->add_filter( 'comments_array', $plugin_review_images, 'display_review_video', 12 );
+				$this->loader->add_filter( 'comments_array', $plugin_review_images, 'display_review_video', 13 );
 			}
 
 			// Voting

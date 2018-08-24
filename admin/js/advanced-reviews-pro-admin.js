@@ -15,10 +15,7 @@ jQuery( document ).ready(
 
 					e.preventDefault();
 
-					var image_frame;
-					if ( image_frame ) {
-						  image_frame.open();
-					}
+					var image_frame, type = $( this ).data( 'type' );
 
 					// Define image_frame as wp.media object
 					image_frame = wp.media(
@@ -30,6 +27,23 @@ jQuery( document ).ready(
 							}
 						}
 					);
+
+					if ( 'video' === type ) {
+						// Define image_frame as wp.media object
+						image_frame = wp.media(
+							{
+								title: 'Select Review Videos',
+								multiple : true,
+								library : {
+									type : 'video'
+								}
+							}
+						);
+					}
+
+					if ( image_frame ) {
+						  image_frame.open();
+					}
 
 					image_frame.on(
 						'close', function() {
@@ -51,9 +65,15 @@ jQuery( document ).ready(
 
 							var ids = gallery_ids.join( ',' );
 
-							$( 'input#arp-selected-imgs' ).val( ids );
+							if ( 'image' === type ) {
+								$( 'input#arp-selected-imgs' ).val( ids );
+								refreshImages( ids, type );
+							}
 
-							refreshImages( ids );
+							if ( 'video' === type ) {
+								$( 'input#arp-selected-videos' ).val( ids );
+								refreshImages( ids, type );
+							}
 
 						}
 					);
@@ -63,8 +83,15 @@ jQuery( document ).ready(
 
 							// On open, get the id from the hidden input
 							// and select the appropiate images in the media manager
-							var selection = image_frame.state().get( 'selection' );
-							var ids       = $( 'input#arp-selected-imgs' ).val().split( ',' );
+							var selection = image_frame.state().get( 'selection' ), ids;
+
+							if ( 'image' === type ) {
+								ids = $( 'input#arp-selected-imgs' ).val().split( ',' );
+							}
+
+							if ( 'video' === type ) {
+								ids = $( 'input#arp-selected-videos' ).val().split( ',' );
+							}
 
 							ids.forEach(
 								function( id ) {
@@ -90,11 +117,12 @@ jQuery( document ).ready(
 			$( '#arp_enable_coupon_review_reminder_checkbox' ).trigger( 'init' );
 
 			// Ajax request to refresh the image preview
-		function refreshImages( ids ){
+		function refreshImages( ids, type ){
 
 			var data = {
-				action: 'arp_get_images',
-				ids: ids
+				action: 'arp_get_files',
+				ids: ids,
+				type: type
 			};
 
 			$.post(
@@ -102,7 +130,7 @@ jQuery( document ).ready(
 
 					if ( true === response.success ) {
 
-						var imagesContainer = $( '#selected-images' );
+						var imagesContainer = type === 'image' ? $( '#selected-images' ) : $( '#selected-videos' );
 						imagesContainer.html( '' );
 
 						response.data.images.forEach(

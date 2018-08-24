@@ -32,6 +32,7 @@
 
 .arp-vote-wrapper {
 	display: table;
+    margin-bottom: 10px;
 }
 
 .arp-vote {
