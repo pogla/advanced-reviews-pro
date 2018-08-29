@@ -224,11 +224,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 		 */
 		public function output_add_comment() {
 
-			$users            = get_users();
-			$review_score_max = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
-			if ( ! $review_score_max ) {
-				$review_score_max = 5;
-			}
+			$users = get_users();
 
 			$products = get_posts(
 				array(
@@ -253,13 +249,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Manual' ) ) {
 				return;
 			}
 
-			$review_score_max = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
-			if ( ! $review_score_max ) {
-				$review_score_max = 5;
-			}
-
-			// Transform to 1-5 rating system
-			$selected_rating = ( $_POST['selected-rating'] / $review_score_max ) * 5;
+			$selected_rating = $_POST['selected-rating'];
 
 			$selected_user = $_POST['selected-user'];
 			if ( 'guest' === $selected_user ) {

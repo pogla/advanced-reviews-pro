@@ -101,9 +101,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 
 			$this->load_dependencies();
 
-			// Check max review score
-			Advanced_Reviews_Pro_Max_Review_Score::check_if_new_max_rating_selected();
-
 			// Update all ratings
 			Advanced_Reviews_Pro_Functions::update_comments_with_meta();
 
@@ -255,11 +252,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			/**
 			 * Include max reviews score class.
 			 */
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-max-review-score.php';
-
-			/**
-			 * Include max reviews score class.
-			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-reviews-pro-voting.php';
 
 			/**
@@ -401,25 +393,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				}
 			}
 
-			// Custom review score
-			$review_score_max = absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) );
-			if ( ! empty( $review_score_max ) && 5 !== $review_score_max ) {
-
-				$plugin_max_score = advanced_reviews_pro_max_review_score( $review_score_max );
-				$this->loader->add_filter( 'wp_insert_comment', $plugin_max_score, 'insert_current_review_score' );
-				$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_max_score, 'custom_review_stars' );
-				$this->loader->add_filter( 'woocommerce_get_star_rating_html', $plugin_max_score, 'woocommerce_get_star_rating_html', 10, 3 );
-				$this->loader->add_filter( 'wp_update_comment_data', $plugin_max_score, 'save_comment_admin' );
-			}
-
 			// Summary
 			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_summary_checkbox' ) ) {
 
-				if ( ! $review_score_max ) {
-					$review_score_max = 5;
-				}
-
-				$plugin_review_summary = advanced_reviews_pro_summary( $review_score_max );
+				$plugin_review_summary = advanced_reviews_pro_summary();
 				$this->loader->add_filter( 'woocommerce_product_review_list_args', $plugin_review_summary, 'add_summary' );
 				$this->loader->add_filter( 'query_vars', $plugin_review_summary, 'add_query_vars' );
 				$this->loader->add_action( 'parse_comment_query', $plugin_review_summary, 'parse_comment_query' );

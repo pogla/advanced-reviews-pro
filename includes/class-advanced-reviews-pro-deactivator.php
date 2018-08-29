@@ -41,7 +41,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Deactivator' ) ) {
 		 * @since    1.0.0
 		 */
 		public static function deactivate() {
-			Advanced_Reviews_Pro_Max_Review_Score::cleanup_decimal_ratings();
 		}
 
 		/**

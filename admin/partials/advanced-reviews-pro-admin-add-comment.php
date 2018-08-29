@@ -13,7 +13,8 @@
 ?>
 <style>
 	.edit-form-section {
-		width: calc( 100% - 20px );max-width: 1200px;
+		width: calc( 100% - 20px );
+		max-width: 1200px;
 	}
 	#post-body-content table tr {
 		padding: 1em;
@@ -150,7 +151,7 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 						<td>
 							<select name="selected-rating">
 								<?php
-								for ( $i = 1; $i <= $review_score_max; $i++ ) {
+								for ( $i = 1; $i <= 5; $i++ ) {
 									echo '<option value="' . $i . '">' . $i . '</option>'; // WPCS XSS ok.
 								}
 								?>

@@ -30,22 +30,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 		protected static $_instance = null;
 
 		/**
-		 * Review score max.
-		 *
 		 * @since    1.0.0
-		 * @access   private
-		 * @var      string    $review_score_max
 		 */
-		private $review_score_max;
-
-		/**
-		 * @since    1.0.0
-		 *
-		 * @param $review_score_max int
-		 */
-		public function __construct( $review_score_max ) {
-
-			$this->review_score_max = $review_score_max;
+		public function __construct() {
 		}
 
 		/**
@@ -94,7 +81,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 			$filter_score = get_query_var( 'arp-rating', false );
 
 			if ( is_product() && $filter_score && true !== $is_comment_summary ) {
-				$meta_query_args = self::get_meta_query_by_score( absint( $filter_score ), $this->review_score_max );
+				$meta_query_args = self::get_meta_query_by_score( absint( $filter_score ) );
 				if ( ! $q->query_vars['meta_query'] ) {
 					$q->query_vars['meta_query'] = $meta_query_args;
 				} else {
@@ -119,7 +106,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 			$grouped_by_score   = array();
 			$total_reviews      = 0;
 
-			for ( $i = 1; $i <= $this->review_score_max; $i++ ) {
+			for ( $i = 1; $i <= 5; $i++ ) {
 
 				$args = array(
 					'post_status' => 'publish',
@@ -127,7 +114,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 					'status'      => 'approve',
 					'post_id'     => get_the_ID(),
 					'parent'      => 0,
-					'meta_query'  => self::get_meta_query_by_score( $i, $this->review_score_max ),
+					'meta_query'  => self::get_meta_query_by_score( $i ),
 				);
 
 				$comments_count = count( get_comments( $args ) );
@@ -150,28 +137,17 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 		 * @since 1.0.0
 		 *
 		 * @param $score
-		 * @param $score_max
 		 *
 		 * @return array
 		 */
-		public static function get_meta_query_by_score( $score, $score_max ) {
-
-			$step_size   = 5 / $score_max;
-			$start_range = 1 === $score ? 0 : ( ( $score - ( 1 / 2 ) ) * $step_size );
-			$end_range   = $score_max === $score ? 5 : ( ( ( 1 / 2 ) + $score ) * $step_size );
+		public static function get_meta_query_by_score( $score ) {
 
 			return array(
 				'relation' => 'AND',
 				array(
 					'key'     => 'rating',
-					'value'   => $start_range,
-					'compare' => '>',
-					'type'    => 'numeric',
-				),
-				array(
-					'key'     => 'rating',
-					'value'   => $end_range,
-					'compare' => '<=',
+					'value'   => $score,
+					'compare' => '=',
 					'type'    => 'numeric',
 				),
 			);
@@ -184,13 +160,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
 		 * @return object instance
 		 *
 		 * @since  1.0.0
-		 *
-		 * @param $review_score_max
 		 */
-		public static function instance( $review_score_max ) {
+		public static function instance() {
 
 			if ( is_null( self::$_instance ) ) {
-				self::$_instance = new self( $review_score_max );
+				self::$_instance = new self();
 			}
 
 			return self::$_instance;
@@ -206,8 +180,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Summary' ) ) {
  */
 if ( ! function_exists( 'advanced_reviews_pro_summary' ) ) {
 
-	function advanced_reviews_pro_summary( $review_score_max ) {
-		return Advanced_Reviews_Pro_Summary::instance( $review_score_max );
+	function advanced_reviews_pro_summary() {
+		return Advanced_Reviews_Pro_Summary::instance();
 	}
 }
 

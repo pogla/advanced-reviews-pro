@@ -126,20 +126,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			wp_enqueue_media();
 
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/advanced-reviews-pro-admin.js', array( 'jquery' ), $this->version, false );
-
-			$comment_id = isset( $_GET['c'] ) ? esc_attr( $_GET['c'] ) : false;
-
-			if ( 'comment' === get_current_screen()->id && $comment_id ) {
-
-				wp_enqueue_script( $this->plugin_name . 'max-score', plugin_dir_url( __FILE__ ) . 'js/advanced-reviews-pro-max-score.js', array( 'jquery' ), $this->version, false );
-				wp_localize_script(
-					$this->plugin_name . 'max-score', 'wp_vars', array(
-						'review_score_max' => absint( arp_get_option( ARP_PREFIX . 'max_review_score_number' ) ),
-						'selected_score'   => get_comment_meta( $comment_id, 'rating', true ),
-					)
-				);
-			}
-
 		}
 
 		/**
@@ -199,21 +185,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'id'    => ARP_PREFIX . 'enable_manual_checkbox',
 					'type'  => 'checkbox',
 					'after' => 'on' === arp_get_option( ARP_PREFIX . 'enable_manual_checkbox' ) ? '<span class="cmb2-metabox-description"><a href="' . admin_url( 'edit-comments.php?page=arp_add-custom-rating' ) . '">' . __( 'Add Review', 'advanced-reviews-pro' ) . '</a></span>' : '',
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name'       => __( 'Maximum Review Score', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Custom maximum review score. Between 2 and 10.', 'advanced-reviews-pro' ),
-					'id'         => ARP_PREFIX . 'max_review_score_number',
-					'type'       => 'text',
-					'default'    => 5,
-					'attributes' => array(
-						'type' => 'number',
-						'min'  => 2,
-						'max'  => 10,
-					),
 				)
 			);
 
@@ -1095,7 +1066,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$descriptions = array(
 				__( 'Product ID *: product or variation id', 'advanced-reviews-pro' ),
-				__( 'Rating *: Rating from 1 to 5. Can also be decimal - if max review score is not 5.', 'advanced-reviews-pro' ),
+				__( 'Rating *: Rating from 1 to 5.', 'advanced-reviews-pro' ),
 				__( 'Date: Date of the review.', 'advanced-reviews-pro' ),
 				__( 'Total Votes: Total votes for review. Visible if voting enabled.', 'advanced-reviews-pro' ),
 				__( 'Images: Images separated by comma. Can be image id from media library or url - gets downloaded to media library.', 'advanced-reviews-pro' ),

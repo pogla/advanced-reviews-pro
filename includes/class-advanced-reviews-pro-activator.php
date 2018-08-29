@@ -44,7 +44,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Activator' ) ) {
 		 * @since    1.0.0
 		 */
 		public static function activate() {
-			Advanced_Reviews_Pro_Max_Review_Score::restore_decimal_ratings();
 		}
 
 		/**
