@@ -101,9 +101,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 
 			$this->load_dependencies();
 
-			// Update all ratings
-			Advanced_Reviews_Pro_Functions::update_comments_with_meta();
-
 			$this->set_locale();
 			$this->define_admin_hooks();
 			$this->define_public_hooks();
@@ -349,10 +346,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-			// General functions
-			$plugin_functions = advanced_reviews_pro_functions();
-			$this->loader->add_action( 'comment_post', $plugin_functions, 'add_comment_post_meta' );
-
 			// reCAPTCHA
 			if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_recaptcha_checkbox' ) ) {
 
@@ -386,6 +379,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_filter( 'woocommerce_review_after_comment_text', $plugin_review_voting, 'add_voting_to_rating_html' );
 				$this->loader->add_action( 'wp_ajax_arp_vote', $plugin_review_voting, 'vote' );
 				$this->loader->add_action( 'wp_ajax_nopriv_arp_vote', $plugin_review_voting, 'vote' );
+				$this->loader->add_action( 'comment_post', $plugin_review_voting, 'add_comment_post_meta' );
+				$this->loader->add_action( 'pre_get_comments', $plugin_review_voting, 'update_product_comments_with_meta' );
 
 				// Sort by votes
 				if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_votes_sorting_checkbox' ) ) {
@@ -436,6 +431,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_filter( 'woocommerce_email_classes', $review_coupons, 'add_review_coupons_woocommerce_email' );
 				$this->loader->add_filter( 'comment_post_redirect', $review_coupons, 'send_coupon_after_review', 9 );
 			}
+
+			// Update all ratings
+			$plugin_functions = advanced_reviews_pro_functions();
+			$plugin_functions::update_comments_with_meta();
 		}
 
 		/**

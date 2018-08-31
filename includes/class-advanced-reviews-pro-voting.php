@@ -40,6 +40,15 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 		private $allow_admin;
 
 		/**
+		 * Make sure we are checking for no-meta values reviews only once.
+		 *
+		 * @since  1.0.0
+		 * @access private
+		 * @var    bool    $reviews_checked
+		 */
+		private $reviews_checked = false;
+
+		/**
 		 * @since 1.0.0
 		 */
 		public function __construct() {
@@ -273,6 +282,50 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 					add_comment_meta( $comment_id, ARP_PREFIX . $reg . 'downvotes', 1 );
 				} else {
 					update_comment_meta( $comment_id, ARP_PREFIX . $reg . 'downvotes', ++$comment_downvotes );
+				}
+			}
+		}
+
+		/**
+		 * Add comment meta when comment created
+		 *
+		 * @since 1.0.0
+		 * @param $comment_id
+		 *
+		 * @return mixed|void
+		 */
+		public function add_comment_post_meta( $comment_id ) {
+
+			$product_id = get_comment( $comment_id )->comment_post_ID;
+			$product    = wc_get_product( $product_id );
+
+			if ( ! $product ) {
+				return;
+			}
+
+			update_comment_meta( $comment_id, ARP_PREFIX . 'total_votes', 0 );
+		}
+
+		/**
+		 * Update all the review of the current product with total_votes post meta, so they will get sorted.
+		 * Otherwise they cannot get sorted by meta value.
+		 * This is only backup. All the meta should already be set.
+		 *
+		 * @param $query
+		 */
+		public function update_product_comments_with_meta( $query ) {
+
+			global $post_type, $id, $wpdb;
+			if ( ! $this->reviews_checked && 'product' === $post_type && $id ) {
+				$this->reviews_checked = true;
+
+				$prefix  = ARP_PREFIX;
+				$results = $wpdb->get_results( $wpdb->prepare( "SELECT cm.comment_ID FROM $wpdb->comments cm LEFT JOIN $wpdb->commentmeta cmm ON cmm.comment_id = cm.comment_ID AND cmm.meta_key = '{$prefix}total_votes' WHERE cmm.meta_key is null AND comment_parent = 0 AND comment_type NOT IN ('order_note','webhook_delivery','action_log') AND comment_post_ID = %d", $id ), ARRAY_A );
+
+				if ( $results && isset( $results[0]['comment_ID'] ) ) {
+					foreach ( $results as $comment ) {
+						update_comment_meta( $comment['comment_ID'], ARP_PREFIX . 'total_votes', 0 );
+					}
 				}
 			}
 		}

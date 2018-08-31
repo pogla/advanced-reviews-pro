@@ -57,7 +57,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Functions' ) ) {
 		}
 
 		/**
-		 * Update all the comments with meta, so the sorting will work
+		 * Update all the comments with meta, so the sorting by votes will work
 		 *
 		 * @since 1.0.0
 		 */
@@ -65,48 +65,19 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Functions' ) ) {
 
 			if ( isset( $_POST[ ARP_PREFIX . 'enable_votes_sorting_checkbox' ] ) ) {
 
-				$args = array(
-					'meta_query' => array(
-						'relation' => 'AND',
-						array(
-							'key'     => ARP_PREFIX . 'total_votes',
-							'compare' => 'NOT EXISTS',
-						),
-						array(
-							'key'     => 'rating',
-							'compare' => 'EXISTS',
-						),
-					),
-				);
+				global $wpdb;
+				$prefix = ARP_PREFIX;
+				$sql    = "SELECT cm.comment_ID FROM $wpdb->comments cm LEFT JOIN $wpdb->commentmeta cmm ON cmm.comment_id = cm.comment_ID AND cmm.meta_key = '{$prefix}total_votes' WHERE cmm.meta_key is null AND comment_parent = 0 AND comment_type NOT IN ('order_note','webhook_delivery','action_log')";
 
-				$comments = get_comments( $args );
+				$results = $wpdb->get_results( $sql, ARRAY_A );
 
-				if ( $comments ) {
-					foreach ( $comments as $comment ) {
-						update_comment_meta( $comment->comment_ID, ARP_PREFIX . 'total_votes', 0 );
+				if ( $results && isset( $results[0]['comment_ID'] ) ) {
+
+					foreach ( $results as $comment ) {
+						update_comment_meta( $comment['comment_ID'], ARP_PREFIX . 'total_votes', 0 );
 					}
 				}
 			}
-		}
-
-		/**
-		 * Add comment meta when comment created
-		 *
-		 * @since 1.0.0
-		 * @param $comment_id
-		 *
-		 * @return mixed|void
-		 */
-		public function add_comment_post_meta( $comment_id ) {
-
-			$product_id = get_comment( $comment_id )->comment_post_ID;
-			$product    = wc_get_product( $product_id );
-
-			if ( ! $product ) {
-				return;
-			}
-
-			update_comment_meta( $comment_id, ARP_PREFIX . 'total_votes', 0 );
 		}
 
 		/**
