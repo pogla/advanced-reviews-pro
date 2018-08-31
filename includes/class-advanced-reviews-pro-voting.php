@@ -203,7 +203,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 			$voted_comments[] = absint( $comment_id );
 			update_user_meta( $user_id, ARP_PREFIX . 'voted_comments', $voted_comments );
 
-			$this->update_vote( $comment_id, $vote_type, true );
+			$this->update_vote( $comment_id, $vote_type );
+
+			// If we need to remember how many people up/down voted
+			//$this->update_up_down( $comment_id, $vote_type, true );
 
 			return 3;
 		}
@@ -241,7 +244,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 			$voted_ips[] = $ip;
 			update_comment_meta( $comment_id, ARP_PREFIX . 'voted_ips', $voted_ips );
 
-			$this->update_vote( $comment_id, $vote_type, false );
+			$this->update_vote( $comment_id, $vote_type );
+
+			// If we need to remember how many people up/down voted
+			//$this->update_up_down( $comment_id, $vote_type, false );
 
 			return 4;
 		}
@@ -253,11 +259,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 		 *
 		 * @param $comment_id
 		 * @param $vote_type
-		 * @param $reg
 		 */
-		private function update_vote( $comment_id, $vote_type, $reg ) {
-
-			$reg = $reg ? 'reg_' : 'unreg_';
+		private function update_vote( $comment_id, $vote_type ) {
 
 			// Update total votes
 			$total_votes = get_comment_meta( $comment_id, ARP_PREFIX . 'total_votes', true );
@@ -266,6 +269,19 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Voting' ) ) {
 			} else {
 				update_comment_meta( $comment_id, ARP_PREFIX . 'total_votes', 'up' === $vote_type ? ++$total_votes : --$total_votes );
 			}
+
+		}
+
+		/**
+		 * Remember how many people up/down voted
+		 *
+		 * @param $comment_id
+		 * @param $vote_type
+		 * @param $reg
+		 */
+		private function update_up_down( $comment_id, $vote_type, $reg ) {
+
+			$reg = $reg ? 'reg_' : 'unreg_';
 
 			if ( 'up' === $vote_type ) {
 
