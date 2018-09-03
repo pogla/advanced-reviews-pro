@@ -134,7 +134,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 					break;
 				}
 
-				$link    = add_query_arg( 'arp-add-review', 'true', get_permalink( $product_id ) ) . '#tab-reviews';
+				$link    = add_query_arg( 'arp-add-review', 'true', get_permalink( $product_id ) ) . '#reviews';
 				$output .= '<li><a href="' . $link . '">' . $order_item->get_name() . '</a></li>';
 			}
 

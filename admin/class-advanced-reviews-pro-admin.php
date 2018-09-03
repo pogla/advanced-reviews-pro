@@ -454,11 +454,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab1_options->add_field(
 				array(
-					'name'    => __( 'Limit emails', 'advanced-reviews-pro' ),
-					'desc'    => __( 'Limit emails per user. User will not get more than 1 email per period.', 'advanced-reviews-pro' ),
-					'id'      => ARP_PREFIX . 'limit_emails_per_user_checkbox',
-					'default' => 'on',
-					'type'    => 'checkbox',
+					'name' => __( 'Limit emails', 'advanced-reviews-pro' ),
+					'desc' => __( 'Limit emails per user. User will not get more than 1 email per selected period.', 'advanced-reviews-pro' ),
+					'id'   => ARP_PREFIX . 'limit_emails_per_user_checkbox',
+					'type' => 'checkbox',
 				)
 			);
 
@@ -479,10 +478,9 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab1_options->add_field(
 				array(
 					'name'       => __( 'Unlimited emails for Review for Discount', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Force unlimited emails for "Review for Discount" feature', 'advanced-reviews-pro' ),
+					'desc'       => __( 'Force unlimited emails for "Review for Discount" feature.', 'advanced-reviews-pro' ),
 					'id'         => ARP_PREFIX . 'force_unlimited_review_emails_checkbox',
 					'type'       => 'checkbox',
-					'default'    => 'on',
 					'attributes' => array(
 						'data-conditional-id' => ARP_PREFIX . 'limit_emails_per_user_checkbox',
 					),
@@ -528,7 +526,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab2_options->add_field(
 				array(
 					'name' => __( 'Enable Manual Review Reminders', 'advanced-reviews-pro' ),
-					'desc' => __( 'Enable manual sending of follow-up emails with a reminder to submit a review. Manual reminders can be sent for completed orders pages.', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable manual sending of follow-up emails with a reminder to submit a review. Manual reminders can be sent from completed orders pages.', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_manual_review_reminder_checkbox',
 					'type' => 'checkbox',
 				)
@@ -569,7 +567,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab2_options->add_field(
 				array(
 					'name'       => __( 'Limit to Product Categories', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Select product categories where review reminder should apply. Leave empty to apply to all tags!', 'advanced-reviews-pro' ),
+					'desc'       => __( 'Select product categories where review reminder should apply. Leave empty to apply to all categories!', 'advanced-reviews-pro' ),
 					'id'         => ARP_PREFIX . 'sending_delay_cats_select',
 					'type'       => 'pw_multiselect',
 					'options'    => self::get_taxonomies_by_slug( 'product_cat' ),
@@ -700,7 +698,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab3_options->add_field(
 				array(
 					'name'       => __( 'Coupon Type', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Select product categories where review reminder should apply. Leave empty to apply to all tags!', 'advanced-reviews-pro' ),
+					'desc'       => __( 'Select coupon type.', 'advanced-reviews-pro' ),
 					'id'         => ARP_PREFIX . 'coupon_type_select',
 					'classes'    => ARP_PREFIX . 'tab3_hide',
 					'type'       => 'pw_select',
@@ -1089,7 +1087,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 		 *
 		 * @return string
 		 */
-		private function get_import_form_html() {
+		protected function get_import_form_html() {
 
 			$file_id = arp_get_option( ARP_PREFIX . 'import_reviews_file_id', 4 );
 
