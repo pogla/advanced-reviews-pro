@@ -411,7 +411,12 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_filter( 'comment_post_redirect', $plugin_review_reminders, 'redirect_after_review' );
 
 				if ( $is_auto_reminders ) {
-					$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_review_reminders, 'order_status_completed' );
+
+					$send_triggers = apply_filters( 'arp_triggers_of_auto_reminders', array( 'woocommerce_order_status_completed' ) );
+					foreach ( $send_triggers as $send_trigger ) {
+						$this->loader->add_action( $send_trigger, $plugin_review_reminders, 'order_status_completed' );
+					}
+
 					$this->loader->add_action( 'send_reminder_review_email_event', $plugin_review_reminders, 'send_reminder_review_email' );
 				}
 

@@ -455,7 +455,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab1_options->add_field(
 				array(
 					'name'    => __( 'Limit emails', 'advanced-reviews-pro' ),
-					'desc'    => __( 'Limit emails per user', 'advanced-reviews-pro' ),
+					'desc'    => __( 'Limit emails per user. User will not get more than 1 email per period.', 'advanced-reviews-pro' ),
 					'id'      => ARP_PREFIX . 'limit_emails_per_user_checkbox',
 					'default' => 'on',
 					'type'    => 'checkbox',
@@ -509,7 +509,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab2_options->add_field(
 				array(
 					'name' => __( 'Review Reminder', 'advanced-reviews-pro' ),
-					'desc' => __( 'Settings for review reminder.', 'advanced-reviews-pro' ),
+					/* translators: 1: a tag, 2: closing a tag */
+					'desc' => sprintf( __( 'Settings for review reminder. Edit more email settings %1$shere%2$s.', 'advanced-reviews-pro' ), '<a href="' . admin_url( 'admin.php?page=arp_options#arp-email-settings-title' ) . '">', '</a>' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'review_reminder_settings_title',
 				)
@@ -661,7 +662,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab3_options->add_field(
 				array(
 					'name' => __( 'Review for Discount', 'advanced-reviews-pro' ),
-					'desc' => __( 'Settings for review for discount.', 'advanced-reviews-pro' ),
+					/* translators: 1: a tag, 2: closing a tag */
+					'desc' => sprintf( __( 'Settings for review for discount. Edit more email settings %1$shere%2$s.', 'advanced-reviews-pro' ), '<a href="' . admin_url( 'admin.php?page=arp_options#arp-email-settings-title' ) . '">', '</a>' ),
 					'type' => 'title',
 					'id'   => ARP_PREFIX . 'review_discount_settings_title',
 				)
