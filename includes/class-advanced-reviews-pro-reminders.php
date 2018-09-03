@@ -196,12 +196,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 */
 		public static function get_limited_ordered_products( $order_items ) {
 
-			$only_cats     = array_map( 'intval', arp_get_option( ARP_PREFIX . 'sending_delay_cats_select', 2 ) );
-			$only_tags     = array_map( 'intval', arp_get_option( ARP_PREFIX . 'sending_delay_tags_select', 2 ) );
-			$only_products = array_map( 'intval', arp_get_option( ARP_PREFIX . 'sending_delay_products_select', 2 ) );
+			$only_cats     = arp_get_option( ARP_PREFIX . 'sending_delay_cats_select', 2 );
+			$only_tags     = arp_get_option( ARP_PREFIX . 'sending_delay_tags_select', 2 );
+			$only_products = arp_get_option( ARP_PREFIX . 'sending_delay_products_select', 2 );
 
 			// Check categories
 			if ( $only_cats ) {
+
+				$only_cats = array_map( 'intval', $only_cats );
 
 				$included_items = array();
 				foreach ( $order_items as $order_item ) {
@@ -228,6 +230,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 			// Check tags
 			if ( $only_tags ) {
 
+				$only_tags = array_map( 'intval', $only_tags );
+
 				$included_items = array();
 				foreach ( $order_items as $order_item ) {
 
@@ -252,6 +256,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 
 			// Check products
 			if ( $only_products ) {
+
+				$only_products = array_map( 'intval', $only_products );
 
 				$included_items = array();
 				foreach ( $order_items as $order_item ) {
