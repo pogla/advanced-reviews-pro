@@ -235,113 +235,6 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			);
 
 			/**
-			 * SECTION: Emails
-			 */
-
-			$tab1_options->add_field(
-				array(
-					'name' => __( 'Emails', 'advanced-reviews-pro' ),
-					'desc' => __( 'Configure email settings.', 'advanced-reviews-pro' ),
-					'type' => 'title',
-					'id'   => ARP_PREFIX . 'email_settings_title',
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name'    => __( 'Shop Name', 'advanced-reviews-pro' ),
-					'desc'    => __( 'Name of your shop.', 'advanced-reviews-pro' ),
-					'id'      => ARP_PREFIX . 'shop_name_text',
-					'type'    => 'text',
-					'default' => get_bloginfo( 'name' ),
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name'    => __( 'From Name', 'advanced-reviews-pro' ),
-					'desc'    => __( 'From name.', 'advanced-reviews-pro' ),
-					'id'      => ARP_PREFIX . 'from_name_text',
-					'type'    => 'text',
-					'default' => get_bloginfo( 'name' ),
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name'    => __( 'From Address', 'advanced-reviews-pro' ),
-					'desc'    => __( 'From email address.', 'advanced-reviews-pro' ),
-					'id'      => ARP_PREFIX . 'from_email_text',
-					'type'    => 'text_email',
-					'default' => get_bloginfo( 'admin_email' ),
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name' => __( 'Reply-To Name', 'advanced-reviews-pro' ),
-					'desc' => __( 'Reply-To Name.', 'advanced-reviews-pro' ),
-					'id'   => ARP_PREFIX . 'reply_to_name_text',
-					'type' => 'text',
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name' => __( 'Reply-To Address', 'advanced-reviews-pro' ),
-					'desc' => __( 'Reply-to address.', 'advanced-reviews-pro' ),
-					'id'   => ARP_PREFIX . 'reply_to_email_text',
-					'type' => 'text_email',
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name' => __( 'BCC Addresses', 'advanced-reviews-pro' ),
-					'desc' => __( 'BCC addresses. Separated by comma.', 'advanced-reviews-pro' ),
-					'id'   => ARP_PREFIX . 'bbc_email_text',
-					'type' => 'text_email',
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name'    => __( 'Limit emails', 'advanced-reviews-pro' ),
-					'desc'    => __( 'Limit emails per user', 'advanced-reviews-pro' ),
-					'id'      => ARP_PREFIX . 'limit_emails_per_user_checkbox',
-					'default' => 'on',
-					'type'    => 'checkbox',
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name'       => __( 'Days between emails', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Minimum days between emails for user/email. 0 means no limit.', 'advanced-reviews-pro' ),
-					'id'         => ARP_PREFIX . 'emails_limit_text',
-					'type'       => 'text',
-					'default'    => 7,
-					'attributes' => array(
-						'type'                => 'number',
-						'data-conditional-id' => ARP_PREFIX . 'limit_emails_per_user_checkbox',
-					),
-				)
-			);
-
-			$tab1_options->add_field(
-				array(
-					'name'       => __( 'Unlimited emails for Review for Discount', 'advanced-reviews-pro' ),
-					'desc'       => __( 'Force unlimited emails for "Review for Discount" feature', 'advanced-reviews-pro' ),
-					'id'         => ARP_PREFIX . 'force_unlimited_review_emails_checkbox',
-					'type'       => 'checkbox',
-					'default'    => 'on',
-					'attributes' => array(
-						'data-conditional-id' => ARP_PREFIX . 'limit_emails_per_user_checkbox',
-					),
-				)
-			);
-
-			/**
 			 * SECTION: Images
 			 */
 
@@ -485,6 +378,113 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 					'type'       => 'text',
 					'attributes' => array(
 						'data-conditional-id' => ARP_PREFIX . 'enable_recaptcha_checkbox',
+					),
+				)
+			);
+
+			/**
+			 * SECTION: Emails
+			 */
+
+			$tab1_options->add_field(
+				array(
+					'name' => __( 'Emails', 'advanced-reviews-pro' ),
+					'desc' => __( 'Configure email settings.', 'advanced-reviews-pro' ),
+					'type' => 'title',
+					'id'   => ARP_PREFIX . 'email_settings_title',
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name'    => __( 'Shop Name', 'advanced-reviews-pro' ),
+					'desc'    => __( 'Name of your shop.', 'advanced-reviews-pro' ),
+					'id'      => ARP_PREFIX . 'shop_name_text',
+					'type'    => 'text',
+					'default' => get_bloginfo( 'name' ),
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name'    => __( 'From Name', 'advanced-reviews-pro' ),
+					'desc'    => __( 'From name.', 'advanced-reviews-pro' ),
+					'id'      => ARP_PREFIX . 'from_name_text',
+					'type'    => 'text',
+					'default' => get_bloginfo( 'name' ),
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name'    => __( 'From Address', 'advanced-reviews-pro' ),
+					'desc'    => __( 'From email address.', 'advanced-reviews-pro' ),
+					'id'      => ARP_PREFIX . 'from_email_text',
+					'type'    => 'text_email',
+					'default' => get_bloginfo( 'admin_email' ),
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name' => __( 'Reply-To Name', 'advanced-reviews-pro' ),
+					'desc' => __( 'Reply-To Name.', 'advanced-reviews-pro' ),
+					'id'   => ARP_PREFIX . 'reply_to_name_text',
+					'type' => 'text',
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name' => __( 'Reply-To Address', 'advanced-reviews-pro' ),
+					'desc' => __( 'Reply-to address.', 'advanced-reviews-pro' ),
+					'id'   => ARP_PREFIX . 'reply_to_email_text',
+					'type' => 'text_email',
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name' => __( 'BCC Addresses', 'advanced-reviews-pro' ),
+					'desc' => __( 'BCC addresses. Separated by comma.', 'advanced-reviews-pro' ),
+					'id'   => ARP_PREFIX . 'bbc_email_text',
+					'type' => 'text_email',
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name'    => __( 'Limit emails', 'advanced-reviews-pro' ),
+					'desc'    => __( 'Limit emails per user', 'advanced-reviews-pro' ),
+					'id'      => ARP_PREFIX . 'limit_emails_per_user_checkbox',
+					'default' => 'on',
+					'type'    => 'checkbox',
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name'       => __( 'Days between emails', 'advanced-reviews-pro' ),
+					'desc'       => __( 'Minimum days between emails for user/email. 0 means no limit.', 'advanced-reviews-pro' ),
+					'id'         => ARP_PREFIX . 'emails_limit_text',
+					'type'       => 'text',
+					'default'    => 7,
+					'attributes' => array(
+						'type'                => 'number',
+						'data-conditional-id' => ARP_PREFIX . 'limit_emails_per_user_checkbox',
+					),
+				)
+			);
+
+			$tab1_options->add_field(
+				array(
+					'name'       => __( 'Unlimited emails for Review for Discount', 'advanced-reviews-pro' ),
+					'desc'       => __( 'Force unlimited emails for "Review for Discount" feature', 'advanced-reviews-pro' ),
+					'id'         => ARP_PREFIX . 'force_unlimited_review_emails_checkbox',
+					'type'       => 'checkbox',
+					'default'    => 'on',
+					'attributes' => array(
+						'data-conditional-id' => ARP_PREFIX . 'limit_emails_per_user_checkbox',
 					),
 				)
 			);
