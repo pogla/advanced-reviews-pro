@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name:       Advanced Reviews Pro
  * Plugin URI:        https://maticpogladic.com/
- * Description:       Advenced WooCommerce Reviews Functionality.
+ * Description:       Advanced WooCommerce Reviews Functionality.
  * Version:           1.0.0
  * Author:            Matic Pogladič
  * Author URI:        https://maticpogladic.com/

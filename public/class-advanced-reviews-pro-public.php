@@ -111,6 +111,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Public' ) ) {
 			wp_localize_script(
 				$this->plugin_name, 'wp_vars', array(
 					'security' => $ajax_nonce,
+					'ajaxurl'  => admin_url( 'admin-ajax.php' ),
 				)
 			);
 

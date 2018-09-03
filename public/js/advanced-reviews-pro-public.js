@@ -105,7 +105,7 @@ jQuery( document ).ready(
 						  votingTotal.html( parseInt( votingTotal.html() ) - 1 );
 					}
 
-					$.post( ajaxurl, data, function(response) {} );
+					$.post( wp_vars.ajaxurl, data, function(response) {} );
 
 				}
 			)
