@@ -96,6 +96,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 			}
 
 			setcookie( ARP_PREFIX . 'products_to_review', wp_json_encode( $products ), time() + ( 86400 * 1 ), '/' );
+			$_COOKIE[ ARP_PREFIX . 'products_to_review' ] = wp_json_encode( $products );
 		}
 
 		/**
@@ -150,6 +151,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				}
 
 				setcookie( ARP_PREFIX . 'products_to_review', wp_json_encode( $current_cookie_data ), time() + ( 86400 * 1 ), '/' );
+				$_COOKIE[ ARP_PREFIX . 'products_to_review' ] = wp_json_encode( $current_cookie_data );
 
 				if ( $next_item_id ) {
 					return apply_filters( 'arp_redirect_to_next_product', get_permalink( $next_item_id ), $next_item_id );
