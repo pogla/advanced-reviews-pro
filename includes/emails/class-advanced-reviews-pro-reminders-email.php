@@ -64,8 +64,9 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			$this->object    = new WC_Order( $order_id );
 			$order_items     = Advanced_Reviews_Pro_Reminders::get_limited_ordered_products( $this->object->get_items() );
 			$this->recipient = $this->object->get_billing_email();
+			$can_send        = $force ? $force : $this->can_send_email( $order_id );
 
-			if ( ! $this->is_enabled() || ! $this->recipient || empty( $order_items ) || ( ! $this->can_send_email( $order_id ) && ! $force ) ) {
+			if ( ! $this->is_enabled() || ! $this->recipient || empty( $order_items ) || ! $can_send ) {
 				return;
 			}
 
