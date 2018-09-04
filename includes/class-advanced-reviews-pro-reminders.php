@@ -76,11 +76,11 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 */
 		public function handle_multiple_reviews_visit_session() {
 
-			$order_id             = get_query_var( 'arp-add-reviews' );
-			$order                = wc_get_order( $order_id );
-			$current_session_data = WC()->session->get( ARP_PREFIX . 'products-to-review' );
+			$order_id            = get_query_var( 'arp-add-reviews' );
+			$order               = wc_get_order( $order_id );
+			$current_cookie_data = isset( $_COOKIE[ ARP_PREFIX . 'products_to_review' ] ) ? json_decode( stripslashes( $_COOKIE[ ARP_PREFIX . 'products_to_review' ] ), true ) : false;
 
-			if ( ! is_a( $order, 'WC_Order' ) || $order_id === $current_session_data['order_id'] ) {
+			if ( ! is_a( $order, 'WC_Order' ) || ( $current_cookie_data && $order_id === $current_cookie_data['order_id'] ) ) {
 				return;
 			}
 
@@ -95,7 +95,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				$products['items'][] = $order_item->get_product_id();
 			}
 
-			WC()->session->set( ARP_PREFIX . 'products-to-review', $products );
+			setcookie( ARP_PREFIX . 'products_to_review', wp_json_encode( $products ), time() + ( 86400 * 1 ), '/' );
 		}
 
 		/**
@@ -103,20 +103,20 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 * Redirects to the next product to review. Only works with review pre-generated link.
 		 *
 		 * @param $location
+		 * @param $comment
 		 * @since 1.0.0
 		 *
 		 * @return string $location
 		 */
-		public function redirect_after_review( $location ) {
+		public function redirect_after_review( $location, $comment ) {
 
-			$product_id = intval( $_POST['comment_post_ID'] );
-			$product    = wc_get_product( $product_id );
+			$product = wc_get_product( $comment->comment_post_ID );
 
 			if ( ! is_a( $product, 'WC_Product' ) ) {
 				return $location;
 			}
 
-			$next_product_url = self::get_next_product_url_to_review( $product_id );
+			$next_product_url = self::get_next_product_url_to_review( $comment->comment_post_ID );
 
 			if ( false === $next_product_url ) {
 				return $location;
@@ -135,21 +135,21 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 */
 		private static function get_next_product_url_to_review( $current_product_id ) {
 
-			$current_session_data = WC()->session->get( ARP_PREFIX . 'products-to-review' );
+			$current_cookie_data = isset( $_COOKIE[ ARP_PREFIX . 'products_to_review' ] ) ? json_decode( stripslashes( $_COOKIE[ ARP_PREFIX . 'products_to_review' ] ), true ) : false;
 
-			if ( $current_session_data && count( $current_session_data['items'] ) > 0 ) {
+			if ( $current_cookie_data && count( $current_cookie_data['items'] ) > 0 ) {
 
 				$next_item_id = false;
-				foreach ( $current_session_data['items'] as $key => $item ) {
+				foreach ( $current_cookie_data['items'] as $key => $item ) {
 
-					if ( $current_product_id === $item ) {
-						unset( $current_session_data['items'][ $key ] );
+					if ( absint( $current_product_id ) === $item ) {
+						unset( $current_cookie_data['items'][ $key ] );
 					} elseif ( false === $next_item_id ) {
 						$next_item_id = $item;
 					}
 				}
 
-				WC()->session->set( ARP_PREFIX . 'products-to-review', $current_session_data );
+				setcookie( ARP_PREFIX . 'products_to_review', wp_json_encode( $current_cookie_data ), time() + ( 86400 * 1 ), '/' );
 
 				if ( $next_item_id ) {
 					return apply_filters( 'arp_redirect_to_next_product', get_permalink( $next_item_id ), $next_item_id );
@@ -159,7 +159,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 				if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_coupon_review_reminder_checkbox', 3 ) ) {
 					global $woocommerce;
 					$reminder_email = $woocommerce->mailer()->emails['WC_Review_Coupons_Email'];
-					$reminder_email->trigger_order_review_coupon( $current_session_data['order_id'] );
+					$reminder_email->trigger_order_review_coupon( $current_cookie_data['order_id'] );
 				}
 			}
 
@@ -176,11 +176,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 */
 		public function add_review_reminder_comment_notice( $comment_form ) {
 
-			$current_session_data = WC()->session->get( ARP_PREFIX . 'products-to-review' );
+			$current_cookie_data = isset( $_COOKIE[ ARP_PREFIX . 'products_to_review' ] ) ? json_decode( stripslashes( $_COOKIE[ ARP_PREFIX . 'products_to_review' ] ), true ) : false;
 
-			if ( $current_session_data && count( $current_session_data['items'] ) > 0 && in_array( get_the_ID(), $current_session_data['items'], true ) ) {
-
-				$comment_form['comment_field'] .= '<p><b>' . __( 'You are reviewing item from your order. After you leave a review, you will be redirected to the next item.', 'advanced-reviews-pro' ) . '</b></p>';
+			if ( $current_cookie_data && count( $current_cookie_data['items'] ) > 0 && in_array( get_the_ID(), $current_cookie_data['items'], true ) ) {
+				$comment_form['comment_field'] .= '<p><b>' . apply_filters( 'arp_reviewing_items_notice', __( 'You are reviewing item from your order. After you leave a review, you will be redirected to the next item.', 'advanced-reviews-pro' ) ) . '</b></p>';
 			}
 
 			return $comment_form;

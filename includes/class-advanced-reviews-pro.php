@@ -408,7 +408,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 				$this->loader->add_action( 'query_vars', $plugin_review_reminders, 'add_query_vars' );
 				$this->loader->add_action( 'template_redirect', $plugin_review_reminders, 'handle_multiple_reviews_visit_session' );
 				$this->loader->add_action( 'woocommerce_product_review_comment_form_args', $plugin_review_reminders, 'add_review_reminder_comment_notice', 99 );
-				$this->loader->add_filter( 'comment_post_redirect', $plugin_review_reminders, 'redirect_after_review' );
+				$this->loader->add_filter( 'comment_post_redirect', $plugin_review_reminders, 'redirect_after_review', 10, 2 );
 
 				if ( $is_auto_reminders ) {
 
