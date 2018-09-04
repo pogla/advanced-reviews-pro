@@ -1080,8 +1080,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 		protected static function get_import_description() {
 
 			$descriptions = array(
-				__( 'Product ID *: product or variation id', 'advanced-reviews-pro' ),
-				__( 'Rating *: Rating from 1 to 5.', 'advanced-reviews-pro' ),
+				__( '* Product ID: product or variation id', 'advanced-reviews-pro' ),
+				__( '* Rating: Rating from 1 to 5.', 'advanced-reviews-pro' ),
 				__( 'Date: Date of the review.', 'advanced-reviews-pro' ),
 				__( 'Total Votes: Total votes for review. Visible if voting enabled.', 'advanced-reviews-pro' ),
 				__( 'Images: Images separated by comma. Can be image id from media library or url - gets downloaded to media library.', 'advanced-reviews-pro' ),

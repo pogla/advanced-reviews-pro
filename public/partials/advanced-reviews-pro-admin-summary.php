@@ -26,7 +26,7 @@ do_action( 'arp_before_review_summary' );
 	<tr class="arp-single-star-rating-wrapper" data-href="<?php echo $comments_count > 0 ? esc_url_raw( add_query_arg( 'arp-rating', $counter, get_permalink( get_the_ID() ) ) ) . '#reviews' : ''; ?>">
 		<?php
 		$total_scores = count( $comments_counts['ratings'] );
-		$percent      = 100 * ( $comments_count / $comments_counts['total'] );
+		$percent      = $comments_counts['total'] ? 100 * ( $comments_count / $comments_counts['total'] ) : 0;
 		for ( $i = 0; $i < $total_scores; $i++ ) :
 			?>
 			<td class="single-star <?php echo ( $total_scores - $key ) > $i ? 'full' : ''; ?>"></td>
