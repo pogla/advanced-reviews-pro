@@ -132,7 +132,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 				$product_id = $order_item->get_product_id();
 
 				if ( $is_single ) {
-					$output = add_query_arg( 'arp-add-reviews', $this->object->get_id(), get_permalink( $product_id ) );
+					$output = add_query_arg( 'arp-add-reviews', $this->object->get_id(), get_permalink( $product_id ) ) . '#reviews';
 					break;
 				}
 
