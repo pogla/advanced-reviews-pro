@@ -21,6 +21,7 @@
 .arv-comment-video {
     width: 25%;
     max-width: 200px;
+    min-width: 150px;
     padding: 0 10px 10px;
     text-align: center;
 }

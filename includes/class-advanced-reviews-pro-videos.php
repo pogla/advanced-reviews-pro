@@ -212,6 +212,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Videos' ) ) {
 							$comment->comment_content .= '</div>';
 						}
 						$comment->comment_content .= '<div style="clear:both;"></div></div>';
+
+						$comment->comment_content = apply_filters( 'arp_comment_videos_display', $comment->comment_content, $comment );
 					}
 				}
 			}
