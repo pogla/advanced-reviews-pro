@@ -325,7 +325,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 
 			$order_id = $order->get_id();
 
-			$this->send_reminder_review_email( $order_id );
+			$this->send_reminder_review_email( $order_id, true );
 
 			// add the order note
 			$message = __( 'Review reminder manually triggered.', 'advanced-reviews-pro' );
@@ -338,13 +338,14 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Reminders' ) ) {
 		 * Trigger review reminder email for order.
 		 *
 		 * @param $order_id
+		 * @param $force
 		 * @since  1.0.0
 		 */
-		public function send_reminder_review_email( $order_id ) {
+		public function send_reminder_review_email( $order_id, $force = false ) {
 
 			global $woocommerce;
 			$reminder_email = $woocommerce->mailer()->emails['WC_Review_Reminder_Email'];
-			$reminder_email->trigger( $order_id );
+			$reminder_email->trigger( $order_id, $force );
 		}
 
 		/**

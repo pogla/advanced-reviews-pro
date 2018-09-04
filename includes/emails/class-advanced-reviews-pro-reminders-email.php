@@ -49,10 +49,11 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 		 *
 		 * @since 1.0.0
 		 * @param int $order_id
+		 * @param bool $force
 		 *
 		 * @return void
 		 */
-		public function trigger( $order_id ) {
+		public function trigger( $order_id, $force = false ) {
 
 			// bail if no order ID is present
 			if ( ! $order_id ) {
@@ -64,7 +65,7 @@ if ( ! class_exists( 'WC_Review_Reminder_Email' ) ) {
 			$order_items     = Advanced_Reviews_Pro_Reminders::get_limited_ordered_products( $this->object->get_items() );
 			$this->recipient = $this->object->get_billing_email();
 
-			if ( ! $this->is_enabled() || ! $this->recipient || empty( $order_items ) || ! $this->can_send_email( $order_id ) ) {
+			if ( ! $this->is_enabled() || ! $this->recipient || empty( $order_items ) || ( ! $this->can_send_email( $order_id ) && ! $force ) ) {
 				return;
 			}
 

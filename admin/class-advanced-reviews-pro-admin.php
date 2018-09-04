@@ -949,6 +949,21 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$tab3_options->add_field(
 				array(
+					'name'       => __( 'Limit usage to X items', 'advanced-reviews-pro' ),
+					'desc'       => __( 'The maximum number of individual items this coupon can apply to when using product discounts. Leave blank to apply to all qualifying items in cart.', 'advanced-reviews-pro' ),
+					'id'         => ARP_PREFIX . 'generate_coupon_limit_usage_x_items_text',
+					'classes'    => ARP_PREFIX . 'tab3_hide',
+					'type'       => 'text',
+					'attributes' => array(
+						'type'                   => 'number',
+						'data-conditional-id'    => ARP_PREFIX . 'coupon_type_select',
+						'data-conditional-value' => 'generate_coupon',
+					),
+				)
+			);
+
+			$tab3_options->add_field(
+				array(
 					'name'       => __( 'Coupon Format', 'advanced-reviews-pro' ),
 					'desc'       => __( 'Format of generated coupon. Use {PREFIX}, {SUFFIX}, {RANDOM-X}. Replace X with a number. X is the number of random characters.', 'advanced-reviews-pro' ),
 					'id'         => ARP_PREFIX . 'generate_coupon_format_text',

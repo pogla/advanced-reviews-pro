@@ -198,6 +198,7 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 				$exclude_cats        = arp_get_option( ARP_PREFIX . 'generate_coupon_exclude_product_categories_select', 3 );
 				$allowed_emails      = arp_get_option( ARP_PREFIX . 'generate_coupon_email_restrict_text', 3 );
 				$usage_limit         = arp_get_option( ARP_PREFIX . 'generate_coupon_usage_restrict_text', 3 );
+				$usage_x_limit       = arp_get_option( ARP_PREFIX . 'generate_coupon_limit_usage_x_items_text', 3 );
 				$format              = arp_get_option( ARP_PREFIX . 'generate_coupon_format_text', 3 );
 
 				// TODO: check if coupon exists and repeat
@@ -247,6 +248,10 @@ if ( ! class_exists( 'WC_Review_Coupons_Email' ) ) {
 
 					if ( $usage_limit ) {
 						update_post_meta( $coupon_id, 'usage_limit', absint( $usage_limit ) );
+					}
+
+					if ( $usage_x_limit ) {
+						update_post_meta( $coupon_id, 'limit_usage_to_x_items', absint( $usage_x_limit ) );
 					}
 
 					if ( $limit_products ) {
