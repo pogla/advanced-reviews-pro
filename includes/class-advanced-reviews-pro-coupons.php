@@ -59,28 +59,23 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Coupons' ) ) {
 		 * Trigger email
 		 *
 		 * @param $location
+		 * @param $comment
 		 * @since 1.0.0
 		 *
 		 * @return string $location
 		 */
-		public function send_coupon_after_review( $location ) {
+		public function send_coupon_after_review( $location, $comment ) {
 
-			if ( ! isset( $_POST['comment_post_ID'] ) || ! isset( $_POST['comment_ID'] ) ) {
-				return $location;
-			}
-
-			$product_id = intval( $_POST['comment_post_ID'] );
-			$comment_id = intval( $_POST['comment_ID'] );
-			$user_id    = get_current_user_id();
+			$user_id = get_current_user_id();
 
 			// Redirect if not product or user not logged in
-			if ( ! is_a( wc_get_product( $product_id ), 'WC_Product' ) || ! $user_id ) {
+			if ( ! is_a( wc_get_product( $comment->comment_post_ID ), 'WC_Product' ) || ! $user_id || ! $comment ) {
 				return $location;
 			}
 
 			global $woocommerce;
 			$reminder_email = $woocommerce->mailer()->emails['WC_Review_Coupons_Email'];
-			$reminder_email->trigger( $user_id, $product_id, $comment_id );
+			$reminder_email->trigger( $user_id, $comment->comment_post_ID, $comment->comment_ID );
 
 			return $location;
 		}

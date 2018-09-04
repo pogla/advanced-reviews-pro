@@ -434,7 +434,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro' ) ) {
 
 				$review_coupons = advanced_reviews_pro_coupons();
 				$this->loader->add_filter( 'woocommerce_email_classes', $review_coupons, 'add_review_coupons_woocommerce_email' );
-				$this->loader->add_filter( 'comment_post_redirect', $review_coupons, 'send_coupon_after_review', 9 );
+				$this->loader->add_filter( 'comment_post_redirect', $review_coupons, 'send_coupon_after_review', 9, 2 );
 			}
 
 			// Update all ratings

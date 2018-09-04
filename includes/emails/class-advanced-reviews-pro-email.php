@@ -105,7 +105,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_WC_Review_Email' ) ) {
 		 */
 		public function can_send_email( $id, $type = 'order' ) {
 
-			// If emails are limited
+			// If emails are not limited
 			if ( 'on' !== arp_get_option( ARP_PREFIX . 'limit_emails_per_user_checkbox' ) ) {
 				return true;
 			}
