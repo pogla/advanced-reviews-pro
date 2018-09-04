@@ -229,6 +229,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Importer' ) ) {
 			update_comment_meta( $comment_id, ARP_PREFIX . 'review_images', $images );
 			update_comment_meta( $comment_id, ARP_PREFIX . 'review_videos', $videos );
 			update_comment_meta( $comment_id, ARP_PREFIX . 'total_votes', $total_votes );
+			update_comment_meta( $comment_id, 'rating', $rating );
 
 			do_action( 'arp_after_imported_comment', $comment_id );
 

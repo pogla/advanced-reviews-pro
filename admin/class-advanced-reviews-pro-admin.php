@@ -1081,8 +1081,8 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 
 			$descriptions = array(
 				__( '* Product ID: product or variation id', 'advanced-reviews-pro' ),
-				__( '* Rating: Rating from 1 to 5.', 'advanced-reviews-pro' ),
-				__( 'Date: Date of the review.', 'advanced-reviews-pro' ),
+				__( 'Rating: Rating from 1 to 5.', 'advanced-reviews-pro' ),
+				__( 'Date: Date of the review. Format: 2000-07-13 08:15:53', 'advanced-reviews-pro' ),
 				__( 'Total Votes: Total votes for review. Visible if voting enabled.', 'advanced-reviews-pro' ),
 				__( 'Images: Images separated by comma. Can be image id from media library or url - gets downloaded to media library.', 'advanced-reviews-pro' ),
 				__( 'Videos: Videos separated by comma. Only works with video id from media library.', 'advanced-reviews-pro' ),

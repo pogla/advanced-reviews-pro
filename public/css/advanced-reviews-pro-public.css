@@ -88,6 +88,10 @@ td.arp-summary-counts {
 	width: 100px;
 }
 
+.arp-single-star-rating-wrapper td {
+    vertical-align: middle;
+}
+
 .arp-single-star-rating-wrapper .single-star:first-child {
 	padding-left: 5px;
 }
@@ -110,6 +114,7 @@ td.arp-summary-counts {
 	width: 15px;
 	height: 15px;
 	padding: 0 1px 0 0;
+    vertical-align: middle;
 }
 
 .arp-single-star-rating-wrapper .single-star:before {
@@ -134,6 +139,10 @@ h4.arp-rating-filter-subtitle {
 	margin: 0;
 	width: 50%;
 	display: inline-block;
+}
+
+#commentform .g-recaptcha {
+    margin-bottom: 10px;
 }
 
 @media screen and ( max-width: 768px ) {
