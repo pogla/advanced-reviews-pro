@@ -670,7 +670,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 			$tab3_options->add_field(
 				array(
 					'name' => __( 'Enable Review for Discount', 'advanced-reviews-pro' ),
-					'desc' => __( 'Enable generation of discount coupons for customers who provide reviews.', 'advanced-reviews-pro' ),
+					'desc' => __( 'Enable generation of discount coupons for customers who provide reviews. Only works for users with existing account.', 'advanced-reviews-pro' ),
 					'id'   => ARP_PREFIX . 'enable_review_discount_checkbox',
 					'type' => 'checkbox',
 				)

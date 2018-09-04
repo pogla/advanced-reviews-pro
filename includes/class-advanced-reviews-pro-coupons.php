@@ -68,6 +68,12 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Coupons' ) ) {
 
 			$user_id = get_current_user_id();
 
+			if ( ! $user_id ) {
+
+				$user    = get_user_by( 'email', $_POST['email'] );
+				$user_id = $user->ID;
+			}
+
 			// Redirect if not product or user not logged in
 			if ( ! is_a( wc_get_product( $comment->comment_post_ID ), 'WC_Product' ) || ! $user_id || ! $comment ) {
 				return $location;
