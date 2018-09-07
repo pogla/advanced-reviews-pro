@@ -124,7 +124,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Videos' ) ) {
 			$post_id          = $comment->comment_post_ID;
 			$comment_video_id = 'review_video_' . $post_id;
 
-			if ( is_array( $_FILES[ $comment_video_id ]['name'] ) ) {
+			if ( isset( $_FILES[ $comment_video_id ] ) && is_array( $_FILES[ $comment_video_id ]['name'] ) ) {
 				$files_count = count( $_FILES[ $comment_video_id ]['name'] );
 
 				if ( ! $_FILES[ $comment_video_id ]['size'][0] ) {
