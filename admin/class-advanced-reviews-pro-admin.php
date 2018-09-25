@@ -67,7 +67,7 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Admin' ) ) {
 		}
 
 		/**
-		 * Show action links on the plugin screen.
+		 * Show action links on the plugins screen.
 		 *
 		 * @since   1.0.0
 		 * @param   mixed $links Plugin Action links.

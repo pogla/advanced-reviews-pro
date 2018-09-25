@@ -2,7 +2,7 @@
 Contributors: poglaa
 Donate link: https://maticpogladic.com/
 Tags: comments, spam, ratings, rating
-Requires at least: 4.0.0
+Requires at least: 4.0
 Tested up to: 4.9.7
 Stable tag: 4.3
 
@@ -14,7 +14,7 @@ Advanced Reviews Pro for WooCommerce.
 
 A few notes about the sections above:
 
-*   Requires WooCommerce 3.0.0 or later
+*   Requires WooCommerce 3.0 or later
 
 == Installation ==
 
@@ -23,5 +23,5 @@ A few notes about the sections above:
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0 =
 * Initial release

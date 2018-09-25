@@ -67,6 +67,10 @@ if ( ! class_exists( 'Advanced_Reviews_Pro_Recaptcha' ) ) {
 						$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
 					}
 
+					if ( ! isset( $_POST['g-recaptcha-response'] ) ) {
+						wp_die( __( '<p>There has been a problem with reCAPTCHA!</p>', 'advanced-reviews-pro' ), __( 'Comment Submission Failure', 'advanced-reviews-pro' ), array( 'back_link' => true ) ); // WPCS XSS ok.
+					}
+
 					$post_data = http_build_query(
 						array(
 							'secret'   => $secret_key,

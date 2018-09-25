@@ -177,26 +177,22 @@ if ( isset( $_POST['add_rating_nonce'] ) && wp_verify_nonce( $_POST['add_rating_
 							</select>
 						</td>
 					</tr>
-					<?php if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_images_checkbox' ) ) { ?>
-						<tr>
-							<td class="first"><label for="selected-images"><?php _e( 'Upload images', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></label></td>
-							<td>
-								<a href="javascript:" class="arp-insert-media button" data-type="image"><?php _e( 'Add Media', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></a>
-								<input type="hidden" name="arp-selected-imgs" id="arp-selected-imgs">
-								<div id="selected-images"></div>
-							</td>
-						</tr>
-					<?php } ?>
-					<?php if ( 'on' === arp_get_option( ARP_PREFIX . 'enable_videos_checkbox' ) ) { ?>
-								<tr>
-									<td class="first"><label for="selected-videos"><?php _e( 'Upload videos', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></label></td>
-									<td>
-										<a href="javascript:" class="arp-insert-media button" data-type="video"><?php _e( 'Add Media', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></a>
-										<input type="hidden" name="arp-selected-videos" id="arp-selected-videos">
-										<div id="selected-videos"></div>
-									</td>
-								</tr>
-					<?php } ?>
+					<tr>
+						<td class="first"><label for="selected-images"><?php _e( 'Upload images', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></label></td>
+						<td>
+							<a href="javascript:" class="arp-insert-media button" data-type="image"><?php _e( 'Add Media', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></a>
+							<input type="hidden" name="arp-selected-imgs" id="arp-selected-imgs">
+							<div id="selected-images"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="first"><label for="selected-videos"><?php _e( 'Upload videos', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></label></td>
+						<td>
+							<a href="javascript:" class="arp-insert-media button" data-type="video"><?php _e( 'Add Media', 'advanced-reviews-pro' ); // WPCS XSS ok. ?></a>
+							<input type="hidden" name="arp-selected-videos" id="arp-selected-videos">
+							<div id="selected-videos"></div>
+						</td>
+					</tr>
 					<?php do_action( 'arp_after_add_manual_review_form' ); ?>
 					<tr>
 						<td>

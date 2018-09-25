@@ -29,8 +29,8 @@ define( 'ARP_VERSION', '1.0.0' );
 define( 'ARP_PREFIX', 'arp_' );
 define( 'ARP_NAME', 'Advanced Reviews Pro' );
 define( 'ARP_MIN_PHP_VER', '5.6' );
-define( 'ARP_MIN_WP_VER', '4.4.0' );
-define( 'ARP_MIN_WC_VER', '3.0.0' );
+define( 'ARP_MIN_WP_VER', '4.7' );
+define( 'ARP_MIN_WC_VER', '3.0' );
 define( 'ARP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**
