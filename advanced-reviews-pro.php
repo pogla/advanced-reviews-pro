@@ -33,6 +33,40 @@ define( 'ARP_MIN_WP_VER', '4.7' );
 define( 'ARP_MIN_WC_VER', '3.0' );
 define( 'ARP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
+// Create a helper function for easy SDK access.
+function arp_fm() {
+	global $arp_fm;
+
+	if ( ! isset( $arp_fm ) ) {
+
+		require_once plugin_dir_path( __FILE__ ) . 'vendor/freemius/start.php';
+
+		$arp_fm = fs_dynamic_init( array(
+			'id'               => '2633',
+			'slug'             => 'advanced-reviews-pro',
+			'type'             => 'plugin',
+			'public_key'       => 'pk_13b9c4ecebbcb0e4b9a89cb07aba1',
+			'is_premium'       => false,
+			'has_addons'       => false,
+			'has_paid_plans'   => false,
+			'is_org_compliant' => false,
+			'menu'             => array(
+				'slug'    => 'arp_options',
+				'account' => false,
+				'contact' => false,
+				'support' => false,
+			),
+		) );
+	}
+
+	return $arp_fm;
+}
+
+// Init Freemius.
+arp_fm();
+// Signal that SDK was initiated.
+do_action( 'arp_fm_loaded' );
+
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
