@@ -34,6 +34,8 @@ define( 'ARP_MIN_WC_VER', '3.0' );
 define( 'ARP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 define( 'WP_FS__DEV_MODE', true );
+define( 'WP_FS__SKIP_EMAIL_ACTIVATION', true );
+define( 'WP_FS__premium_SECRET_KEY', 'sk_GNqq)1^7bV_CB^tb-n2Y6oKVY=B@6' );
 
 // Create a helper function for easy SDK access.
 function arp_fs() {
