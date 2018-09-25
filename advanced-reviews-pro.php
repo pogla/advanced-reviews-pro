@@ -34,23 +34,23 @@ define( 'ARP_MIN_WC_VER', '3.0' );
 define( 'ARP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 // Create a helper function for easy SDK access.
-function arp_fm() {
-	global $arp_fm;
+function arp_fs() {
+	global $arp_fs;
 
-	if ( ! isset( $arp_fm ) ) {
+	if ( ! isset( $arp_fs ) ) {
 
 		require_once plugin_dir_path( __FILE__ ) . 'vendor/freemius/start.php';
 
-		$arp_fm = fs_dynamic_init( array(
-			'id'               => '2635',
-			'slug'             => 'advanced-reviews-pro',
-			'type'             => 'plugin',
-			'public_key'       => 'pk_79da82319034ea44a528f8e47e01d',
-			'is_premium'       => false,
-			'has_addons'       => false,
-			'has_paid_plans'   => false,
-			'is_org_compliant' => false,
-			'menu'             => array(
+		$arp_fs = fs_dynamic_init( array(
+			'id'                  => '2635',
+			'slug'                => 'advanced-reviews-pro',
+			'type'                => 'plugin',
+			'public_key'          => 'pk_79da82319034ea44a528f8e47e01d',
+			'has_premium_version' => true,
+			'has_addons'          => false,
+			'has_paid_plans'      => true,
+			'is_org_compliant'    => false,
+			'menu'                => array(
 				'slug'    => 'arp_options',
 				'account' => false,
 				'contact' => false,
@@ -59,13 +59,13 @@ function arp_fm() {
 		) );
 	}
 
-	return $arp_fm;
+	return $arp_fs;
 }
 
 // Init Freemius.
-arp_fm();
+arp_fs();
 // Signal that SDK was initiated.
-do_action( 'arp_fm_loaded' );
+do_action( 'arp_fs_loaded' );
 
 /**
  * The core plugin class that is used to define internationalization,
