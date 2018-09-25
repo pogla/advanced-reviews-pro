@@ -48,6 +48,8 @@ function arp_fs() {
 			'slug'                => 'advanced-reviews-pro',
 			'type'                => 'plugin',
 			'public_key'          => 'pk_79da82319034ea44a528f8e47e01d',
+			'is_premium'          => true,
+			'is_premium_only'     => true,
 			'has_premium_version' => true,
 			'has_addons'          => false,
 			'has_paid_plans'      => true,
@@ -58,6 +60,7 @@ function arp_fs() {
 				'contact' => false,
 				'support' => false,
 			),
+			'secret_key'          => 'sk_GNqq)1^7bV_CB^tb-n2Y6oKVY=B@6',
 		) );
 	}
 
