@@ -33,6 +33,8 @@ define( 'ARP_MIN_WP_VER', '4.7' );
 define( 'ARP_MIN_WC_VER', '3.0' );
 define( 'ARP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
+define( 'WP_FS__DEV_MODE', true );
+
 // Create a helper function for easy SDK access.
 function arp_fs() {
 	global $arp_fs;
