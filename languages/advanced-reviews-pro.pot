@@ -1,0 +1,1759 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Advanced Reviews Pro\n"
+"POT-Creation-Date: 2018-09-25 15:32+0200\n"
+"PO-Revision-Date: 2018-09-25 15:32+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: advanced-reviews-pro.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/class-advanced-reviews-pro-admin.php:78
+msgid "View Advanced Reviews Pro Settings"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:78
+msgid "Settings"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: admin/class-advanced-reviews-pro-admin.php:146
+msgid "Advanced Reviews Pro"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:150
+msgid "General Options"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:152
+msgid "Advanced Reviews"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:155
+#: admin/class-advanced-reviews-pro-admin.php:503
+#: admin/class-advanced-reviews-pro-admin.php:656
+#: admin/class-advanced-reviews-pro-admin.php:1034
+#: vendor/cmb2/includes/helper-functions.php:304
+msgid "Save"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:165
+msgid "General"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:166
+msgid "General settings."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:174
+msgid "Reviews Summary"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:175
+msgid ""
+"Enable display of a histogram table with a summary of reviews on a product "
+"page."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:183
+msgid "Manual Reviews"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:184
+msgid "Enable manual review generation via admin panel."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:187
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:199
+#: includes/class-advanced-reviews-pro-manual.php:217
+msgid "Add Review"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:197
+#: admin/class-advanced-reviews-pro-admin.php:206
+msgid "Vote for Reviews"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:198
+msgid "Settings for review voting."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:207
+msgid ""
+"Enable people to upvote or downvote reviews. The plugin allows one vote per "
+"review per person. If the person is a guest, the plugin uses cookies and IP "
+"addresses to identify this visitor."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:215
+msgid "Admin Votes"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:216
+msgid "Allow logged-in administrators to make unlimited votes."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:227
+msgid "Sort Reviews by Votes"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:228
+msgid "Sort product reviews by the total score of votes."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:243
+#: includes/class-advanced-reviews-pro-manual.php:110
+msgid "Images"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:244
+msgid "Enable attaching images to reviews left on WooCommerce product pages."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:252
+#: admin/class-advanced-reviews-pro-admin.php:302
+#: admin/class-advanced-reviews-pro-admin.php:352
+msgid "Enable"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:253
+msgid "Enable Images on Reviews"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:261
+msgid "Total Images"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:262
+msgid "Maximum amount of images to be left on a single review."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:275
+msgid "Image Size"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:276
+msgid "Maximum size of image (MB)."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:293
+#: includes/class-advanced-reviews-pro-manual.php:125
+msgid "Videos"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:294
+msgid "Enable attaching videos to reviews left on WooCommerce product pages."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:303
+msgid "Enable Videos on Reviews"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:311
+msgid "Total Videos"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:312
+msgid "Maximum amount of videos to be left on a single review."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:325
+msgid "Video Size"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:326
+msgid "Maximum size of video (MB)."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:343
+msgid "reCAPTCHA V2"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:344
+msgid "Eliminate fake and spam reviews."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:353
+msgid "Enable reCAPTCHA"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:361
+msgid "reCAPTCHA V2 Site Key"
+msgstr ""
+
+#. translators: 1: link start, 2: link end
+#: admin/class-advanced-reviews-pro-admin.php:363
+#, php-format
+msgid "reCAPTCHA V2 site key. %1$sHow to get reCAPTCHA?%2$s"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:374
+msgid "reCAPTCHA V2 Secret Key"
+msgstr ""
+
+#. translators: 1: link start, 2: link end
+#: admin/class-advanced-reviews-pro-admin.php:376
+#, php-format
+msgid "reCAPTCHA V2 secret key. %1$sHow to get reCAPTCHA?%2$s"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:391
+msgid "Emails"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:392
+msgid "Configure email settings."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:400
+msgid "Shop Name"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:401
+msgid "Name of your shop."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:410
+msgid "From Name"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:411
+msgid "From name."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:420
+msgid "From Address"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:421
+msgid "From email address."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:430
+msgid "Reply-To Name"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:431
+msgid "Reply-To Name."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:439
+msgid "Reply-To Address"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:440
+msgid "Reply-to address."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:448
+msgid "BCC Addresses"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:449
+msgid "BCC addresses. Separated by comma."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:457
+msgid "Limit emails"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:458
+msgid ""
+"Limit emails per user. User will not get more than 1 email per selected "
+"period."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:466
+msgid "Days between emails"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:467
+msgid "Minimum days between emails for user/email. 0 means no limit."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:480
+msgid "Unlimited emails for Review for Discount"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:481
+msgid "Force unlimited emails for \"Review for Discount\" feature."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:498
+#: admin/class-advanced-reviews-pro-admin.php:509
+msgid "Review Reminder"
+msgstr ""
+
+#. translators: 1: a tag, 2: closing a tag
+#: admin/class-advanced-reviews-pro-admin.php:511
+#, php-format
+msgid "Settings for review reminder. Edit more email settings %1$shere%2$s."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:519
+msgid "Enable Automatic Review Reminders"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:520
+msgid "Enable automatic review reminders."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:528
+msgid "Enable Manual Review Reminders"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:529
+msgid ""
+"Enable manual sending of follow-up emails with a reminder to submit a "
+"review. Manual reminders can be sent from completed orders pages."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:537
+msgid "Sending Delay"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:538
+msgid "Choose when automatic reminder should be sent after the purchase."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:551
+msgid "Sending Delay Unit"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:552
+msgid "Choose the unit for sending delay."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:557
+msgid "Minutes"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:558
+msgid "Hours"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:559
+msgid "Days"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:569
+msgid "Limit to Product Categories"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:570
+msgid ""
+"Select product categories where review reminder should apply. Leave empty to "
+"apply to all categories!"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:575
+#: admin/class-advanced-reviews-pro-admin.php:711
+msgid "Select Categories"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:582
+msgid "Limit to Product Tags"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:583
+msgid ""
+"Select product tags where review reminder should apply. Leave empty to apply "
+"to all tags!"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:588
+msgid "Select Tags"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:595
+msgid "Limit to Products"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:596
+msgid ""
+"Select products where review reminder should apply. Leave empty to apply to "
+"all products!"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:601
+msgid "Select Products"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:608
+#: admin/class-advanced-reviews-pro-admin.php:982
+msgid "Email Template"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:609
+msgid "Design your email template."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:617
+#: admin/class-advanced-reviews-pro-admin.php:992
+msgid "Email Subject"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:620
+msgid "Review Your Experience with Us"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:626
+#: admin/class-advanced-reviews-pro-admin.php:1002
+msgid "Email Heading"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:629
+msgid "Thanks for your order. Please take a moment and review our products."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:635
+#: admin/class-advanced-reviews-pro-admin.php:1012
+msgid "Email Body"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:636
+msgid ""
+"<b>You can use these variables</b>:<br>{site_title} - Site "
+"title<br>{customer_first_name} - Billing first name<br>{customer_last_name} "
+"- Billing last name<br>{customer_full_name} - Billing full "
+"name<br>{order_id} - Order ID<br>{list_of_products} - List of products to "
+"review<br>{review_link} - Link to review all purchased products, one after "
+"another<br>{order_date} - Order date"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:651
+msgid "Coupon for Review"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:662
+msgid "Review for Discount"
+msgstr ""
+
+#. translators: 1: a tag, 2: closing a tag
+#: admin/class-advanced-reviews-pro-admin.php:664
+#, php-format
+msgid ""
+"Settings for review for discount. Edit more email settings %1$shere%2$s."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:672
+msgid "Enable Review for Discount"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:673
+msgid ""
+"Enable generation of discount coupons for customers who provide reviews. "
+"Only works for users with existing account."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:681
+msgid "Enable on Review Reminder"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:682
+msgid ""
+"Send email when user finishes with reviewing their order. User gets "
+"redirected after each review and on the last review triggers this email. "
+"Only works with pre-generated link {review_link}."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:690
+msgid "Review Coupons Settings"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:691
+msgid "Settings for review coupons."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:700
+msgid "Coupon Type"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:701
+msgid "Select coupon type."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:707
+msgid "Generate Unique Coupon"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:708
+msgid "Existing Coupon"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:718
+#: admin/class-advanced-reviews-pro-admin.php:725
+msgid "Select Coupon"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:719
+msgid "This coupon code will be sent to customers who provide reviews."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:734
+msgid "Discount Type"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:735
+msgid "Select a discount type."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:740
+msgid "Percentage discount"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:741
+msgid "Fixed cart discount"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:742
+msgid "Fixed product discount"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:746
+msgid "Select Discount Type"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:755
+msgid "Coupon Amount"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:756
+msgid "Coupon amount."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:771
+msgid "Allow free shipping"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:772
+msgid ""
+"Check this box if the coupon grants free shipping. A <a href=\"https://docs."
+"woocommerce.com/document/free-shipping/\">free shipping method</a> must be "
+"enabled in your shipping zone and be set to require \"a valid free shipping "
+"coupon\" (see the \"Free Shipping Requires\" setting)."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:785
+msgid "Validity"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:786
+msgid "How many days should the coupon be valid."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:800
+msgid "Minimum spend"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:801
+msgid "Minimum spend for the generated coupon."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:815
+msgid "Maximum spend"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:816
+msgid "Maximum spend for the generated coupon."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:830
+msgid "Individual Use Only"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:831
+msgid ""
+"Check this box if the coupon cannot be used in conjunction with other "
+"coupons."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:844
+msgid "Exclude sale items"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:845
+msgid ""
+"Check this box if the coupon should not apply to items on sale. Per-item "
+"coupons will only work if the item is not on sale. Per-cart coupons will "
+"only work if there are items in the cart that are not on sale."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:858
+msgid "Products"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:859
+msgid ""
+"Products that the coupon will be applied to, or that need to be in the cart "
+"in order for the \"Fixed cart discount\" to be applied."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:865
+#: admin/class-advanced-reviews-pro-admin.php:881
+msgid "Search for a product"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:874
+msgid "Exclude Products"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:875
+msgid ""
+"Products that the coupon will not be applied to, or that cannot be in the "
+"cart in order for the \"Fixed cart discount\" to be applied."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:890
+msgid "Product Categories"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:891
+#: admin/class-advanced-reviews-pro-admin.php:907
+msgid ""
+"Product categories that the coupon will be applied to, or that need to be in "
+"the cart in order for the \"Fixed cart discount\" to be applied."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:897
+msgid "Any Category"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:906
+msgid "Exclude Categories"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:913
+msgid "No Categories"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:922
+msgid "Allowed emails"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:923
+msgid ""
+"Whitelist of billing emails to check against when an order is placed. "
+"Separate email addresses with commas. You can also use an asterisk (*) to "
+"match parts of an email. For example \"*@gmail.com\" would match all gmail "
+"addresses. <b>Use {BUYER_EMAIL} to restrict coupon to email receiver.</b>"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:927
+msgid "{BUYER_EMAIL}"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:937
+msgid "Usage limit per coupon"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:938
+msgid "How many times this coupon can be used before it is void."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:952
+msgid "Limit usage to X items"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:953
+msgid ""
+"The maximum number of individual items this coupon can apply to when using "
+"product discounts. Leave blank to apply to all qualifying items in cart."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:967
+msgid "Coupon Format"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:968
+msgid ""
+"Format of generated coupon. Use {PREFIX}, {SUFFIX}, {RANDOM-X}. Replace X "
+"with a number. X is the number of random characters."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:983
+msgid ""
+"Design your email template. Email is triggered after a customer leaves a "
+"review. Only works if the customer is logged in the store."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:996
+msgid "Thanks for the review"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1006
+msgid "Here is your coupon"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1013
+msgid ""
+"<b>You can use these variables</b>:<br>{coupon} - Coupon "
+"code<br>{site_title} - Site title<br>{user_first_name} - User first name "
+"(Customer if \"Review Reminder\")<br>{user_last_name} - User last name "
+"(Customer if \"Review Reminder\")<br>{user_full_name} - User full name "
+"(Customer if \"Review Reminder\")<br>{user_display_name} - User display name "
+"(Customer full name if \"Review Reminder\")<br>{coupon_expiration_date} - "
+"Coupon expiration datetime<br>{reviewed_product_name} - Product that has "
+"been reviewed (\"Ordered products\" if \"Review Reminder\")<br>"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1029
+#: admin/class-advanced-reviews-pro-admin.php:1040
+msgid "Import Reviews"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1041
+msgid "Import Reviews."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1048
+#: admin/class-advanced-reviews-pro-admin.php:1054
+msgid "Upload File"
+msgstr ""
+
+#. translators: 1: a tag, 2: closing a tag
+#: admin/class-advanced-reviews-pro-admin.php:1050
+#, php-format
+msgid "Upload csv file. %1$sDownload%2$s example file."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1083
+msgid "* Product ID: product or variation id"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1084
+msgid "Rating: Rating from 1 to 5."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1085
+msgid "Date: Date of the review. Format: 2000-07-13 08:15:53"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1086
+msgid "Total Votes: Total votes for review. Visible if voting enabled."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1087
+msgid ""
+"Images: Images separated by comma. Can be image id from media library or url "
+"- gets downloaded to media library."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1088
+msgid ""
+"Videos: Videos separated by comma. Only works with video id from media "
+"library."
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1089
+msgid "Author ID: User id"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1090
+msgid "Author Name: Author Name"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1091
+msgid "Author Email: Author Email"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1092
+msgid "Author URL: Author URL"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1129
+msgid "Import successful!"
+msgstr ""
+
+#: admin/class-advanced-reviews-pro-admin.php:1134
+msgid "Process File"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:67
+msgid "Comment added! Check it out: "
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:71
+msgid "There has been an error adding your custom comment!"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:81
+msgid "Add Rating"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:82
+msgid "On this screen you can add ratings yourself"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:92
+msgid "Select User"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:95
+msgid "Guest"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:113
+msgid "Name"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:117
+msgid "Email"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:123
+msgid "URL"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:129
+msgid "Comment Date"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:135
+msgid "Comment"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:150
+msgid "Rating"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:162
+#: includes/class-advanced-reviews-pro-manual.php:140
+msgid "Total Votes"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:168
+msgid "Select a Product"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:181
+msgid "Upload images"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:183
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:191
+#: includes/class-advanced-reviews-pro-manual.php:156
+#: includes/class-advanced-reviews-pro-manual.php:183
+msgid "Add Media"
+msgstr ""
+
+#: admin/partials/advanced-reviews-pro-admin-add-comment.php:189
+msgid "Upload videos"
+msgstr ""
+
+#. translators: %1$d: number of images, %2$s: max images to upload, %3$s: file extensions
+#: includes/class-advanced-reviews-pro-images.php:99
+#, php-format
+msgid ""
+"Upload up to %1$d images for your review <br><span style=\"font-size: 0.8rem;"
+"opacity: .8;font-weight: normal;\">(Allowed image size is %2$s MB. Allowed "
+"image types are: %3$s.)</span>"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-images.php:142
+#: includes/class-advanced-reviews-pro-videos.php:142
+msgid "File size is too large!"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-images.php:149
+#: includes/class-advanced-reviews-pro-videos.php:149
+msgid "Wrong file extension!"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-images.php:161
+#: includes/class-advanced-reviews-pro-videos.php:168
+msgid "Error uploading file."
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-images.php:199
+msgid "Uploaded image:"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-images.php:199
+msgid "Uploaded images:"
+msgstr ""
+
+#. translators: #%1$d: image name
+#: includes/class-advanced-reviews-pro-images.php:207
+#, php-format
+msgid "Image #%1$d from "
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-images.php:229
+#: includes/class-advanced-reviews-pro-recaptcha.php:71
+#: includes/class-advanced-reviews-pro-recaptcha.php:95
+#: includes/class-advanced-reviews-pro-videos.php:233
+msgid "Comment Submission Failure"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-importer.php:82
+msgid "File does not exist."
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-importer.php:107
+msgid "File cannot be processed."
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-importer.php:131
+msgid "Wrong number of total values on line: "
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-importer.php:143
+msgid "Wrong product ID on line: "
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-importer.php:150
+msgid "Wrong rating on line: "
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-importer.php:225
+msgid "Failed to import comment on line: "
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-importer.php:265
+msgid "File upload failed on line: "
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-recaptcha.php:71
+msgid "<p>There has been a problem with reCAPTCHA!</p>"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-recaptcha.php:95
+msgid "<p>reCAPTCHA is not valid!</p>"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-reminders.php:184
+msgid ""
+"You are reviewing item from your order. After you leave a review, you will "
+"be redirected to the next item."
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-reminders.php:315
+msgid "Send review reminder"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-reminders.php:332
+msgid "Review reminder manually triggered."
+msgstr ""
+
+#. translators: %1$d: number of videos, %2$s: max videos to upload, %3$s: file extensions
+#: includes/class-advanced-reviews-pro-videos.php:99
+#, php-format
+msgid ""
+"Upload up to %1$d videos for your review <br><span style=\"font-size: 0.8rem;"
+"opacity: .8;font-weight: normal;\">(Allowed video size is %2$s MB. Allowed "
+"video types are: %3$s.)</span>"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-videos.php:205
+msgid "Uploaded video:"
+msgstr ""
+
+#: includes/class-advanced-reviews-pro-videos.php:205
+msgid "Uploaded videos:"
+msgstr ""
+
+#. translators: #%1$d: video name
+#: includes/class-advanced-reviews-pro-videos.php:211
+#, php-format
+msgid "Video #%1$d from "
+msgstr ""
+
+#. translators: 1: Plugin name
+#: includes/class-advanced-reviews-pro.php:121
+#, php-format
+msgid "%s is inactive."
+msgstr ""
+
+#. translators: 1: inactive text, 2: plugin name
+#: includes/class-advanced-reviews-pro.php:125
+#, php-format
+msgid "%1$s The plugin requires PHP version %2$s or newer."
+msgstr ""
+
+#. translators: 1: inactive text, 2: plugin name
+#: includes/class-advanced-reviews-pro.php:129
+#, php-format
+msgid "%1$s The plugin requires WooCommerce version %2$s or newer."
+msgstr ""
+
+#. translators: 1: inactive text, 2: plugin name
+#: includes/class-advanced-reviews-pro.php:133
+#, php-format
+msgid "%1$s The plugin requires WordPress version %2$s or newer."
+msgstr ""
+
+#: includes/emails/class-advanced-reviews-pro-coupons-email.php:39
+msgid "Review Coupons"
+msgstr ""
+
+#. translators: %1$s: Link
+#: includes/emails/class-advanced-reviews-pro-coupons-email.php:41
+#, php-format
+msgid "Review coupons email. Edit settings %1$shere%2$s."
+msgstr ""
+
+#: includes/emails/class-advanced-reviews-pro-coupons-email.php:127
+msgid "Ordered products"
+msgstr ""
+
+#: includes/emails/class-advanced-reviews-pro-coupons-email.php:294
+msgid "Never"
+msgstr ""
+
+#: includes/emails/class-advanced-reviews-pro-coupons-email.php:300
+msgid "No Coupon"
+msgstr ""
+
+#. translators: %1$s: Link
+#: includes/emails/class-advanced-reviews-pro-reminders-email.php:41
+#, php-format
+msgid "Review reminder email. Edit settings %1$shere%2$s."
+msgstr ""
+
+#: public/partials/advanced-reviews-pro-admin-add-vote.php:18
+msgid "Vote"
+msgstr ""
+
+#: public/partials/advanced-reviews-pro-admin-summary.php:35
+msgid "Star"
+msgstr ""
+
+#: public/partials/advanced-reviews-pro-admin-summary.php:35
+msgid "Stars"
+msgstr ""
+
+#. translators: 1: score, 2: s
+#: public/partials/advanced-reviews-pro-admin-summary.php:57
+#, php-format
+msgid "Ratings With %1$d Star%2$s"
+msgstr ""
+
+#: public/partials/advanced-reviews-pro-admin-summary.php:58
+msgid "View All Ratings"
+msgstr ""
+
+#: vendor/cmb2-conditionals/example-functions.php:210
+#: vendor/cmb2/example-functions.php:437
+msgid "Test Multi Checkbox"
+msgstr ""
+
+#: vendor/cmb2-conditionals/example-functions.php:211
+#: vendor/cmb2/example-functions.php:134 vendor/cmb2/example-functions.php:149
+#: vendor/cmb2/example-functions.php:164 vendor/cmb2/example-functions.php:173
+#: vendor/cmb2/example-functions.php:188 vendor/cmb2/example-functions.php:198
+#: vendor/cmb2/example-functions.php:209 vendor/cmb2/example-functions.php:219
+#: vendor/cmb2/example-functions.php:238 vendor/cmb2/example-functions.php:248
+#: vendor/cmb2/example-functions.php:258 vendor/cmb2/example-functions.php:277
+#: vendor/cmb2/example-functions.php:288 vendor/cmb2/example-functions.php:306
+#: vendor/cmb2/example-functions.php:315 vendor/cmb2/example-functions.php:324
+#: vendor/cmb2/example-functions.php:353 vendor/cmb2/example-functions.php:368
+#: vendor/cmb2/example-functions.php:383 vendor/cmb2/example-functions.php:397
+#: vendor/cmb2/example-functions.php:408 vendor/cmb2/example-functions.php:418
+#: vendor/cmb2/example-functions.php:429 vendor/cmb2/example-functions.php:438
+#: vendor/cmb2/example-functions.php:454 vendor/cmb2/example-functions.php:538
+#: vendor/cmb2/example-functions.php:645 vendor/cmb2/example-functions.php:655
+#: vendor/cmb2/example-functions.php:664 vendor/cmb2/example-functions.php:673
+#: vendor/cmb2/example-functions.php:682 vendor/cmb2/example-functions.php:691
+#: vendor/cmb2/example-functions.php:700 vendor/cmb2/example-functions.php:731
+#: vendor/cmb2/example-functions.php:741 vendor/cmb2/example-functions.php:750
+#: vendor/cmb2/example-functions.php:803
+msgid "field description (optional)"
+msgstr ""
+
+#: vendor/cmb2-conditionals/example-functions.php:215
+#: vendor/cmb2/example-functions.php:443
+msgid "Check One"
+msgstr ""
+
+#: vendor/cmb2-conditionals/example-functions.php:216
+#: vendor/cmb2/example-functions.php:444
+msgid "Check Two"
+msgstr ""
+
+#: vendor/cmb2-conditionals/example-functions.php:217
+#: vendor/cmb2/example-functions.php:445
+msgid "Check Three"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:118
+msgid "Test Metabox"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:133 vendor/cmb2/example-functions.php:537
+msgid "Test Text"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:148
+msgid "Test Text Small"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:163
+msgid "Test Text Medium"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:172
+msgid "Read-only Disabled Field"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:176
+msgid "Hey there, I'm a read-only field"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:187
+msgid "Custom Rendered Field"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:197
+msgid "Website URL"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:208
+msgid "Test Text Email"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:218
+msgid "Test Time"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:228 vendor/cmb2/example-functions.php:229
+msgid "Time zone"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:237
+msgid "Test Date Picker"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:247
+msgid "Test Date Picker (UNIX timestamp)"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:257
+msgid "Test Date/Time Picker Combo (UNIX timestamp)"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:276
+msgid "Test Money"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:287
+msgid "Test Color Picker"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:305
+msgid "Test Text Area"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:314
+msgid "Test Text Area Small"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:323
+msgid "Test Text Area for Code"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:343
+msgid "Test Title Weeeee"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:344
+msgid "This is a title description"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:352
+msgid "Test Select"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:358 vendor/cmb2/example-functions.php:373
+#: vendor/cmb2/example-functions.php:387
+msgid "Option One"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:359 vendor/cmb2/example-functions.php:374
+#: vendor/cmb2/example-functions.php:388
+msgid "Option Two"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:360 vendor/cmb2/example-functions.php:375
+#: vendor/cmb2/example-functions.php:389
+msgid "Option Three"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:367
+msgid "Test Radio inline"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:382
+msgid "Test Radio"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:396
+msgid "Test Taxonomy Radio"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:407
+msgid "Test Taxonomy Select"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:417
+msgid "Test Taxonomy Multi Checkbox"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:428
+msgid "Test Checkbox"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:453
+msgid "Test wysiwyg"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:465
+msgid "Test Image"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:466
+msgid "Upload an image or enter a URL."
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:474
+msgid "Multiple Files"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:475
+msgid "Upload or add multiple images/attachments."
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:484
+msgid "oEmbed"
+msgstr ""
+
+#. translators: %s: link to codex.wordpress.org/Embeds
+#: vendor/cmb2/example-functions.php:487
+#, php-format
+msgid ""
+"Enter a youtube, twitter, or instagram URL. Supports services listed at %s."
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:524
+msgid "About Page Metabox"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:559
+msgid "Repeating Field Group"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:569
+msgid "Generates reusable form entries"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:571
+msgid "Entry {#}"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:572
+msgid "Add Another Entry"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:573
+msgid "Remove Entry"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:588
+msgid "Entry Title"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:597
+msgid "Description"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:598
+msgid "Write a short description for this entry"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:606
+msgid "Entry Image"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:614
+msgid "Image Caption"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:635
+msgid "User Profile Metabox"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:644 vendor/cmb2/example-functions.php:730
+msgid "Extra Info"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:654
+msgid "Avatar"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:663
+msgid "Facebook URL"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:672
+msgid "Twitter URL"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:681
+msgid "Google+ URL"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:690
+msgid "Linkedin URL"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:699
+msgid "User Field"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:721
+msgid "Category Metabox"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:740
+msgid "Term Image"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:749
+msgid "Arbitrary Term Field"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:770
+msgid "Theme Options"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:802
+msgid "Site Background Color"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:840
+#, php-format
+msgid "%s &mdash; Updated!"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:875
+msgid "REST Test Box"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:886
+msgid "REST Test Text"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:887
+msgid "Will show in the REST API for this box and for pages."
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:895
+msgid "REST Editable Test Text"
+msgstr ""
+
+#: vendor/cmb2/example-functions.php:896
+msgid "Will show in REST API \"editable\" contexts only (`POST` requests)."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2.php:179
+msgid "Metabox configuration is required to have an ID parameter."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2.php:582
+msgid "Click to toggle"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Ajax.php:75
+msgid "Please Try Again"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Ajax.php:185
+msgid "Remove Embed"
+msgstr ""
+
+#. translators: 1: results for. 2: link to codex.wordpress.org/Embeds
+#: vendor/cmb2/includes/CMB2_Ajax.php:193
+#: vendor/cmb2/includes/helper-functions.php:105
+#, php-format
+msgid "No oEmbed Results Found for %1$s. View more info at %2$s."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Base.php:422
+#, php-format
+msgid ""
+"The \"%1$s\" field parameter has been deprecated in favor of the \"%2$s\" "
+"parameter."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Base.php:426
+#, php-format
+msgid ""
+"Using the \"%1$s\" field parameter as a callback has been deprecated in "
+"favor of the \"%2$s\" parameter."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Base.php:456
+#, php-format
+msgid ""
+"%1$s was called with a parameter that is <strong>deprecated</strong> since "
+"version %2$s! %3$s"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Base.php:458
+#, php-format
+msgid ""
+"%1$s was called with a parameter that is <strong>deprecated</strong> since "
+"version %2$s with no alternative available."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Base.php:491
+#: vendor/cmb2/includes/CMB2_Hookup_Base.php:100
+#: vendor/cmb2/includes/CMB2_Options_Hookup.php:345
+#: vendor/cmb2/includes/types/CMB2_Type_Base.php:172
+#, php-format
+msgid "Invalid %1$s property: %2$s"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Base.php:506
+#: vendor/cmb2/includes/types/CMB2_Type_Base.php:156
+#, php-format
+msgid "Invalid %1$s method: %2$s"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Field.php:1311
+msgid "Add Group"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Field.php:1312
+msgid "Remove Group"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Field.php:1344
+#: vendor/cmb2/includes/CMB2_Field.php:1348
+msgid "None"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Field.php:1459
+msgid "Sorry, this field does not have a cmb_id specified."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Field_Display.php:436
+#: vendor/cmb2/includes/CMB2_JS.php:230
+#: vendor/cmb2/includes/types/CMB2_Type_File_Base.php:81
+msgid "File:"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Hookup_Base.php:42
+#, php-format
+msgid "%1$s should be implemented by the extended class."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:166 vendor/cmb2/includes/CMB2_JS.php:210
+msgid "Clear"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:167
+msgid "Default"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:168
+msgid "Select Color"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:169
+msgid "Current Color"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:200
+msgctxt "Valid formatDate string for jquery-ui datepicker"
+msgid "mm/dd/yy"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:201
+msgid "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:202
+msgid "Su, Mo, Tu, We, Th, Fr, Sa"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:203
+msgid "Sun, Mon, Tue, Wed, Thu, Fri, Sat"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:204
+msgid ""
+"January, February, March, April, May, June, July, August, September, "
+"October, November, December"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:205
+msgid "Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:206
+msgid "Next"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:207
+msgid "Prev"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:208
+msgid "Today"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:209 vendor/cmb2/includes/CMB2_JS.php:219
+msgid "Done"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:213
+msgid "Choose Time"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:214
+msgid "Time"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:215
+msgid "Hour"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:216
+msgid "Minute"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:217
+msgid "Second"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:218
+msgid "Now"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:220
+msgctxt ""
+"Valid formatting string, as per http://trentrichardson.com/examples/"
+"timepicker/"
+msgid "hh:mm TT"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:226
+msgid "Use this file"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:227
+msgid "Use these files"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:228
+#: vendor/cmb2/includes/types/CMB2_Type_File_Base.php:65
+msgid "Remove Image"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:229 vendor/cmb2/includes/CMB2_Types.php:412
+#: vendor/cmb2/includes/types/CMB2_Type_File_Base.php:86
+msgid "Remove"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:231
+#: vendor/cmb2/includes/types/CMB2_Type_File_Base.php:84
+msgid "Download"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_JS.php:232
+msgid "Select / Deselect All"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Options_Hookup.php:131
+msgid "Nothing to update."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Options_Hookup.php:135
+msgid "Settings updated."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Types.php:231
+msgid "Custom CMB2 field type classes must extend CMB2_Type_Base."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Types.php:349
+msgid "Add Row"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_Types.php:412
+msgid "Remove Row"
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_hookup.php:181
+msgid ""
+"Term Metadata is a WordPress 4.4+ feature. Please upgrade your WordPress "
+"install."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_hookup.php:185
+msgid "Term metaboxes configuration requires a \"taxonomies\" parameter."
+msgstr ""
+
+#: vendor/cmb2/includes/CMB2_hookup.php:460
+#, php-format
+msgid "Toggle panel: %s"
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller.php:258
+msgid "This box does not have read permissions."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller.php:280
+msgid "This box does not have write permissions."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller.php:305
+msgid ""
+"No box found by that id. A box needs to be registered with the \"show_in_rest"
+"\" parameter configured."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller.php:384
+msgid "A human-readable description of the object."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller.php:391
+msgid "The id for the object."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller.php:398
+msgid "The title for the object."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Boxes.php:51
+msgid "Includes the registered fields for the box in the response."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Boxes.php:74
+msgid ""
+"Includes the fully rendered attributes, 'form_open', 'form_close', as well "
+"as the enqueued 'js_dependencies' script handles, and 'css_dependencies' "
+"stylesheet handles."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Boxes.php:127
+msgid "No boxes found."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:27
+msgid ""
+"Includes the box object which the fields are registered to in the response."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:30
+msgid ""
+"When the '_rendered' argument is passed, the renderable field attributes "
+"will be returned fully rendered. By default, the names of the callback "
+"handers for the renderable attributes will be returned."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:33
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:36
+msgid ""
+"To view or modify the field's value, the 'object_id' and 'object_type' "
+"arguments are required."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:241
+msgid ""
+"CMB2 Field value cannot be updated without the value parameter specified."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:304
+msgid ""
+"CMB2 Field value cannot be modified without the object_id and object_type "
+"parameters specified."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:321
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:352
+msgid "No field found by that id."
+msgstr ""
+
+#: vendor/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:427
+#, php-format
+msgid "Value Error for %s"
+msgstr ""
+
+#. translators: %s: register_routes()
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:25
+#, php-format
+msgid "Method '%s' must be overridden."
+msgstr ""
+
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:36
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:50
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:64
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:78
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:92
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:106
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:120
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:134
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:148
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:162
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:176
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:191
+#, php-format
+msgid "Method '%s' not implemented. Must be overridden in subclass."
+msgstr ""
+
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:297
+msgid "Current page of the collection."
+msgstr ""
+
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:305
+msgid "Maximum number of items to be returned in result set."
+msgstr ""
+
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:314
+msgid "Limit results to those matching a string."
+msgstr ""
+
+#: vendor/cmb2/includes/shim/WP_REST_Controller.php:332
+msgid ""
+"Scope under which the request is made; determines fields present in response."
+msgstr ""
+
+#: vendor/cmb2/includes/types/CMB2_Type_File.php:80
+msgid "Add or Upload File"
+msgstr ""
+
+#: vendor/cmb2/includes/types/CMB2_Type_File_List.php:44
+msgid "Add or Upload Files"
+msgstr ""
+
+#: vendor/cmb2/includes/types/CMB2_Type_Taxonomy_Base.php:115
+msgid "No terms"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://maticpogladic.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Advanced WooCommerce Reviews Functionality."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Matic Pogladič"
+msgstr ""
