@@ -58,7 +58,7 @@ function arp_fs() {
 			'is_org_compliant'    => false,
 			'menu'                => array(
 				'slug'    => 'arp_options',
-				'account' => false,
+				'account' => true,
 				'contact' => false,
 				'support' => false,
 			),
