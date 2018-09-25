@@ -42,10 +42,10 @@ function arp_fm() {
 		require_once plugin_dir_path( __FILE__ ) . 'vendor/freemius/start.php';
 
 		$arp_fm = fs_dynamic_init( array(
-			'id'               => '2633',
+			'id'               => '2635',
 			'slug'             => 'advanced-reviews-pro',
 			'type'             => 'plugin',
-			'public_key'       => 'pk_13b9c4ecebbcb0e4b9a89cb07aba1',
+			'public_key'       => 'pk_79da82319034ea44a528f8e47e01d',
 			'is_premium'       => false,
 			'has_addons'       => false,
 			'has_paid_plans'   => false,
