@@ -1,9 +1,9 @@
 === Plugin Name ===
 Contributors: poglaa
-Donate link: https://maticpogladic.com/
-Tags: comments, spam, ratings, rating
+Donate link: https://maticpogladic.com
+Tags: comments, spam, ratings, rating, import reviews, coupon for review, review reminder, vote for reviews
 Requires at least: 4.0
-Tested up to: 4.9.7
+Tested up to: 5.2.2
 Stable tag: 4.3
 
 Advanced Reviews Pro

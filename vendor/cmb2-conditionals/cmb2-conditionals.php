@@ -39,12 +39,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! class_exists( 'CMB2_Conditionals' ) ) {
+if ( ! class_exists( 'CK_CMB2_Conditionals' ) ) {
 
 	/**
-	 * CMB2_Conditionals Plugin.
+	 * CK_CMB2_Conditionals Plugin.
 	 */
-	class CMB2_Conditionals {
+	class CK_CMB2_Conditionals {
 
 		/**
 		 * Priority on which our actions are hooked in.
@@ -254,15 +254,15 @@ if ( ! class_exists( 'CMB2_Conditionals' ) ) {
 	 * check can be removed once the min version for this plugin has been upped to 4.4.}}
 	 */
 	if ( ( function_exists( 'wp_installing' ) && wp_installing() === false ) || ( ! function_exists( 'wp_installing' ) && ( ! defined( 'WP_INSTALLING' ) || WP_INSTALLING === false ) ) ) {
-		add_action( 'plugins_loaded', 'cmb2_conditionals_init' );
+		add_action( 'plugins_loaded', 'arp_cmb2_conditionals_init' );
 	}
 
-	if ( ! function_exists( 'cmb2_conditionals_init' ) ) {
+	if ( ! function_exists( 'arp_cmb2_conditionals_init' ) ) {
 		/**
 		 * Initialize the class.
 		 */
-		function cmb2_conditionals_init() {
-			$cmb2_conditionals = new CMB2_Conditionals();
+		function arp_cmb2_conditionals_init() {
+			$cmb2_conditionals = new CK_CMB2_Conditionals();
 		}
 	}
 } /* End of class-exists wrapper. */

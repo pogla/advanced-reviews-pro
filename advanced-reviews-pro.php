@@ -9,9 +9,9 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Advanced Reviews Pro
- * Plugin URI:        https://maticpogladic.com/
+ * Plugin URI:        https://maticpogladic.com/advanced-reviews-pro/
  * Description:       Advanced WooCommerce Reviews Functionality.
- * Version:           1.0.0
+ * Version:           1.0
  * Author:            Matic Pogladič
  * Author URI:        https://maticpogladic.com/
  * Text Domain:       advanced-reviews-pro
@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
  * Currently plugin version.
  * SemVer - https://semver.org
  */
-define( 'ARP_VERSION', '1.0.0' );
+define( 'ARP_VERSION', '1.0' );
 define( 'ARP_PREFIX', 'arp_' );
 define( 'ARP_NAME', 'Advanced Reviews Pro' );
 define( 'ARP_MIN_PHP_VER', '5.6' );
@@ -33,46 +33,6 @@ define( 'ARP_MIN_WP_VER', '4.7' );
 define( 'ARP_MIN_WC_VER', '3.0' );
 define( 'ARP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-define( 'WP_FS__DEV_MODE', true );
-define( 'WP_FS__SKIP_EMAIL_ACTIVATION', true );
-define( 'WP_FS__advanced-reviews-pro_SECRET_KEY', 'sk_GNqq)1^7bV_CB^tb-n2Y6oKVY=B@6' );
-
-// Create a helper function for easy SDK access.
-function arp_fs() {
-	global $arp_fs;
-
-	if ( ! isset( $arp_fs ) ) {
-
-		require_once plugin_dir_path( __FILE__ ) . 'vendor/freemius/start.php';
-
-		$arp_fs = fs_dynamic_init( array(
-			'id'                  => '2635',
-			'slug'                => 'advanced-reviews-pro',
-			'type'                => 'plugin',
-			'public_key'          => 'pk_79da82319034ea44a528f8e47e01d',
-			'is_premium'          => true,
-			'is_premium_only'     => true,
-			'has_premium_version' => true,
-			'has_addons'          => false,
-			'has_paid_plans'      => true,
-			'is_org_compliant'    => false,
-			'menu'                => array(
-				'slug'    => 'arp_options',
-				'account' => true,
-				'contact' => false,
-				'support' => false,
-			),
-			'secret_key'          => 'sk_GNqq)1^7bV_CB^tb-n2Y6oKVY=B@6',
-		) );
-	}
-
-	return $arp_fs;
-}
-
-// Init Freemius.
-arp_fs();
-// Signal that SDK was initiated.
-do_action( 'arp_fs_loaded' );
 
 /**
  * The core plugin class that is used to define internationalization,
